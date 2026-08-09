@@ -11,8 +11,8 @@ const REASONS: { title: L10n; body: L10n; glyph: "a" | "b" | "c" | "d" }[] = [
   {
     title: { en: "Proven Industry Experience", ms: "Pengalaman Industri Terbukti" },
     body: {
-      en: "Barbershops to logistics fleets, cafés to oil brands — we've shipped across industries and markets.",
-      ms: "Dari kedai gunting hingga armada logistik, kafe hingga jenama minyak — kami telah menyiapkan projek merentas industri dan pasaran.",
+      en: "Barbershops to logistics fleets, cafés to oil brands. We have shipped across industries and markets.",
+      ms: "Dari kedai gunting hingga armada logistik, kafe hingga jenama minyak. Kami telah menyiapkan projek merentas industri dan pasaran.",
     },
     glyph: "a",
   },
@@ -27,8 +27,8 @@ const REASONS: { title: L10n; body: L10n; glyph: "a" | "b" | "c" | "d" }[] = [
   {
     title: { en: "Business-Focused Solutions", ms: "Penyelesaian Fokus Perniagaan" },
     body: {
-      en: "We measure work by revenue, bookings and leads — not by how it looks in a case study.",
-      ms: "Kami mengukur kerja dengan hasil, tempahan dan lead — bukan rupa dalam kajian kes.",
+      en: "We measure work by revenue, bookings and leads, not by how it looks in a case study.",
+      ms: "Kami mengukur kerja dengan hasil, tempahan dan lead, bukan rupa dalam kajian kes.",
     },
     glyph: "c",
   },
@@ -60,13 +60,13 @@ const REASONS: { title: L10n; body: L10n; glyph: "a" | "b" | "c" | "d" }[] = [
 
 const COPY = {
   en: {
-    eyebrow: "Why Imsuya — 004",
-    lines: ["The partner serious", "businesses pick."],
+    eyebrow: "Why Imsuya / 004",
+    lines: ["The reasons our", "partners trust us."],
     sub: "Six reasons companies stop hiring vendors and start working with us.",
   },
   ms: {
-    eyebrow: "Kenapa Imsuya — 004",
-    lines: ["Rakan pilihan", "perniagaan serius."],
+    eyebrow: "Kenapa Imsuya / 004",
+    lines: ["Sebab rakan kami", "mempercayai kami."],
     sub: "Enam sebab syarikat berhenti mengupah vendor dan mula bekerjasama dengan kami.",
   },
 };

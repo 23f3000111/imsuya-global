@@ -8,26 +8,26 @@ import { useLang } from "@/i18n";
 
 const COPY = {
   en: {
-    eyebrow: "Contact — replies within 1 business day",
+    eyebrow: "Contact / replies within 1 business day",
     lines: ["Tell us what", "you're building."],
     intro: "Four questions, sixty seconds. Your brief lands directly on our phone.",
     direct: "Prefer it direct?",
     whatsapp: "WhatsApp us",
     email: "Email us",
-    waMessage: "Hi Imsuya Global — I'd like to talk about a project.",
-    location: "Kuala Lumpur — working worldwide",
-    hours: "Mon–Fri, 9am–6pm MYT",
+    waMessage: "Hi Imsuya Global, I'd like to talk about a project.",
+    location: "Kuala Lumpur, working worldwide",
+    hours: "Monday to Friday, 9am to 6pm MYT",
   },
   ms: {
-    eyebrow: "Hubungi — balasan dalam 1 hari bekerja",
+    eyebrow: "Hubungi / balasan dalam 1 hari bekerja",
     lines: ["Ceritakan apa", "yang anda bina."],
     intro: "Empat soalan, enam puluh saat. Brief anda terus sampai ke telefon kami.",
     direct: "Mahu terus berhubung?",
     whatsapp: "WhatsApp kami",
     email: "E-mel kami",
-    waMessage: "Hai Imsuya Global — saya ingin berbincang tentang satu projek.",
-    location: "Kuala Lumpur — bekerja di seluruh dunia",
-    hours: "Isnin–Jumaat, 9 pagi–6 petang MYT",
+    waMessage: "Hai Imsuya Global, saya ingin berbincang tentang satu projek.",
+    location: "Kuala Lumpur, bekerja di seluruh dunia",
+    hours: "Isnin hingga Jumaat, 9 pagi hingga 6 petang MYT",
   },
 };
 

@@ -20,23 +20,23 @@ const rest = services.filter((s) => !featuredSlugs.includes(s.slug));
 
 const COPY = {
   en: {
-    eyebrow: "What we do — 002",
+    eyebrow: "What we do / 002",
     heading: "Nine disciplines.",
     headingSoft: "One team.",
     cue: "Scroll to explore →",
     explore: "Explore",
-    closingEyebrow: "And everything in between",
-    closingTitle: "Merchandise. Gifts. Social. Design.",
+    closingEyebrow: "Everything else we do",
+    closingTitle: "Social. Merchandise. Corporate Gifts.",
     viewAll: "View all services",
   },
   ms: {
-    eyebrow: "Apa kami buat — 002",
+    eyebrow: "Apa kami buat / 002",
     heading: "Sembilan disiplin.",
     headingSoft: "Satu pasukan.",
     cue: "Skrol untuk terokai →",
     explore: "Terokai",
-    closingEyebrow: "Dan segalanya di antaranya",
-    closingTitle: "Barangan. Hadiah. Sosial. Reka Bentuk.",
+    closingEyebrow: "Segala yang lain kami buat",
+    closingTitle: "Sosial. Barangan. Hadiah Korporat.",
     viewAll: "Lihat semua perkhidmatan",
   },
 };
@@ -151,7 +151,7 @@ export function Services() {
         {featured.map((s, i) => (
           <article
             key={s.slug}
-            className="relative flex min-h-[70vh] w-full flex-col justify-end border-b border-paper/[0.06] px-6 py-16 lg:min-h-0 lg:w-screen lg:border-b-0 lg:border-r lg:px-12 lg:pb-24 lg:pt-6 lg:h-[calc(100vh-150px)]"
+            className="relative flex min-h-[70vh] w-full flex-col justify-end border-b border-paper/[0.06] px-6 py-16 lg:h-[calc(100vh-150px)] lg:min-h-0 lg:w-screen lg:justify-center lg:border-b-0 lg:border-r lg:px-12 lg:pb-16 lg:pt-0"
           >
             {/* ghost index — decorative, below everything */}
             <span
@@ -175,13 +175,13 @@ export function Services() {
             <div className="panel-visual img-veil card relative z-[1] mb-10 aspect-[16/10] w-full max-w-xl overflow-hidden border border-paper/[0.1] lg:absolute lg:right-[7vw] lg:top-1/2 lg:mb-0 lg:w-[34vw] lg:max-w-none lg:-translate-y-1/2">
               <Image
                 src={serviceImage(s.slug)}
-                alt={`${t(s.title)} — Imsuya Global`}
+                alt={`${t(s.title)} · Imsuya Global`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 34vw"
                 className="img-cinematic object-cover"
               />
               <span className="absolute left-4 top-4 z-10 font-mono text-[10px] tracking-[0.25em] text-white/70">
-                {s.index} — IMSUYA
+                {s.index} / IMSUYA
               </span>
             </div>
 
@@ -189,7 +189,7 @@ export function Services() {
               <p className="text-eyebrow mb-6 text-coral">
                 {s.index} / {t(s.short)}
               </p>
-              <h3 className="text-display text-[clamp(2.2rem,5vw,4.8rem)] uppercase">
+              <h3 className="text-display text-[clamp(1.9rem,4vw,3.9rem)] uppercase">
                 {t(s.short)}
               </h3>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{t(s.tagline)}</p>
@@ -227,7 +227,7 @@ export function Services() {
                   href={`/services/${s.slug}`}
                   className="font-mono text-sm text-muted transition-colors hover:text-coral"
                 >
-                  {s.index} — {t(s.short)}
+                  {s.index} / {t(s.short)}
                 </Link>
               </li>
             ))}

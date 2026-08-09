@@ -7,17 +7,17 @@ import { useLang } from "@/i18n";
 
 const COPY = {
   en: {
-    eyebrow: "Say hello — 007",
+    eyebrow: "Say hello / 007",
     heading: "No forms.",
     headingSoft: "Just a conversation.",
-    before: "Four quick questions, then it lands directly on our phone — ",
+    before: "Four quick questions, then it lands directly on our phone. ",
     link: "or visit the contact page",
   },
   ms: {
-    eyebrow: "Tegur kami — 007",
+    eyebrow: "Tegur kami / 007",
     heading: "Tiada borang.",
     headingSoft: "Hanya perbualan.",
-    before: "Empat soalan ringkas, terus sampai ke telefon kami — ",
+    before: "Empat soalan ringkas, terus sampai ke telefon kami. ",
     link: "atau lawati halaman hubungi",
   },
 };

@@ -9,7 +9,7 @@ import { useLang, useT } from "@/i18n";
 const COPY = {
   en: {
     tagline: "Digital transformation partners.",
-    whatsapp: "Hi Imsuya Global — I'd like to talk about a project.",
+    whatsapp: "Hi Imsuya Global, I'd like to talk about a project.",
     menu: "Menu",
     servicesLabel: "Services",
     links: [
@@ -20,11 +20,11 @@ const COPY = {
       { href: "/contact", label: "Contact" },
     ],
     rights: "All rights reserved.",
-    strap: "Full-Service Digital & AI Agency",
+    strap: "Creative Digital Design & Smart Website Development Studio",
   },
   ms: {
     tagline: "Rakan transformasi digital.",
-    whatsapp: "Hai Imsuya Global — saya ingin berbincang tentang satu projek.",
+    whatsapp: "Hai Imsuya Global, saya ingin berbincang tentang satu projek.",
     menu: "Menu",
     servicesLabel: "Perkhidmatan",
     links: [
@@ -35,7 +35,7 @@ const COPY = {
       { href: "/contact", label: "Hubungi" },
     ],
     rights: "Hak cipta terpelihara.",
-    strap: "Agensi Digital & AI Serba Lengkap",
+    strap: "Studio Reka Bentuk Digital Kreatif & Pembangunan Laman Web Pintar",
   },
 };
 

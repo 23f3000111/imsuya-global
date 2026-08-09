@@ -24,12 +24,12 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Imsuya Global — Full-Service Digital & AI Agency",
+  title: "Imsuya Global · Creative Digital Design and Smart Website Development Boutique Studio",
   description:
     "We build digital futures. Websites, custom software, AI systems, branding and growth engines for ambitious businesses.",
   metadataBase: new URL("https://imsuyaglobal.com"),
   openGraph: {
-    title: "Imsuya Global — Full-Service Digital & AI Agency",
+    title: "Imsuya Global · Creative Digital Design and Smart Website Development Boutique Studio",
     description:
       "We build digital futures. Websites, custom software, AI systems, branding and growth engines for ambitious businesses.",
     images: ["/brand/logo.png"],

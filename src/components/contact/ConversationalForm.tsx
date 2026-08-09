@@ -33,7 +33,7 @@ const COPY = {
     lastStep: "One last step",
     thanks: (name: string) => `Thanks, ${name}. Send it our way.`,
     ready:
-      "Your brief is ready — deliver it on whichever channel you prefer. We reply within one business day.",
+      "Your brief is ready. Deliver it on whichever channel you prefer. We reply within one business day.",
     whatsapp: "Send via WhatsApp",
     email: "Send via Email",
     restart: "← start over",
@@ -42,7 +42,7 @@ const COPY = {
     waCompany: "Company",
     waInterest: "Interested in",
     waProject: "Project",
-    mailSubject: (who: string) => `Project enquiry — ${who}`,
+    mailSubject: (who: string) => `Project enquiry: ${who}`,
   },
   ms: {
     steps: [
@@ -63,7 +63,7 @@ const COPY = {
     lastStep: "Satu langkah terakhir",
     thanks: (name: string) => `Terima kasih, ${name}. Hantarkan kepada kami.`,
     ready:
-      "Brief anda sedia — hantar melalui saluran pilihan anda. Kami balas dalam satu hari bekerja.",
+      "Brief anda sedia. Hantar melalui saluran pilihan anda. Kami balas dalam satu hari bekerja.",
     whatsapp: "Hantar melalui WhatsApp",
     email: "Hantar melalui E-mel",
     restart: "← mula semula",
@@ -72,7 +72,7 @@ const COPY = {
     waCompany: "Syarikat",
     waInterest: "Berminat dengan",
     waProject: "Projek",
-    mailSubject: (who: string) => `Pertanyaan projek — ${who}`,
+    mailSubject: (who: string) => `Pertanyaan projek: ${who}`,
   },
 } as const;
 

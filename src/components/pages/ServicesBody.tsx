@@ -9,14 +9,14 @@ import { useLang, useT } from "@/i18n";
 
 const COPY = {
   en: {
-    eyebrow: "Services — 09 disciplines",
+    eyebrow: "Services / 09 disciplines",
     lines: ["Everything a digital", "business needs."],
     intro: "Strategy, design, engineering and growth under one roof. Pick a discipline to see how we run it.",
     unsure: "Not sure which one you need?",
     cta: "Talk it through with us",
   },
   ms: {
-    eyebrow: "Perkhidmatan — 09 disiplin",
+    eyebrow: "Perkhidmatan / 09 disiplin",
     lines: ["Segala keperluan", "perniagaan digital."],
     intro: "Strategi, reka bentuk, kejuruteraan dan pertumbuhan di bawah satu bumbung. Pilih satu disiplin untuk lihat cara kami melaksanakannya.",
     unsure: "Tidak pasti yang mana anda perlukan?",

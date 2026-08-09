@@ -59,8 +59,8 @@ export const projects: Project[] = [
     name: "Roadtainers",
     sector: { en: "Logistics", ms: "Logistik" },
     summary: {
-      en: "Logistics built for scale — a fleet and network site for East Africa's corridors.",
-      ms: "Logistik dibina untuk skala — laman armada dan rangkaian untuk koridor Afrika Timur.",
+      en: "Logistics built for scale. A fleet and network site for East Africa's corridors.",
+      ms: "Logistik dibina untuk skala. Laman armada dan rangkaian untuk koridor Afrika Timur.",
     },
     image: "/work/roadtainers.png",
     url: "#",

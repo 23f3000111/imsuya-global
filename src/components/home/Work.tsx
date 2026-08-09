@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
@@ -11,15 +11,6 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { useLang, useT } from "@/i18n";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
-
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 
 export function ProjectCard({
   project,
@@ -37,13 +28,13 @@ export function ProjectCard({
       className={`work-card group block ${className}`}
       data-cursor
     >
-      <div className="card relative overflow-hidden border border-paper/[0.08] transition-colors duration-500 group-hover:border-coral/50">
+      <div className="card relative flex h-full flex-col overflow-hidden border border-paper/[0.08] transition-colors duration-500 group-hover:border-coral/50">
         <div className="relative aspect-[16/10] overflow-hidden">
           <Image
             src={project.image}
-            alt={`${project.name} — Imsuya Global`}
+            alt={`${project.name} website by Imsuya Global`}
             fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             loading={eager ? "eager" : "lazy"}
             className="object-cover object-top transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
           />
@@ -52,7 +43,7 @@ export function ProjectCard({
           {/* coral glow */}
           <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(ellipse_at_50%_120%,rgba(255,78,69,0.25)_0%,transparent_60%)]" />
         </div>
-        <div className="flex items-center justify-between px-5 py-4">
+        <div className="flex flex-1 items-center justify-between gap-4 px-5 py-4">
           <div>
             <h3 className="text-lg font-bold tracking-tight">{project.name}</h3>
             <p className="font-mono text-xs text-soft">{t(project.sector)}</p>
@@ -68,31 +59,29 @@ export function ProjectCard({
 
 const COPY = {
   en: {
-    eyebrow: "Selected work — 003",
+    eyebrow: "Selected work / 003",
     heading: "Built by",
-    counter: "randomised each visit",
+    counter: (n: string) => `${n} live projects`,
     viewAll: "View all projects",
-    marquee: "Selected Work — Selected Work — Selected Work —",
+    marquee: "Selected Work · Selected Work · Selected Work ·",
   },
   ms: {
-    eyebrow: "Kerja pilihan — 003",
+    eyebrow: "Kerja pilihan / 003",
     heading: "Dibina oleh",
-    counter: "rawak setiap kunjungan",
+    counter: (n: string) => `${n} projek hidup`,
     viewAll: "Lihat semua projek",
-    marquee: "Kerja Pilihan — Kerja Pilihan — Kerja Pilihan —",
+    marquee: "Kerja Pilihan · Kerja Pilihan · Kerja Pilihan ·",
   },
 };
+
+// Curated running order lives in the data file; the homepage shows the
+// first six of it and the portfolio page shows them all.
+const picks: Project[] = projects.slice(0, 6);
 
 export function Work() {
   const ref = useRef<HTMLElement>(null);
   const { lang } = useLang();
   const copy = COPY[lang];
-  // Deterministic first paint (SSR-safe), shuffled after mount — new mix every refresh.
-  const [picks, setPicks] = useState<Project[]>(projects.slice(0, 6));
-
-  useEffect(() => {
-    setPicks(shuffle(projects).slice(0, 6));
-  }, []);
 
   useGSAP(
     () => {
@@ -109,7 +98,7 @@ export function Work() {
         }
       );
     },
-    { scope: ref, dependencies: [picks] }
+    { scope: ref }
   );
 
   return (
@@ -136,23 +125,14 @@ export function Work() {
             </h2>
           </div>
           <p className="hidden font-mono text-xs text-soft lg:block">
-            06 / {String(projects.length).padStart(2, "0")} — {copy.counter}
+            {copy.counter(String(projects.length).padStart(2, "0"))}
           </p>
         </div>
 
-        <div className="work-grid grid gap-6 lg:grid-cols-12 lg:gap-8">
+        {/* even grid: every project gets the same frame */}
+        <div className="work-grid grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {picks.map((p, i) => (
-            <ProjectCard
-              key={p.slug}
-              project={p}
-              eager={i < 2}
-              className={
-                // editorial rhythm: wide / narrow alternation with vertical offsets
-                i % 4 === 0 || i % 4 === 3
-                  ? "lg:col-span-7"
-                  : "lg:col-span-5 lg:translate-y-16"
-              }
-            />
+            <ProjectCard key={p.slug} project={p} eager={i < 3} />
           ))}
         </div>
 

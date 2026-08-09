@@ -12,12 +12,12 @@ import { useLang, useT } from "@/i18n";
 
 const COPY = {
   en: {
-    eyebrow: (sector: string) => `Project — ${sector}`,
+    eyebrow: (sector: string) => `Project / ${sector}`,
     visit: "Visit live site ↗",
     linkSoon: "Live link coming soon",
     aboutLabel: "About this project",
     aboutSoon:
-      "The full case study for this project is being written — scope, process and results will live here soon.",
+      "The full case study for this project is being written. Scope, process and results will live here soon.",
     sectorLabel: "Sector",
     servicesLabel: "Delivered by",
     moreLabel: "More work",
@@ -26,12 +26,12 @@ const COPY = {
     cta: "Start your project",
   },
   ms: {
-    eyebrow: (sector: string) => `Projek — ${sector}`,
+    eyebrow: (sector: string) => `Projek / ${sector}`,
     visit: "Lawati laman sebenar ↗",
     linkSoon: "Pautan akan datang",
     aboutLabel: "Tentang projek ini",
     aboutSoon:
-      "Kajian kes penuh untuk projek ini sedang ditulis — skop, proses dan hasil akan dipaparkan di sini tidak lama lagi.",
+      "Kajian kes penuh untuk projek ini sedang ditulis. Skop, proses dan hasil akan dipaparkan di sini tidak lama lagi.",
     sectorLabel: "Sektor",
     servicesLabel: "Dihasilkan oleh",
     moreLabel: "Kerja lain",
@@ -62,14 +62,14 @@ export function ProjectBody({ project }: { project: Project }) {
           <Reveal y={60} className="img-veil card relative aspect-[16/9] w-full overflow-hidden border border-paper/[0.1]">
             <Image
               src={project.image}
-              alt={`${project.name} — Imsuya Global`}
+              alt={`${project.name} · Imsuya Global`}
               fill
               priority
               sizes="100vw"
               className="img-cinematic object-cover object-top"
             />
             <span className="absolute bottom-5 left-5 z-10 font-mono text-[11px] tracking-[0.25em] text-white/70">
-              {project.name.toUpperCase()} — IMSUYA GLOBAL
+              {project.name.toUpperCase()} / IMSUYA GLOBAL
             </span>
           </Reveal>
 

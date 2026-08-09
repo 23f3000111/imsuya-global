@@ -25,6 +25,11 @@ const LINKS = {
 
 const CTA = { en: "Start a project", ms: "Mulakan projek" };
 
+const TAGLINE = {
+  en: "Creative Digital Design and Smart Website Development Boutique Studio",
+  ms: "Studio Butik Reka Bentuk Digital Kreatif dan Pembangunan Laman Web Pintar",
+};
+
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -54,16 +59,23 @@ export function Nav() {
             : "border-b border-transparent"
         }`}
       >
-        <nav className="mx-auto flex h-[72px] max-w-[1600px] items-center justify-between px-6 lg:px-12">
-          <Link href="/" className="flex items-center" aria-label="Imsuya Global — home">
+        <nav className="mx-auto flex h-[80px] max-w-[1600px] items-center justify-between px-6 lg:h-[96px] lg:px-12">
+          <Link
+            href="/"
+            className="flex flex-col justify-center gap-1.5"
+            aria-label="Imsuya Global"
+          >
             <Image
               src="/brand/logo.png"
               alt="Imsuya Global"
-              width={180}
-              height={40}
+              width={240}
+              height={54}
               priority
-              className="h-7 w-auto lg:h-8"
+              className="h-9 w-auto lg:h-[42px]"
             />
+            <span className="hidden font-mono text-[9px] font-medium leading-none tracking-[0.1em] text-soft xl:block">
+              {TAGLINE[lang]}
+            </span>
           </Link>
 
           <div className="hidden items-center gap-9 lg:flex">
@@ -135,6 +147,14 @@ export function Nav() {
                 </Link>
                 <LangToggle />
               </motion.div>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.55, duration: 0.5 }}
+                className="mt-10 max-w-xs font-mono text-[10px] leading-relaxed tracking-[0.1em] text-soft"
+              >
+                {TAGLINE[lang]}
+              </motion.p>
             </nav>
           </motion.div>
         )}

@@ -67,14 +67,14 @@ export function ServiceBody({ service }: { service: Service }) {
           <Reveal y={60} className="img-veil card relative mb-20 aspect-[21/9] w-full overflow-hidden border border-paper/[0.1]">
             <Image
               src={serviceImage(service.slug)}
-              alt={`${t(service.title)} — Imsuya Global`}
+              alt={`${t(service.title)} · Imsuya Global`}
               fill
               priority
               sizes="100vw"
               className="img-cinematic object-cover"
             />
             <span className="absolute bottom-5 left-5 z-10 font-mono text-[11px] tracking-[0.25em] text-white/70">
-              {service.index} / 09 — {t(service.short).toUpperCase()}
+              {service.index} / 09 / {t(service.short).toUpperCase()}
             </span>
           </Reveal>
 

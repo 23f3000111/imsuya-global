@@ -22,7 +22,7 @@ const PIXELS = [
 
 const COPY = {
   en: {
-    eyebrow: "Your move — 006",
+    eyebrow: "Your move / 006",
     line1: "Let's build",
     line2: "what's",
     accent: "next.",
@@ -30,7 +30,7 @@ const COPY = {
     cta: "Start your project",
   },
   ms: {
-    eyebrow: "Giliran anda — 006",
+    eyebrow: "Giliran anda / 006",
     line1: "Mari bina",
     line2: "langkah",
     accent: "seterusnya.",

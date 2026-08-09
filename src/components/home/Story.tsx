@@ -13,12 +13,12 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const COPY = {
   en: {
-    eyebrow: "The Agency — 001",
+    eyebrow: "The Agency / 001",
     statement:
-      "We don't just build websites. We build systems, brands, software and growth engines — the digital infrastructure behind ambitious businesses.",
+      "We don't just build websites. We build systems, brands, software and growth engines. The digital infrastructure behind ambitious businesses.",
     accent: new Set(["systems,", "brands,", "software", "growth"]),
-    body: "Imsuya Global is a full-service digital and AI agency. One team covering strategy, design, engineering and growth — so nothing is lost between agencies, freelancers and handoffs.",
-    photoAlt: "Imsuya Global — design work in progress at the studio",
+    body: "Imsuya Global is a boutique creative digital design and smart website development studio. We have experts covering every aspect of the company from strategy, design, engineering, production, development and more.",
+    photoAlt: "Imsuya Global design work in progress at the studio",
     stats: [
       { value: "15+", label: "Projects shipped" },
       { value: "09", label: "Service lines" },
@@ -27,12 +27,12 @@ const COPY = {
     ],
   },
   ms: {
-    eyebrow: "Agensi — 001",
+    eyebrow: "Agensi / 001",
     statement:
-      "Kami bukan sekadar membina laman web. Kami membina sistem, jenama, perisian dan enjin pertumbuhan — infrastruktur digital di sebalik perniagaan berwawasan.",
+      "Kami bukan sekadar membina laman web. Kami membina sistem, jenama, perisian dan enjin pertumbuhan. Infrastruktur digital di sebalik perniagaan berwawasan.",
     accent: new Set(["sistem,", "jenama,", "perisian", "pertumbuhan"]),
-    body: "Imsuya Global ialah agensi digital dan AI serba lengkap. Satu pasukan merangkumi strategi, reka bentuk, kejuruteraan dan pertumbuhan — tiada apa yang hilang antara agensi, freelancer dan serahan tugas.",
-    photoAlt: "Imsuya Global — kerja reka bentuk sedang berjalan di studio",
+    body: "Imsuya Global ialah studio butik reka bentuk digital kreatif dan pembangunan laman web pintar. Kami mempunyai pakar merangkumi setiap aspek syarikat dari strategi, reka bentuk, kejuruteraan, produksi, pembangunan dan banyak lagi.",
+    photoAlt: "Kerja reka bentuk Imsuya Global sedang berjalan di studio",
     stats: [
       { value: "15+", label: "Projek disiapkan" },
       { value: "09", label: "Barisan perkhidmatan" },

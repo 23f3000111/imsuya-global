@@ -69,7 +69,31 @@ body {
 
 /* Ghost display type: filled ink, not hairline strokes. */
 .text-outline {
-  color: rgba(10, 14, 26, 0.13);
+  color: rgba(10, 14, 26, 0.34);
+}
+
+/*
+ * Motion scrim: a navy veil laid over the particle canvas so the animation
+ * reads as a recessed field and the headline keeps stark contrast against it.
+ * Sits above the canvas (z-0) and below all copy (z-10).
+ */
+.motion-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Layers paint top-first: a paper band that keeps the nav legible, then a
+     paper plate that clears ground for the headline, then a navy veil that
+     deepens toward the empty right side. */
+  background:
+    linear-gradient(to bottom, rgba(247, 248, 251, 0.94) 0%, rgba(247, 248, 251, 0) 150px),
+    radial-gradient(64% 54% at 28% 52%, rgba(247, 248, 251, 0.92) 0%, rgba(247, 248, 251, 0) 74%),
+    linear-gradient(
+      100deg,
+      rgba(30, 40, 82, 0.14) 0%,
+      rgba(30, 40, 82, 0.24) 45%,
+      rgba(30, 40, 82, 0.34) 100%
+    );
 }
 
 /* Giant ghost typography (marquees, panel indices, footer wordmark). */

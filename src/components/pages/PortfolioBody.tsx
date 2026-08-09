@@ -9,7 +9,7 @@ import { useLang } from "@/i18n";
 
 const COPY = {
   en: {
-    eyebrow: (n: string) => `Selected work — ${n} projects`,
+    eyebrow: (n: string) => `Selected work / ${n} projects`,
     lines: ["Proof,", "not promises."],
     intro:
       "Every project here is live and working for a real business. Open any of them to see the full story.",
@@ -17,7 +17,7 @@ const COPY = {
     cta: "Start your project",
   },
   ms: {
-    eyebrow: (n: string) => `Kerja pilihan — ${n} projek`,
+    eyebrow: (n: string) => `Kerja pilihan / ${n} projek`,
     lines: ["Bukti,", "bukan janji."],
     intro:
       "Setiap projek di sini hidup dan bekerja untuk perniagaan sebenar. Buka mana-mana untuk melihat kisah penuhnya.",

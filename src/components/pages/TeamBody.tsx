@@ -22,8 +22,8 @@ const MEMBERS: {
     image: "/team/founder.jpg",
     position: "object-[50%_25%]",
     bio: {
-      en: "Sets the direction — which businesses we partner with, what we build for them, and the standard every project has to clear before it ships.",
-      ms: "Menetapkan hala tuju — perniagaan mana kami jadikan rakan, apa yang kami bina untuk mereka, dan piawaian yang mesti dicapai setiap projek sebelum dilancarkan.",
+      en: "Sets the direction. Which businesses we partner with, what we build for them, and the standard every project has to clear before it ships.",
+      ms: "Menetapkan hala tuju. Perniagaan mana kami jadikan rakan, apa yang kami bina untuk mereka, dan piawaian yang mesti dicapai setiap projek sebelum dilancarkan.",
     },
   },
   {
@@ -32,25 +32,25 @@ const MEMBERS: {
     image: "/team/director.png",
     position: "object-[50%_15%]",
     bio: {
-      en: "Owns the promise. Scopes, timelines and communication — the reason clients always know what's happening and when it lands.",
-      ms: "Memegang janji. Skop, garis masa dan komunikasi — sebab pelanggan sentiasa tahu apa yang berlaku dan bila ia siap.",
+      en: "Owns the promise. Scopes, timelines and communication are the reason clients always know what is happening and when it lands.",
+      ms: "Memegang janji. Skop, garis masa dan komunikasi adalah sebab pelanggan sentiasa tahu apa yang berlaku dan bila ia siap.",
     },
   },
   {
-    role: { en: "Developer", ms: "Pembangun" },
+    role: { en: "CTO", ms: "CTO" },
     focus: { en: "Engineering & Systems", ms: "Kejuruteraan & Sistem" },
     image: "/team/developer.png",
     position: "object-[50%_15%]",
     bio: {
-      en: "Turns ambition into working software — websites, platforms and AI systems engineered to hold up long after launch day.",
-      ms: "Menukar cita-cita kepada perisian yang berfungsi — laman web, platform dan sistem AI yang kekal kukuh lama selepas hari pelancaran.",
+      en: "Turns ambition into working software. Websites, platforms and AI systems engineered to hold up long after launch day.",
+      ms: "Menukar cita-cita kepada perisian yang berfungsi. Laman web, platform dan sistem AI yang kekal kukuh lama selepas hari pelancaran.",
     },
   },
 ];
 
 const COPY = {
   en: {
-    eyebrow: "The team — 03 people",
+    eyebrow: "The team / 03 people",
     lines: ["People you can", "actually reach."],
     intro:
       "No account managers between you and the people doing the work. When you work with Imsuya Global, you work with us directly.",
@@ -59,7 +59,7 @@ const COPY = {
     cta: "Work with the team",
   },
   ms: {
-    eyebrow: "Pasukan — 03 insan",
+    eyebrow: "Pasukan / 03 insan",
     lines: ["Insan yang benar-benar", "boleh dihubungi."],
     intro:
       "Tiada pengurus akaun antara anda dan orang yang membuat kerja. Bila anda bekerja dengan Imsuya Global, anda bekerja terus dengan kami.",
@@ -86,7 +86,7 @@ export function TeamBody() {
                   <div className="img-veil card relative aspect-[4/5] max-w-md overflow-hidden border border-paper/[0.1]">
                     <Image
                       src={m.image}
-                      alt={`${m.role[lang]} — Imsuya Global`}
+                      alt={`${m.role[lang]} of Imsuya Global`}
                       fill
                       sizes="(max-width: 1024px) 100vw, 40vw"
                       className={`img-cinematic object-cover ${m.position}`}
@@ -100,7 +100,7 @@ export function TeamBody() {
                   </div>
                 </div>
                 <div className={`lg:col-span-6 ${i % 2 === 1 ? "lg:order-1 lg:col-start-1" : "lg:col-start-7"}`}>
-                  <Eyebrow className="mb-6">{`0${i + 1} — ${m.focus[lang]}`}</Eyebrow>
+                  <Eyebrow className="mb-6">{`0${i + 1} / ${m.focus[lang]}`}</Eyebrow>
                   <h2 className="text-display text-4xl uppercase lg:text-6xl">{m.role[lang]}</h2>
                   <p className="mt-6 max-w-md text-base leading-relaxed text-muted">{m.bio[lang]}</p>
                   <p className="mt-4 font-mono text-xs text-soft">{copy.nameSoon}</p>

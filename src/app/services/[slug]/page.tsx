@@ -16,7 +16,7 @@ export async function generateMetadata({
   const service = services.find((s) => s.slug === slug);
   if (!service) return {};
   return {
-    title: `${service.title.en} — Imsuya Global`,
+    title: `${service.title.en} · Imsuya Global`,
     description: service.description.en,
   };
 }
