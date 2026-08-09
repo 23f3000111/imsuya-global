@@ -52,8 +52,8 @@ export function Footer() {
             <Image
               src="/brand/logo.png"
               alt="Imsuya Global"
-              width={200}
-              height={45}
+              width={450}
+              height={100}
               className="mb-8 h-9 w-auto"
             />
             <p className="text-display max-w-sm text-3xl uppercase">{copy.tagline}</p>

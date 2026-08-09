@@ -37,18 +37,10 @@ export function PortfolioBody() {
 
       <section className="bg-void px-6 pb-32 lg:px-12">
         <div className="relative z-10 mx-auto max-w-[1600px]">
-          <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+          {/* even grid: every project gets the same frame */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {projects.map((p, i) => (
-              <ProjectCard
-                key={p.slug}
-                project={p}
-                eager={i < 2}
-                className={
-                  i % 4 === 0 || i % 4 === 3
-                    ? "lg:col-span-7"
-                    : "lg:col-span-5 lg:translate-y-16"
-                }
-              />
+              <ProjectCard key={p.slug} project={p} eager={i < 3} />
             ))}
           </div>
 

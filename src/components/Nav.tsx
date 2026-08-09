@@ -60,16 +60,18 @@ export function Nav() {
         }`}
       >
         <nav className="mx-auto flex h-[80px] max-w-[1600px] items-center justify-between px-6 lg:h-[96px] lg:px-12">
+          {/* items-start is load-bearing: a stretched flex item would force the
+              logo to the tagline's width and distort it */}
           <Link
             href="/"
-            className="flex flex-col justify-center gap-1.5"
+            className="flex flex-col items-start justify-center gap-1.5"
             aria-label="Imsuya Global"
           >
             <Image
               src="/brand/logo.png"
               alt="Imsuya Global"
-              width={240}
-              height={54}
+              width={450}
+              height={100}
               priority
               className="h-9 w-auto lg:h-[42px]"
             />
