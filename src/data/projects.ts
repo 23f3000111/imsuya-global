@@ -206,9 +206,7 @@ export const projects: Project[] = [
       ms: "Ketepatan dalam setiap pusingan. Jenama pelincir automotif premium, satu lagi jenama oleh Prince.",
     },
     image: "/work/px98.jpg",
-    // TODO: the only link supplied was a local file path, so this opens the
-    // case study until a public URL is published.
-    url: "#",
+    url: "https://23f3000111.github.io/px98-website/index.html",
   },
   {
     slug: "roadside-eatery",
