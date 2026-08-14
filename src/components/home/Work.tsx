@@ -19,8 +19,8 @@ import { useLang, useT } from "@/i18n";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const CARD_COPY = {
-  en: { soon: "Preview coming soon", visit: "Visit site" },
-  ms: { soon: "Pratonton akan datang", visit: "Lawati laman" },
+  en: { soon: "Preview coming soon", live: "LIVE SITE" },
+  ms: { soon: "Pratonton akan datang", live: "LAMAN HIDUP" },
 };
 
 export function ProjectCard({
@@ -36,85 +36,74 @@ export function ProjectCard({
   const { lang } = useLang();
   const copy = CARD_COPY[lang];
 
-  // Once a live URL is known the card goes straight to the site, which is what
-  // the card is advertising. Until then it opens the case study instead.
-  const external = project.url !== "#" && project.url.startsWith("http");
-  const href = external ? project.url : `/portfolio/${project.slug}`;
-
-  const inner = (
-    <div className="card relative flex h-full flex-col overflow-hidden border border-paper/[0.08] transition-colors duration-500 group-hover:border-coral/50">
-      {/*
-        The frame matches the captures' own 1600x748 ratio and the image is
-        contained inside it, so every site is shown whole at its true
-        proportions. No crop, no zoom, and nothing scales on hover.
-      */}
-      <div className="relative aspect-[1600/748] overflow-hidden bg-white">
-        {project.image ? (
-          <Image
-            src={project.image}
-            alt={`${project.name} website by Imsuya Global`}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            loading={eager ? "eager" : "lazy"}
-            className="object-contain"
-          />
-        ) : (
-          // Holding frame: brand furniture rather than a broken image, so the
-          // grid stays even until the capture arrives.
-          <div className="panel-navy absolute inset-0 flex flex-col items-center justify-center gap-4">
-            <span className="text-display text-[clamp(2rem,4vw,3rem)] uppercase text-white/85">
-              {project.name}
-            </span>
-            <span className="font-mono text-[10px] tracking-[0.25em] text-white/40">
-              {copy.soon}
-            </span>
-            <span aria-hidden className="mt-1 grid grid-cols-4 gap-1.5">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <span
-                  key={i}
-                  className={`size-1.5 ${i % 3 === 0 ? "bg-coral" : "bg-white/25"}`}
-                />
-              ))}
-            </span>
-          </div>
-        )}
-        {/* coral glow */}
-        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(ellipse_at_50%_120%,rgba(255,78,69,0.25)_0%,transparent_60%)]" />
-      </div>
-      <div className="flex flex-1 items-center justify-between gap-4 px-5 py-4">
-        <div>
-          <h3 className="text-lg font-bold tracking-tight">{project.name}</h3>
-          {/* Brands with more than one build carry the version on the label. */}
-          <p className="font-mono text-xs text-soft">
-            {project.variant ? `${t(project.variant)} · ` : ""}
-            {t(project.sector)}
-          </p>
-        </div>
-        <span className="flex size-9 items-center justify-center border border-paper/15 text-muted transition-all duration-300 group-hover:border-coral group-hover:bg-coral group-hover:text-black">
-          {external ? "↗" : "→"}
-        </span>
-      </div>
-    </div>
-  );
-
-  if (external) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${project.name} — ${copy.visit}`}
-        className={`work-card group block ${className}`}
-        data-cursor
-      >
-        {inner}
-      </a>
-    );
-  }
+  // The card always opens our own project page. The live site is reachable
+  // from there, so a click never leaves the site unexpectedly.
+  const hasLive = project.url !== "#" && project.url.startsWith("http");
 
   return (
-    <Link href={href} className={`work-card group block ${className}`} data-cursor>
-      {inner}
+    <Link
+      href={`/portfolio/${project.slug}`}
+      className={`work-card group block ${className}`}
+      data-cursor
+    >
+      <div className="card relative flex h-full flex-col overflow-hidden border border-paper/[0.08] transition-colors duration-500 group-hover:border-coral/50">
+        {/*
+          The frame matches the captures' own 1600x748 ratio and the image is
+          contained inside it, so every site is shown whole at its true
+          proportions. No crop, no zoom, and nothing scales on hover.
+        */}
+        <div className="relative aspect-[1600/748] overflow-hidden bg-white">
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt={`${project.name} website by Imsuya Global`}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              loading={eager ? "eager" : "lazy"}
+              className="object-contain"
+            />
+          ) : (
+            // Holding frame: brand furniture rather than a broken image, so the
+            // grid stays even until the capture arrives.
+            <div className="panel-navy absolute inset-0 flex flex-col items-center justify-center gap-4">
+              <span className="text-display text-[clamp(2rem,4vw,3rem)] uppercase text-white/85">
+                {project.name}
+              </span>
+              <span className="font-mono text-[10px] tracking-[0.25em] text-white/40">
+                {copy.soon}
+              </span>
+              <span aria-hidden className="mt-1 grid grid-cols-4 gap-1.5">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className={`size-1.5 ${i % 3 === 0 ? "bg-coral" : "bg-white/25"}`}
+                  />
+                ))}
+              </span>
+            </div>
+          )}
+          {/* coral glow */}
+          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(ellipse_at_50%_120%,rgba(255,78,69,0.25)_0%,transparent_60%)]" />
+        </div>
+        <div className="flex flex-1 items-center justify-between gap-4 px-5 py-4">
+          <div>
+            <h3 className="text-lg font-bold tracking-tight">{project.name}</h3>
+            {/* Brands with more than one build carry the version on the label. */}
+            <p className="font-mono text-xs text-soft">
+              {project.variant ? `${t(project.variant)} · ` : ""}
+              {t(project.sector)}
+            </p>
+            {hasLive && (
+              <p className="mt-1 font-mono text-[10px] tracking-[0.15em] text-coral/80">
+                {copy.live}
+              </p>
+            )}
+          </div>
+          <span className="flex size-9 shrink-0 items-center justify-center border border-paper/15 text-muted transition-all duration-300 group-hover:border-coral group-hover:bg-coral group-hover:text-black">
+            →
+          </span>
+        </div>
+      </div>
     </Link>
   );
 }

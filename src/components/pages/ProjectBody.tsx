@@ -83,6 +83,19 @@ export function ProjectBody({ project }: { project: Project }) {
             <span className="absolute bottom-5 left-5 z-10 bg-void/85 px-3 py-1.5 font-mono text-[11px] tracking-[0.25em] text-paper backdrop-blur-sm">
               {project.name.toUpperCase()} / IMSUYA GLOBAL
             </span>
+
+            {/* The way out to the real thing, sitting on the capture itself so
+                it is the first thing found after the card opens this page. */}
+            {project.url !== "#" && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute right-5 top-5 z-10 bg-coral px-5 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors duration-300 hover:bg-void hover:text-paper"
+              >
+                {copy.visit}
+              </a>
+            )}
           </Reveal>
 
           {/* meta + about */}
