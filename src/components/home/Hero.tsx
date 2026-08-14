@@ -3,12 +3,11 @@
 import { useRef } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { SplitChars } from "@/components/ui/SplitChars";
 import { useLang } from "@/i18n";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(useGSAP);
 
 const ParticleField = dynamic(
   () => import("@/components/three/ParticleField").then((m) => m.ParticleField),
@@ -40,9 +39,11 @@ const COPY = {
   },
 };
 
+// Seconds each headline holds before the next one takes over.
+const HOLD = 2.4;
+
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollRef = useRef(0);
   const { lang } = useLang();
   const copy = COPY[lang];
 
@@ -53,85 +54,65 @@ export function Hero() {
       const markers = gsap.utils.toArray<HTMLElement>(".hero-marker");
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      // --- entrance ---
       const chars0 = section.querySelectorAll(".hero-static .char");
       const firstChars = phrases[0].querySelectorAll(".char");
+
+      // Everything after the first headline waits below the mask line.
       phrases.forEach((p, i) => {
         if (i > 0) gsap.set(p.querySelectorAll(".char"), { yPercent: 120 });
-      });
-
-      if (!reduced) {
-        // Delayed so the reveal plays as the preloader curtain lifts.
-        gsap
-          .timeline({ delay: 1.0, defaults: { ease: "expo.out" } })
-          .fromTo(".hero-canvas", { opacity: 0 }, { opacity: 1, duration: 2 }, 0)
-          .fromTo(
-            chars0,
-            { yPercent: 120 },
-            { yPercent: 0, duration: 1.2, stagger: 0.035 },
-            0.3
-          )
-          .fromTo(
-            firstChars,
-            { yPercent: 120 },
-            { yPercent: 0, duration: 1.2, stagger: 0.025 },
-            0.55
-          )
-          .fromTo(
-            ".hero-fade-in",
-            { opacity: 0, y: 16 },
-            { opacity: 1, y: 0, duration: 1, stagger: 0.12 },
-            1
-          );
-      }
-
-      if (reduced) return;
-
-      // --- pinned scroll story ---
-      // Long pin + wide dwell between swaps so each headline can be read.
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=620%",
-          pin: true,
-          scrub: 0.6,
-          onUpdate: (self) => {
-            scrollRef.current = self.progress;
-          },
-        },
       });
 
       const markerRest =
         markers.length > 1 ? getComputedStyle(markers[1]).backgroundColor : "rgba(13,18,36,0.2)";
       gsap.set(markers[0], { backgroundColor: "#ff4e45" });
 
-      const DWELL = 2.6; // scroll units each headline holds before swapping
+      if (reduced) {
+        // Hold on the first headline; no looping motion.
+        gsap.set([".hero-canvas", ".hero-fade-in"], { opacity: 1 });
+        return;
+      }
+
+      // --- entrance, timed to the preloader curtain lifting ---
+      gsap
+        .timeline({ delay: 1.0, defaults: { ease: "expo.out" } })
+        .fromTo(".hero-canvas", { opacity: 0 }, { opacity: 1, duration: 2 }, 0)
+        .fromTo(chars0, { yPercent: 120 }, { yPercent: 0, duration: 1.2, stagger: 0.035 }, 0.3)
+        .fromTo(firstChars, { yPercent: 120 }, { yPercent: 0, duration: 1.2, stagger: 0.025 }, 0.55)
+        .fromTo(
+          ".hero-fade-in",
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 1, stagger: 0.12 },
+          1
+        );
+
+      // --- the headline carousel, running on its own clock ---
+      // Each pass hands off to the next phrase; the final pass returns to the
+      // first, which leaves the timeline in its start state so it can repeat.
+      const loop = gsap.timeline({ repeat: -1, delay: 2.6 });
+
       copy.phrases.forEach((_, i) => {
-        if (i === copy.phrases.length - 1) return;
+        const next = (i + 1) % copy.phrases.length;
         const label = `swap${i}`;
-        tl.addLabel(label, i * DWELL + 1.6);
-        // Exit as one block: a char stagger here strands the last letter
-        // mid-scrub, floating on its own.
-        tl.to(
+
+        loop.addLabel(label, i === 0 ? 0 : `+=${HOLD}`);
+        // Exit as one block: staggering here strands the last letter alone.
+        loop.to(
           phrases[i].querySelectorAll(".char"),
           { yPercent: -120, duration: 0.5, ease: "power3.in" },
           label
         );
-        tl.to(
-          phrases[i + 1].querySelectorAll(".char"),
+        loop.fromTo(
+          phrases[next].querySelectorAll(".char"),
+          { yPercent: 120 },
           { yPercent: 0, duration: 0.6, stagger: 0.02, ease: "power3.out" },
-          `${label}+=0.42`
+          `${label}+=0.34`
         );
-        tl.to(markers[i], { backgroundColor: markerRest, duration: 0.2 }, label);
-        tl.to(markers[i + 1], { backgroundColor: "#ff4e45", duration: 0.2 }, label);
+        loop.to(markers[i], { backgroundColor: markerRest, duration: 0.25 }, label);
+        loop.to(markers[next], { backgroundColor: "#ff4e45", duration: 0.25 }, label);
       });
 
-      // Hold on the final headline before the pin releases.
-      tl.to({}, { duration: 0.01 }, copy.phrases.length * DWELL + 1.2);
-
-      // Fade the scroll cue away once the story starts.
-      tl.to(".hero-cue", { opacity: 0, duration: 0.3 }, 0.5);
+      // Let the last headline breathe before the loop restarts.
+      loop.to({}, { duration: HOLD });
     },
     { scope: sectionRef, dependencies: [lang], revertOnUpdate: true }
   );
@@ -143,15 +124,21 @@ export function Hero() {
     >
       {/* decorative layers, all beneath the copy */}
       <div className="blueprint" aria-hidden />
-      <div className="hero-canvas absolute inset-0 z-0">
-        <ParticleField scrollRef={scrollRef} />
+
+      {/* The motion lives on the right half only. The mask dissolves it before
+          it can reach the headline column, so no pixel ever crosses the type. */}
+      <div className="hero-canvas hero-motion absolute inset-y-0 right-0 z-0 w-full lg:w-[58%]">
+        <ParticleField />
       </div>
-      {/* navy veil over the motion so the words stay stark against it */}
+
+      {/* Solid paper under the nav and the copy column; clear glass on the right. */}
       <div className="motion-scrim" aria-hidden />
 
       <div className="relative z-10 mx-auto w-full max-w-[1600px] px-6 lg:px-12">
-        <h1 className="text-display whitespace-nowrap text-[clamp(1.5rem,6.6vw,6.9rem)] uppercase">
-          <span className="hero-static text-outline block">
+        {/* No max-width here: the rotating band below clips overflow on both
+            axes, so a narrower h1 would shear the longest headline. */}
+        <h1 className="text-display text-[clamp(1.5rem,5.6vw,5.6rem)] uppercase">
+          <span className="hero-static text-outline block whitespace-nowrap">
             <SplitChars text={copy.weBuild} />
           </span>
           <span className="relative block h-[1.05em] overflow-hidden">
@@ -167,7 +154,7 @@ export function Hero() {
           </span>
         </h1>
 
-        <p className="hero-fade-in mt-12 max-w-xl text-base leading-relaxed text-muted lg:text-lg">
+        <p className="hero-fade-in mt-10 max-w-xl text-base leading-relaxed text-muted lg:text-lg">
           {copy.sub}
         </p>
       </div>
@@ -180,7 +167,7 @@ export function Hero() {
       </div>
 
       <div className="hero-fade-in absolute inset-x-0 bottom-8 z-10 flex items-end justify-end px-6 lg:px-12">
-        <div className="hero-cue flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-2">
           <span className="font-mono text-[11px] tracking-[0.25em] text-soft">{copy.scroll}</span>
           <span className="block h-10 w-px animate-pulse bg-gradient-to-b from-coral to-transparent" />
         </div>

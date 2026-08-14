@@ -8,15 +8,15 @@ import { useLang } from "@/i18n";
 const COPY = {
   en: {
     eyebrow: "Say hello / 007",
-    heading: "No forms.",
-    headingSoft: "Just a conversation.",
+    heading: "No Forms!",
+    headingSoft: "Let's Communicate.",
     before: "Four quick questions, then it lands directly on our phone. ",
     link: "or visit the contact page",
   },
   ms: {
     eyebrow: "Tegur kami / 007",
-    heading: "Tiada borang.",
-    headingSoft: "Hanya perbualan.",
+    heading: "Tiada Borang!",
+    headingSoft: "Mari Berhubung.",
     before: "Empat soalan ringkas, terus sampai ke telefon kami. ",
     link: "atau lawati halaman hubungi",
   },
@@ -27,8 +27,8 @@ export function ContactSection() {
   const copy = COPY[lang];
 
   return (
-    <section className="relative border-t border-paper/[0.06] bg-void py-32 lg:py-44">
-      <div className="relative z-10 mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-12 lg:px-12">
+    <section className="relative border-t border-paper/[0.06] bg-void py-20 lg:py-24">
+      <div className="relative z-10 mx-auto grid max-w-[1600px] gap-12 px-6 lg:grid-cols-12 lg:gap-16 lg:px-12">
         <div className="lg:col-span-4">
           <Eyebrow variant="c" className="mb-4">
             {copy.eyebrow}

@@ -7,6 +7,19 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Held at module scope so the nav can jump the page home without threading a
+// context through every layer.
+let instance: Lenis | null = null;
+
+/** Snap to the very top. Used by the HOME button and on route changes. */
+export function scrollToTop(immediate = true) {
+  if (instance) {
+    instance.scrollTo(0, { immediate });
+    return;
+  }
+  window.scrollTo({ top: 0, behavior: immediate ? "auto" : "smooth" });
+}
+
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -15,6 +28,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
+    instance = lenis;
 
     lenis.on("scroll", ScrollTrigger.update);
 
@@ -25,6 +39,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     return () => {
       gsap.ticker.remove(raf);
       lenis.destroy();
+      instance = null;
     };
   }, []);
 

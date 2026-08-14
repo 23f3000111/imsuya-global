@@ -51,24 +51,36 @@ export function ProjectBody({ project }: { project: Project }) {
   return (
     <>
       <PageHero
-        eyebrow={copy.eyebrow(t(project.sector))}
+        eyebrow={copy.eyebrow(
+          project.variant ? `${t(project.sector)} · ${t(project.variant)}` : t(project.sector)
+        )}
         lines={[project.name]}
         intro={t(project.summary)}
       />
 
       <section className="bg-void px-6 pb-32 lg:px-12">
         <div className="relative z-10 mx-auto max-w-[1600px]">
-          {/* hero screenshot */}
-          <Reveal y={60} className="img-veil card relative aspect-[16/9] w-full overflow-hidden border border-paper/[0.1]">
-            <Image
-              src={project.image}
-              alt={`${project.name} · Imsuya Global`}
-              fill
-              priority
-              sizes="100vw"
-              className="img-cinematic object-cover object-top"
-            />
-            <span className="absolute bottom-5 left-5 z-10 font-mono text-[11px] tracking-[0.25em] text-white/70">
+          {/* The capture at its own proportions: contained, never cropped. */}
+          <Reveal y={60} className="card relative aspect-[1600/748] w-full overflow-hidden border border-paper/[0.1] bg-white">
+            {project.image ? (
+              <Image
+                src={project.image}
+                alt={`${project.name} · Imsuya Global`}
+                fill
+                priority
+                sizes="100vw"
+                className="object-contain"
+              />
+            ) : (
+              <div className="panel-navy absolute inset-0 flex items-center justify-center">
+                <span className="text-display text-[clamp(2rem,6vw,5rem)] uppercase text-white/85">
+                  {project.name}
+                </span>
+              </div>
+            )}
+            {/* Chip, not bare white type: the veil is gone, so the caption
+                has to carry its own contrast over a light capture. */}
+            <span className="absolute bottom-5 left-5 z-10 bg-void/85 px-3 py-1.5 font-mono text-[11px] tracking-[0.25em] text-paper backdrop-blur-sm">
               {project.name.toUpperCase()} / IMSUYA GLOBAL
             </span>
           </Reveal>

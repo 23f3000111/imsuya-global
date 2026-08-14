@@ -6,16 +6,19 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { LangToggle } from "./LangToggle";
+import { scrollToTop } from "./providers/SmoothScroll";
 import { useLang } from "@/i18n";
 
 const LINKS = {
   en: [
+    { href: "/", label: "Home" },
     { href: "/portfolio", label: "Work" },
     { href: "/services", label: "Services" },
     { href: "/team", label: "Team" },
     { href: "/contact", label: "Contact" },
   ],
   ms: [
+    { href: "/", label: "Laman Utama" },
     { href: "/portfolio", label: "Kerja" },
     { href: "/services", label: "Perkhidmatan" },
     { href: "/team", label: "Pasukan" },
@@ -26,8 +29,8 @@ const LINKS = {
 const CTA = { en: "Start a project", ms: "Mulakan projek" };
 
 const TAGLINE = {
-  en: "Creative Digital Design and Smart Website Development Boutique Studio",
-  ms: "Studio Butik Reka Bentuk Digital Kreatif dan Pembangunan Laman Web Pintar",
+  en: "We Build Your Digital Future",
+  ms: "Kami Bina Masa Depan Digital Anda",
 };
 
 export function Nav() {
@@ -50,6 +53,13 @@ export function Nav() {
     document.documentElement.style.overflow = open ? "hidden" : "";
   }, [open]);
 
+  // "/" would prefix match every route, so home needs an exact test.
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  // Home always lands at the top, even when you are already on the homepage.
+  const onHome = (href: string) => (href === "/" ? () => scrollToTop() : undefined);
+
   return (
     <>
       <header
@@ -64,6 +74,7 @@ export function Nav() {
               logo to the tagline's width and distort it */}
           <Link
             href="/"
+            onClick={() => scrollToTop()}
             className="flex flex-col items-start justify-center gap-1.5"
             aria-label="Imsuya Global"
           >
@@ -75,18 +86,20 @@ export function Nav() {
               priority
               className="h-9 w-auto lg:h-[42px]"
             />
-            <span className="hidden font-mono text-[9px] font-medium leading-none tracking-[0.1em] text-soft xl:block">
+            {/* Short enough now to hold its place on a phone too. */}
+            <span className="block font-mono text-[8px] font-medium leading-none tracking-[0.14em] text-soft sm:text-[10px] sm:tracking-[0.18em]">
               {TAGLINE[lang]}
             </span>
           </Link>
 
-          <div className="hidden items-center gap-9 lg:flex">
+          <div className="hidden items-center gap-8 lg:flex">
             {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
+                onClick={onHome(l.href)}
                 className={`text-eyebrow transition-colors duration-300 hover:text-coral ${
-                  pathname.startsWith(l.href) ? "text-coral" : "text-muted"
+                  isActive(l.href) ? "text-coral" : "text-muted"
                 }`}
               >
                 {l.label}
@@ -130,7 +143,11 @@ export function Nav() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.08 * i + 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <Link href={l.href} className="text-display block py-3 text-5xl uppercase">
+                  <Link
+                    href={l.href}
+                    onClick={onHome(l.href)}
+                    className="text-display block py-3 text-4xl uppercase"
+                  >
                     {l.label}
                   </Link>
                 </motion.div>

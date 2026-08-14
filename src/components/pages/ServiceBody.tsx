@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { process, serviceImage, type Service } from "@/data/services";
 import { projects } from "@/data/projects";
+import { merchandise } from "@/data/merchandise";
 import { PageHero } from "@/components/ui/PageHero";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
@@ -17,6 +18,7 @@ const COPY = {
     features: "What you get",
     process: "How we run it",
     related: "In the wild",
+    merch: "Brands we have produced for",
     allProjects: "All projects →",
     readyA: "Ready when",
     readyB: "you",
@@ -28,6 +30,7 @@ const COPY = {
     features: "Apa yang anda dapat",
     process: "Cara kami laksanakan",
     related: "Dalam dunia sebenar",
+    merch: "Jenama yang kami hasilkan",
     allProjects: "Semua projek →",
     readyA: "Sedia bila",
     readyB: "anda",
@@ -104,6 +107,39 @@ export function ServiceBody({ service }: { service: Service }) {
               ))}
             </Reveal>
           </div>
+
+          {/* physical work, shown only where it belongs */}
+          {service.slug === "merchandise-design" && (
+            <div className="mt-24">
+              <Eyebrow variant="a" className="mb-10">
+                {copy.merch}
+              </Eyebrow>
+              <Reveal stagger={0.08} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {merchandise.map((m) => (
+                  <figure
+                    key={m.name}
+                    className="card group overflow-hidden border border-paper/[0.08] transition-colors duration-500 hover:border-coral/50"
+                  >
+                    {/* Letterboxed, not cropped: these are full presentation
+                        boards and the edges carry the detail. */}
+                    <div className="panel-navy relative aspect-[3/2] overflow-hidden">
+                      <Image
+                        src={m.image}
+                        alt={`${m.name} merchandise designed by Imsuya Global`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-contain transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                      />
+                    </div>
+                    <figcaption className="px-5 py-4">
+                      <p className="text-base font-bold tracking-tight">{m.name}</p>
+                      <p className="font-mono text-xs text-soft">{t(m.kind)}</p>
+                    </figcaption>
+                  </figure>
+                ))}
+              </Reveal>
+            </div>
+          )}
 
           {/* process — a real sequence, so the numbering carries meaning */}
           <div className="mt-28">

@@ -65,7 +65,7 @@ const COPY = {
     ready:
       "Brief anda sedia. Hantar melalui saluran pilihan anda. Kami balas dalam satu hari bekerja.",
     whatsapp: "Hantar melalui WhatsApp",
-    email: "Hantar melalui E-mel",
+    email: "Hantar melalui Emel",
     restart: "← mula semula",
     waIntro: "Hai Imsuya Global!",
     waName: "Nama",

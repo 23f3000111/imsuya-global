@@ -76,7 +76,7 @@ export function FinalCTA() {
   return (
     <section
       ref={ref}
-      className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-void py-32 text-center"
+      className="relative flex flex-col items-center justify-center overflow-hidden bg-void py-24 text-center lg:py-28"
     >
       {/* decorative layers — always below text */}
       <div
@@ -100,8 +100,8 @@ export function FinalCTA() {
       ))}
 
       <div className="relative z-10 px-6">
-        <p className="text-eyebrow mb-10 text-soft">{copy.eyebrow}</p>
-        <h2 className="cta-line text-display text-[clamp(2.6rem,9vw,9rem)] uppercase">
+        <p className="text-eyebrow mb-8 text-soft">{copy.eyebrow}</p>
+        <h2 className="cta-line text-display text-[clamp(2.4rem,7.5vw,7rem)] uppercase">
           <span className="block overflow-hidden">
             <span className="line-inner block">{copy.line1}</span>
           </span>
@@ -111,10 +111,10 @@ export function FinalCTA() {
             </span>
           </span>
         </h2>
-        <p className="cta-after mx-auto mt-8 max-w-md text-base leading-relaxed text-muted">
+        <p className="cta-after mx-auto mt-7 max-w-md text-base leading-relaxed text-muted">
           {copy.sub}
         </p>
-        <div className="cta-after mt-12">
+        <div className="cta-after mt-10">
           <MagneticButton href="/contact">{copy.cta}</MagneticButton>
         </div>
       </div>

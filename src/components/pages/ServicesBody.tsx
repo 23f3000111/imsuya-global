@@ -44,8 +44,9 @@ export function ServicesBody() {
                 data-cursor
               >
                 <span className="font-mono text-sm text-coral lg:col-span-1">{s.index}</span>
-                <h2 className="text-display text-2xl uppercase transition-transform duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3 lg:col-span-6 lg:text-4xl">
-                  {t(s.short)}
+                {/* Full service names, in the same running order as the homepage. */}
+                <h2 className="text-display text-xl uppercase transition-transform duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3 lg:col-span-6 lg:text-3xl">
+                  {t(s.title)}
                 </h2>
                 <p className="text-sm text-muted lg:col-span-4">{t(s.tagline)}</p>
                 <span className="hidden justify-self-end text-2xl text-soft transition-all duration-300 group-hover:translate-x-2 group-hover:text-coral lg:col-span-1 lg:block">

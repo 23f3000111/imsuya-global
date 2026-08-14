@@ -11,8 +11,8 @@ export type Service = {
   related: string[]; // project slugs
 };
 
-// Every service has a visual at /services/<slug>.png
-export const serviceImage = (slug: string) => `/services/${slug}.png`;
+// Every service has a visual at /services/<slug>.jpg
+export const serviceImage = (slug: string) => `/services/${slug}.jpg`;
 
 export const process: { step: L10n; detail: L10n }[] = [
   {
@@ -53,7 +53,7 @@ export const process: { step: L10n; detail: L10n }[] = [
   {
     step: { en: "Launch", ms: "Pelancaran" },
     detail: {
-      en: "Deployment, monitoring and a partner who stays after go-live.",
+      en: "Deployment, monitoring and a partner who stays after you go live.",
       ms: "Pelancaran, pemantauan dan rakan yang kekal selepas laman anda hidup.",
     },
   },
@@ -73,12 +73,12 @@ export const services: Service[] = [
       ms: "Laman web direka untuk menukar pelawat kepada pelanggan.",
     },
     description: {
-      en: "Flagship marketing sites, e-commerce and landing experiences built on modern frameworks, designed to feel premium and measured by the business they generate.",
-      ms: "Laman pemasaran utama, e-dagang dan halaman pendaratan dibina atas rangka kerja moden, direka untuk terasa premium dan diukur dengan hasil perniagaan.",
+      en: "Flagship marketing sites, ecommerce and landing experiences built on modern frameworks, designed to feel premium and measured by the business they generate.",
+      ms: "Laman pemasaran utama, edagang dan halaman pendaratan dibina atas rangka kerja moden, direka untuk terasa premium dan diukur dengan hasil perniagaan.",
     },
     features: [
       {
-        name: { en: "Conversion-first design", ms: "Reka bentuk fokus penukaran" },
+        name: { en: "Conversion first design", ms: "Reka bentuk fokus penukaran" },
         detail: {
           en: "Every section is built around a user decision, not decoration.",
           ms: "Setiap bahagian dibina sekitar keputusan pengguna, bukan hiasan.",
@@ -87,7 +87,7 @@ export const services: Service[] = [
       {
         name: { en: "Motion & interaction", ms: "Animasi & interaksi" },
         detail: {
-          en: "Studio-grade animation that makes brands feel expensive.",
+          en: "Studio grade animation that makes brands feel expensive.",
           ms: "Animasi bertaraf studio yang menjadikan jenama terasa mewah.",
         },
       },
@@ -106,7 +106,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["balrcutz", "toastful", "mohd-shah-dolah"],
+    related: ["toastful", "wrap-district", "cyw-art-craft"],
   },
   {
     slug: "custom-web-applications",
@@ -142,7 +142,7 @@ export const services: Service[] = [
       {
         name: { en: "Secure architecture", ms: "Seni bina selamat" },
         detail: {
-          en: "Role-based access, audit trails and best-practice security.",
+          en: "Role based access, audit trails and best practice security.",
           ms: "Akses berperanan, jejak audit dan keselamatan amalan terbaik.",
         },
       },
@@ -167,7 +167,7 @@ export const services: Service[] = [
     },
     description: {
       en: "AI agents and automated workflows wired into your business, so the repetitive work runs itself and your team spends its hours where they actually count.",
-      ms: "Ejen AI dan aliran kerja automatik disambung ke dalam perniagaan anda, supaya kerja berulang berjalan sendiri dan pasukan anda menumpukan masa pada perkara yang benar-benar penting.",
+      ms: "Ejen AI dan aliran kerja automatik disambung ke dalam perniagaan anda, supaya kerja berulang berjalan sendiri dan pasukan anda menumpukan masa pada perkara yang benar benar penting.",
     },
     features: [
       {
@@ -199,7 +199,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["roadtainers", "mohd-shah-dolah"],
+    related: ["roadtainers", "mir"],
   },
   {
     slug: "ai-products",
@@ -211,14 +211,14 @@ export const services: Service[] = [
       ms: "Data anda, aliran kerja anda, dengan kecerdasan terbina.",
     },
     description: {
-      en: "Chatbots, copilots, knowledge systems and AI-powered platforms. Designed, trained and shipped as real products your customers use.",
+      en: "Chatbots, copilots, knowledge systems and AI powered platforms. Designed, trained and shipped as real products your customers use.",
       ms: "Chatbot, copilot, sistem pengetahuan dan platform berkuasa AI. Direka, dilatih dan dilancarkan sebagai produk sebenar yang digunakan pelanggan anda.",
     },
     features: [
       {
         name: { en: "AI assistants", ms: "Pembantu AI" },
         detail: {
-          en: "Customer-facing bots trained on your knowledge.",
+          en: "Customer facing bots trained on your knowledge.",
           ms: "Bot pelanggan dilatih dengan pengetahuan anda.",
         },
       },
@@ -366,7 +366,7 @@ export const services: Service[] = [
       {
         name: { en: "Design & production", ms: "Reka bentuk & penghasilan" },
         detail: {
-          en: "Posts, reels and stories produced in-house.",
+          en: "Posts, reels and stories produced in house.",
           ms: "Post, reel dan story dihasilkan secara dalaman.",
         },
       },
@@ -385,7 +385,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["toastful", "balrcutz"],
+    related: ["toastful", "mojo-momo-kingdom"],
   },
   {
     slug: "merchandise-design",
@@ -397,7 +397,7 @@ export const services: Service[] = [
       ms: "Sentuhan jenama fizikal, direka dan dihantar.",
     },
     description: {
-      en: "Apparel, packaging and branded goods. Designed in-house and produced through a vetted procurement network, so what arrives matches what we drew.",
+      en: "Apparel, packaging and branded goods. Designed in house and produced through a vetted procurement network, so what arrives matches what we drew.",
       ms: "Pakaian, pembungkusan dan barangan berjenama. Direka secara dalaman dan dihasilkan melalui rangkaian perolehan yang disahkan, supaya apa yang tiba sepadan dengan apa yang kami lukis.",
     },
     features: [
@@ -405,7 +405,7 @@ export const services: Service[] = [
         name: { en: "Product design", ms: "Reka bentuk produk" },
         detail: {
           en: "Merchandise people actually want to keep.",
-          ms: "Barangan yang orang benar-benar mahu simpan.",
+          ms: "Barangan yang orang benar benar mahu simpan.",
         },
       },
       {
@@ -416,7 +416,7 @@ export const services: Service[] = [
         },
       },
       {
-        name: { en: "End-to-end delivery", ms: "Penghantaran menyeluruh" },
+        name: { en: "End to end delivery", ms: "Penghantaran menyeluruh" },
         detail: {
           en: "From artwork to doorstep, managed for you.",
           ms: "Dari lakaran hingga ke depan pintu, diuruskan untuk anda.",
@@ -430,7 +430,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["wrap-district", "balrcutz"],
+    related: ["wrap-district", "legendary"],
   },
   {
     slug: "corporate-gifts",
@@ -479,13 +479,21 @@ export const services: Service[] = [
   },
 ];
 
-// The six services featured in the homepage horizontal experience,
-// in the same running order as the full list.
-export const featuredSlugs = [
-  "website-design-development",
-  "custom-web-applications",
-  "ai-automation",
-  "ai-products",
-  "custom-digital-design",
-  "digital-marketing",
-];
+/**
+ * Words inside a service heading that carry the brand orange. Matching is done
+ * on the whole word, case insensitively, against the full `title`.
+ */
+export const serviceAccent: Record<string, { en: string[]; ms: string[] }> = {
+  "website-design-development": { en: ["Development"], ms: ["Pembangunan"] },
+  "custom-web-applications": { en: ["Software"], ms: ["Perisian"] },
+  "ai-automation": { en: ["Automation"], ms: ["Automasi"] },
+  "ai-products": { en: ["Softwares"], ms: ["Perisian"] },
+  "custom-digital-design": { en: ["Design"], ms: ["Digital"] },
+  "digital-marketing": { en: ["Marketing"], ms: ["Pemasaran"] },
+  "social-media-management": { en: ["Media"], ms: ["Sosial"] },
+  "merchandise-design": { en: ["Design"], ms: ["Barangan"] },
+  "corporate-gifts": { en: ["Gift"], ms: ["Hadiah"] },
+};
+
+// The homepage horizontal experience runs the full nine, in list order.
+export const featuredSlugs = services.map((s) => s.slug);

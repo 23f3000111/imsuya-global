@@ -20,7 +20,7 @@ const COPY = {
     eyebrow: (n: string) => `Kerja pilihan / ${n} projek`,
     lines: ["Bukti,", "bukan janji."],
     intro:
-      "Setiap projek di sini hidup dan bekerja untuk perniagaan sebenar. Buka mana-mana untuk melihat kisah penuhnya.",
+      "Setiap projek di sini hidup dan bekerja untuk perniagaan sebenar. Buka mana mana untuk melihat kisah penuhnya.",
     ctaHeading: "Projek anda layak berada di halaman ini.",
     cta: "Mulakan projek anda",
   },
@@ -44,7 +44,7 @@ export function PortfolioBody() {
             ))}
           </div>
 
-          <Reveal className="mt-40 border-t border-paper/[0.08] pt-20 text-center">
+          <Reveal className="mt-20 border-t border-paper/[0.08] pt-16 text-center">
             <h2 className="text-display mx-auto max-w-3xl text-4xl uppercase lg:text-6xl">
               {copy.ctaHeading}
             </h2>

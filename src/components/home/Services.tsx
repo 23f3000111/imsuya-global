@@ -6,17 +6,11 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { services, featuredSlugs, serviceImage } from "@/data/services";
-import { Eyebrow } from "@/components/ui/Eyebrow";
+import { services, serviceImage, serviceAccent } from "@/data/services";
+import { PixelGlyph } from "@/components/ui/PixelGlyph";
 import { useLang, useT } from "@/i18n";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
-
-const featured = featuredSlugs
-  .map((slug) => services.find((s) => s.slug === slug)!)
-  .filter(Boolean);
-
-const rest = services.filter((s) => !featuredSlugs.includes(s.slug));
 
 const COPY = {
   en: {
@@ -25,9 +19,7 @@ const COPY = {
     headingSoft: "One team.",
     cue: "Scroll to explore →",
     explore: "Explore",
-    closingEyebrow: "Everything else we do",
-    closingTitle: "Social. Merchandise. Corporate Gifts.",
-    viewAll: "View all services",
+    of: "of",
   },
   ms: {
     eyebrow: "Apa kami buat / 002",
@@ -35,11 +27,27 @@ const COPY = {
     headingSoft: "Satu pasukan.",
     cue: "Skrol untuk terokai →",
     explore: "Terokai",
-    closingEyebrow: "Segala yang lain kami buat",
-    closingTitle: "Sosial. Barangan. Hadiah Korporat.",
-    viewAll: "Lihat semua perkhidmatan",
+    of: "daripada",
   },
 };
+
+/** Renders a heading with the service's key words in the brand orange. */
+function AccentTitle({ text, accent }: { text: string; accent: string[] }) {
+  const wanted = new Set(accent.map((w) => w.toLowerCase()));
+  return (
+    <>
+      {text.split(" ").map((word, i) => {
+        const bare = word.replace(/[^\p{L}]/gu, "").toLowerCase();
+        return (
+          <span key={i} className={wanted.has(bare) ? "text-coral" : undefined}>
+            {word}
+            {i < text.split(" ").length - 1 ? " " : ""}
+          </span>
+        );
+      })}
+    </>
+  );
+}
 
 export function Services() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -47,6 +55,7 @@ export function Services() {
   const { lang } = useLang();
   const t = useT();
   const copy = COPY[lang];
+  const total = String(services.length).padStart(2, "0");
 
   useGSAP(
     () => {
@@ -85,33 +94,36 @@ export function Services() {
           }
         );
 
-        // Ghost numbers drift slower than their panels — depth.
-        gsap.utils.toArray<HTMLElement>(".panel-ghost").forEach((ghost) => {
+        // Each panel's copy lifts in as the panel reaches the middle of the
+        // viewport, so the information arrives with the panel rather than
+        // having already played off screen.
+        gsap.utils.toArray<HTMLElement>(".panel-copy").forEach((copyBlock) => {
           gsap.fromTo(
-            ghost,
-            { xPercent: 12 },
+            copyBlock.children,
+            { y: 40, opacity: 0 },
             {
-              xPercent: -12,
-              ease: "none",
+              y: 0,
+              opacity: 1,
+              duration: 0.6,
+              stagger: 0.06,
+              ease: "expo.out",
               scrollTrigger: {
-                trigger: ghost,
+                trigger: copyBlock,
                 containerAnimation: tween,
-                start: "left right",
-                end: "right left",
-                scrub: true,
+                start: "left 85%",
+                toggleActions: "play none none reverse",
               },
             }
           );
         });
 
-        // Panel visuals parallax against the horizontal motion.
+        // Visuals drift gently against the horizontal motion.
         gsap.utils.toArray<HTMLElement>(".panel-visual").forEach((visual) => {
           gsap.fromTo(
             visual,
-            { xPercent: 6, yPercent: 3 },
+            { xPercent: 4 },
             {
-              xPercent: -6,
-              yPercent: 0,
+              xPercent: -4,
               ease: "none",
               scrollTrigger: {
                 trigger: visual,
@@ -131,73 +143,57 @@ export function Services() {
   );
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-void lg:h-screen">
-      {/* header sits in flow — panels can never collide with it */}
+    <section
+      ref={sectionRef}
+      className="panel-navy relative overflow-hidden text-white lg:h-screen"
+    >
+      {/*
+        Header sits in flow so panels can never collide with it. The section
+        pins to the top of the window, so it also has to clear the fixed navbar
+        (96px on desktop) or the heading slides underneath it.
+      */}
       <div className="relative z-20 mx-auto w-full max-w-[1600px] px-6 pt-24 lg:flex lg:items-end lg:px-12 lg:pt-0">
-        <div className="flex w-full items-end justify-between lg:h-[150px] lg:pb-4">
+        <div className="flex w-full items-end justify-between lg:h-[196px] lg:pb-6 lg:pt-[96px]">
           <div>
-            <Eyebrow variant="b" className="mb-4">
+            <p className="text-eyebrow mb-4 flex items-center gap-3 text-coral">
+              <PixelGlyph variant="b" />
               {copy.eyebrow}
-            </Eyebrow>
-            <h2 className="text-display text-4xl uppercase lg:text-5xl">
-              {copy.heading} <span className="text-soft">{copy.headingSoft}</span>
+            </p>
+            <h2 className="text-display text-3xl uppercase lg:text-5xl">
+              {copy.heading} <span className="text-white/40">{copy.headingSoft}</span>
             </h2>
           </div>
-          <p className="text-eyebrow hidden text-soft lg:block">{copy.cue}</p>
+          <p className="text-eyebrow hidden text-white/45 lg:block">{copy.cue}</p>
         </div>
       </div>
 
       <div ref={trackRef} className="flex flex-col lg:w-max lg:flex-row lg:items-stretch">
-        {featured.map((s, i) => (
+        {services.map((s, i) => (
           <article
             key={s.slug}
-            className="relative flex min-h-[70vh] w-full flex-col justify-end border-b border-paper/[0.06] px-6 py-16 lg:h-[calc(100vh-150px)] lg:min-h-0 lg:w-screen lg:justify-center lg:border-b-0 lg:border-r lg:px-12 lg:pb-16 lg:pt-0"
+            className={`relative flex w-full flex-col justify-center gap-10 border-b border-white/10 px-6 py-16 lg:h-[calc(100vh-196px)] lg:w-[78vw] lg:flex-row lg:items-center lg:gap-[3vw] lg:border-b-0 lg:border-r lg:px-[4vw] lg:py-0 ${
+              i % 2 === 0 ? "panel-navy" : "panel-navy-alt"
+            }`}
           >
-            {/* ghost index — decorative, below everything */}
-            <span
-              aria-hidden
-              className="panel-ghost ghost-text text-display pointer-events-none absolute right-0 top-1/2 z-0 -translate-y-1/2 text-[34vh] leading-none lg:text-[48vh]"
-            >
-              {s.index}
-            </span>
-
-            {/* navy depth gradient, alternating direction */}
-            <div
-              aria-hidden
-              className={`navy-wash absolute inset-0 z-0 ${
-                i % 2 === 0
-                  ? "bg-[radial-gradient(ellipse_at_20%_80%,#1e2852_0%,transparent_55%)]"
-                  : "bg-[radial-gradient(ellipse_at_80%_20%,#1e2852_0%,transparent_55%)]"
-              }`}
-            />
-
-            {/* cinematic visual — framed, parallaxed */}
-            <div className="panel-visual img-veil card relative z-[1] mb-10 aspect-[16/10] w-full max-w-xl overflow-hidden border border-paper/[0.1] lg:absolute lg:right-[7vw] lg:top-1/2 lg:mb-0 lg:w-[34vw] lg:max-w-none lg:-translate-y-1/2">
-              <Image
-                src={serviceImage(s.slug)}
-                alt={`${t(s.title)} · Imsuya Global`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 34vw"
-                className="img-cinematic object-cover"
-              />
-              <span className="absolute left-4 top-4 z-10 font-mono text-[10px] tracking-[0.25em] text-white/70">
-                {s.index} / IMSUYA
-              </span>
-            </div>
-
-            <div className="relative z-10 max-w-3xl lg:max-w-[50vw]">
-              <p className="text-eyebrow mb-6 text-coral">
+            {/* copy column — always the first thing that reaches the eye */}
+            <div className="panel-copy relative z-10 flex-1 lg:max-w-[38vw]">
+              <p className="text-eyebrow mb-5 text-coral">
                 {s.index} / {t(s.short)}
               </p>
-              <h3 className="text-display text-[clamp(1.9rem,4vw,3.9rem)] uppercase">
-                {t(s.short)}
+              <h3 className="text-display text-[clamp(1.6rem,2.7vw,2.7rem)] uppercase">
+                <AccentTitle
+                  text={t(s.title)}
+                  accent={serviceAccent[s.slug]?.[lang] ?? []}
+                />
               </h3>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{t(s.tagline)}</p>
-              <div className="mt-8 flex flex-wrap gap-2">
+              <p className="mt-5 max-w-lg text-base leading-relaxed text-white/70 lg:text-lg">
+                {t(s.tagline)}
+              </p>
+              <div className="mt-7 flex flex-wrap gap-2">
                 {s.features.slice(0, 4).map((f) => (
                   <span
                     key={f.name.en}
-                    className="border border-paper/15 bg-void/60 px-4 py-2 font-mono text-xs text-muted"
+                    className="border border-white/20 px-3.5 py-1.5 font-mono text-[11px] text-white/75"
                   >
                     {t(f.name)}
                   </span>
@@ -205,44 +201,42 @@ export function Services() {
               </div>
               <Link
                 href={`/services/${s.slug}`}
-                className="group mt-10 inline-flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-paper"
+                className="group mt-9 inline-flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-coral"
               >
                 {copy.explore}
                 <span className="inline-block size-2 bg-coral transition-transform duration-300 group-hover:translate-x-2" />
               </Link>
             </div>
+
+            {/* visual, then the running number to the right of it */}
+            <div className="relative z-[1] flex items-center gap-4 lg:gap-[1.5vw]">
+              <div className="panel-visual img-veil relative aspect-[4/3] w-full overflow-hidden border border-white/15 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.75)] lg:w-[26vw]">
+                <Image
+                  src={serviceImage(s.slug)}
+                  alt={`${t(s.title)} · Imsuya Global`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 26vw"
+                  className="img-cinematic object-cover"
+                />
+              </div>
+
+              {/* the sequence, reading down the right edge of the image */}
+              <div className="flex shrink-0 flex-col items-center">
+                <span className="text-display text-3xl leading-none text-white lg:text-[3.4vw]">
+                  {s.index}
+                </span>
+                <span className="my-2 block h-10 w-px bg-white/25 lg:h-[4vh]" />
+                <span className="font-mono text-[10px] tracking-[0.2em] text-white/40">
+                  {total}
+                </span>
+              </div>
+            </div>
           </article>
         ))}
-
-        {/* closing panel — the rest of the offering */}
-        <article className="relative flex min-h-[70vh] w-full flex-col items-start justify-center bg-navy-deep/50 px-6 py-16 lg:min-h-0 lg:w-screen lg:px-12 lg:h-[calc(100vh-150px)]">
-          <p className="text-eyebrow relative z-10 mb-6 text-coral">{copy.closingEyebrow}</p>
-          <h3 className="text-display relative z-10 max-w-4xl text-[clamp(2rem,4.4vw,4.4rem)] uppercase">
-            {copy.closingTitle}
-          </h3>
-          <ul className="relative z-10 mt-10 flex flex-wrap gap-x-10 gap-y-4">
-            {rest.map((s) => (
-              <li key={s.slug}>
-                <Link
-                  href={`/services/${s.slug}`}
-                  className="font-mono text-sm text-muted transition-colors hover:text-coral"
-                >
-                  {s.index} / {t(s.short)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href="/services"
-            className="relative z-10 mt-14 inline-flex items-center gap-3 bg-coral px-8 py-4 text-sm font-bold uppercase tracking-wide text-black transition-colors duration-300 hover:bg-paper hover:text-void"
-          >
-            {copy.viewAll}
-          </Link>
-        </article>
       </div>
 
       {/* progress bar */}
-      <div className="absolute bottom-0 left-0 z-20 hidden h-px w-full bg-paper/10 lg:block">
+      <div className="absolute bottom-0 left-0 z-20 hidden h-px w-full bg-white/15 lg:block">
         <div className="services-progress h-full w-full origin-left bg-coral" />
       </div>
     </section>

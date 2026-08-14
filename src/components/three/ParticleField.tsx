@@ -12,16 +12,34 @@ import * as THREE from "three";
  */
 
 const ACCENT = new THREE.Color("#ff4e45");
-const SECONDARY = new THREE.Color("#6d7cad");
-const PRIMARY = new THREE.Color("#2c365e");
+
+// On paper the network reads as navy ink; on a navy ground it has to invert
+// or the particles simply vanish into the background.
+const PALETTE = {
+  light: {
+    secondary: new THREE.Color("#6d7cad"),
+    primary: new THREE.Color("#2c365e"),
+    line: "#7d8cba",
+    lineOpacity: 0.45,
+  },
+  dark: {
+    secondary: new THREE.Color("#93a3d6"),
+    primary: new THREE.Color("#e8ecf8"),
+    line: "#8fa0d4",
+    lineOpacity: 0.28,
+  },
+} as const;
 
 function Field({
   count,
   scrollRef,
+  tone,
 }: {
   count: number;
   scrollRef?: MutableRefObject<number>;
+  tone: "light" | "dark";
 }) {
+  const palette = PALETTE[tone];
   const group = useRef<THREE.Group>(null);
   const mouse = useRef({ x: 0, y: 0 });
 
@@ -39,7 +57,7 @@ function Field({
       pts.push(new THREE.Vector3(x, y, z));
 
       const r = Math.random();
-      const c = r < 0.07 ? ACCENT : r < 0.4 ? SECONDARY : PRIMARY;
+      const c = r < 0.07 ? ACCENT : r < 0.4 ? palette.secondary : palette.primary;
       col.set([c.r, c.g, c.b], i * 3);
     }
 
@@ -61,7 +79,7 @@ function Field({
       colors: col,
       linePositions: new Float32Array(segs),
     };
-  }, [count]);
+  }, [count, palette]);
 
   useFrame(({ clock, camera, pointer }) => {
     const t = clock.getElapsedTime();
@@ -101,9 +119,9 @@ function Field({
           <bufferAttribute attach="attributes-position" args={[linePositions, 3]} />
         </bufferGeometry>
         <lineBasicMaterial
-          color="#7d8cba"
+          color={palette.line}
           transparent
-          opacity={0.45}
+          opacity={palette.lineOpacity}
           depthWrite={false}
         />
       </lineSegments>
@@ -114,12 +132,16 @@ function Field({
 export function ParticleField({
   scrollRef,
   className = "",
+  tone = "light",
 }: {
   scrollRef?: MutableRefObject<number>;
   className?: string;
+  /** Which ground the field is sitting on, so fog and vignette match it. */
+  tone?: "light" | "dark";
 }) {
   const count =
     typeof window !== "undefined" && window.innerWidth < 768 ? 450 : 1100;
+  const ground = tone === "dark" ? "#0b1128" : "#f7f8fb";
 
   return (
     <div className={`pointer-events-none absolute inset-0 z-0 ${className}`} aria-hidden>
@@ -128,11 +150,16 @@ export function ParticleField({
         dpr={[1, 1.5]}
         gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
       >
-        <fog attach="fog" args={["#f7f8fb", 9, 20]} />
-        <Field count={count} scrollRef={scrollRef} />
+        <fog attach="fog" args={[ground, 9, 20]} />
+        <Field count={count} scrollRef={scrollRef} tone={tone} />
       </Canvas>
       {/* Vignette so type always wins over the scene */}
-      <div className="absolute inset-0 opacity-80 [background:radial-gradient(ellipse_at_center,transparent_30%,var(--void)_100%)]" />
+      <div
+        className="absolute inset-0 opacity-80"
+        style={{
+          background: `radial-gradient(ellipse at center, transparent 30%, ${ground} 100%)`,
+        }}
+      />
     </div>
   );
 }
