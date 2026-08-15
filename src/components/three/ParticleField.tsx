@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, type MutableRefObject } from "react";
+import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -81,21 +81,45 @@ function Field({
     };
   }, [count, palette]);
 
-  useFrame(({ clock, camera, pointer }) => {
+  // A click sends a shockwave through the field: this decays back to zero.
+  const burst = useRef(0);
+  useEffect(() => {
+    const onDown = () => {
+      burst.current = 1;
+    };
+    window.addEventListener("pointerdown", onDown);
+    return () => window.removeEventListener("pointerdown", onDown);
+  }, []);
+
+  useFrame(({ clock, camera, pointer }, delta) => {
     const t = clock.getElapsedTime();
-    mouse.current.x = THREE.MathUtils.lerp(mouse.current.x, pointer.x, 0.04);
-    mouse.current.y = THREE.MathUtils.lerp(mouse.current.y, pointer.y, 0.04);
+    // Faster lerp than before so the field visibly tracks the cursor.
+    mouse.current.x = THREE.MathUtils.lerp(mouse.current.x, pointer.x, 0.08);
+    mouse.current.y = THREE.MathUtils.lerp(mouse.current.y, pointer.y, 0.08);
+
+    burst.current = Math.max(0, burst.current - delta * 1.6);
+    // Ease out, so the kick is strongest the instant you click.
+    const kick = burst.current * burst.current;
 
     const g = group.current;
     if (g) {
-      g.rotation.y = t * 0.02 + mouse.current.x * 0.12;
-      g.rotation.x = Math.sin(t * 0.08) * 0.04 + mouse.current.y * 0.08;
-      g.position.y = Math.sin(t * 0.25) * 0.35;
+      // Follow the pointer: move right and the field swings right with you.
+      g.rotation.y = t * 0.02 + mouse.current.x * 0.42;
+      g.rotation.x = Math.sin(t * 0.08) * 0.04 + mouse.current.y * 0.24;
+      g.position.x = mouse.current.x * 0.9;
+      g.position.y = Math.sin(t * 0.25) * 0.35 - mouse.current.y * 0.5;
+      // The click pushes the whole network out and lets it settle back.
+      g.scale.setScalar(1 + kick * 0.18);
     }
 
-    // Pull the camera back gently as the hero story progresses.
+    // Pull the camera back gently as the hero story progresses, and punch it
+    // on click so the pixels visibly jump.
     const progress = scrollRef?.current ?? 0;
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, 11 + progress * 4, 0.06);
+    camera.position.z = THREE.MathUtils.lerp(
+      camera.position.z,
+      11 + progress * 4 - kick * 1.4,
+      0.06
+    );
   });
 
   return (

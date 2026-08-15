@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { services } from "@/data/services";
+import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -44,8 +45,13 @@ export function ServicesBody() {
                 data-cursor
               >
                 <span className="font-mono text-sm text-coral lg:col-span-1">{s.index}</span>
-                {/* Full service names, in the same running order as the homepage. */}
-                <h2 className="text-display text-xl uppercase transition-transform duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3 lg:col-span-6 lg:text-3xl">
+                {/* Full service names, in the same running order as the homepage.
+                    The icon sits navy at rest and lights orange on hover. */}
+                <h2 className="text-display flex items-center gap-4 text-xl uppercase transition-transform duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3 lg:col-span-6 lg:gap-5 lg:text-3xl">
+                  <ServiceIcon
+                    slug={s.slug}
+                    className="size-8 shrink-0 text-navy/70 transition-colors duration-300 group-hover:text-coral lg:size-11"
+                  />
                   {t(s.title)}
                 </h2>
                 <p className="text-sm text-muted lg:col-span-4">{t(s.tagline)}</p>

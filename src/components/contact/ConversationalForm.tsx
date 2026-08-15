@@ -132,8 +132,10 @@ export function ConversationalForm() {
     copy.mailSubject(answers.company || answers.name)
   )}&body=${encodeURIComponent(summary)}`;
 
+  // Just enough floor to stop the layout jumping between steps. It used to be
+  // 480px, which left a dead block of paper under the short first question.
   return (
-    <div className="relative min-h-[480px] w-full max-w-3xl">
+    <div className="relative min-h-[320px] w-full max-w-3xl">
       {/* progress */}
       <div className="mb-14 flex items-center gap-4">
         <span className="font-mono text-xs text-coral">

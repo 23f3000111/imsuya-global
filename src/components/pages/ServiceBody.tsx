@@ -6,6 +6,8 @@ import { process, serviceImage, type Service } from "@/data/services";
 import { projects } from "@/data/projects";
 import { merchandise } from "@/data/merchandise";
 import { PageHero } from "@/components/ui/PageHero";
+import { ServiceIcon } from "@/components/ui/ServiceIcon";
+import { ServiceRail } from "@/components/ui/ServiceRail";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { ProjectCard } from "@/components/home/Work";
@@ -15,10 +17,15 @@ import { useLang, useT } from "@/i18n";
 const COPY = {
   en: {
     eyebrow: (index: string) => `Service ${index} / 09`,
-    features: "What you get",
-    process: "How we run it",
+    process: "How we run it, and what you get",
+    processIntro:
+      "Six stages from first conversation to launch day. The deliverables sit against the stage that produces them.",
+    youGet: "You get",
     related: "In the wild",
     merch: "Brands we have produced for",
+    soon: "Coming soon",
+    soonBody:
+      "We are shipping work in this discipline right now. The first case studies land here shortly.",
     allProjects: "All projects →",
     readyA: "Ready when",
     readyB: "you",
@@ -27,10 +34,15 @@ const COPY = {
   },
   ms: {
     eyebrow: (index: string) => `Perkhidmatan ${index} / 09`,
-    features: "Apa yang anda dapat",
-    process: "Cara kami laksanakan",
+    process: "Cara kami laksanakan, dan apa anda dapat",
+    processIntro:
+      "Enam peringkat dari perbualan pertama hingga hari pelancaran. Hasil kerja diletakkan pada peringkat yang menghasilkannya.",
+    youGet: "Anda dapat",
     related: "Dalam dunia sebenar",
     merch: "Jenama yang kami hasilkan",
+    soon: "Akan datang",
+    soonBody:
+      "Kami sedang menyiapkan kerja dalam disiplin ini. Kajian kes pertama akan dipaparkan di sini tidak lama lagi.",
     allProjects: "Semua projek →",
     readyA: "Sedia bila",
     readyB: "anda",
@@ -39,14 +51,26 @@ const COPY = {
   },
 };
 
+/**
+ * Which process stage hands over which deliverable. Discovery and Testing are
+ * deliberately blank: they are checks on the work, not things you walk away
+ * with, and forcing a card onto them would be noise.
+ */
+const STAGE_OF_FEATURE = [1, 2, 3, 5];
+
 export function ServiceBody({ service }: { service: Service }) {
   const { lang } = useLang();
   const t = useT();
   const copy = COPY[lang];
 
+  const deliverableFor = (stage: number) => {
+    const idx = STAGE_OF_FEATURE.indexOf(stage);
+    return idx === -1 ? undefined : service.features[idx];
+  };
+
   const related = service.related
-    .map((r) => projects.find((p) => p.slug === r)!)
-    .filter(Boolean);
+    .map((r) => projects.find((p) => p.slug === r))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   // Split the short title across two hero lines for scale.
   const words = t(service.short).split(" ");
@@ -57,7 +81,12 @@ export function ServiceBody({ service }: { service: Service }) {
       : [t(service.short)];
 
   return (
-    <>
+    // The rail is fixed to the left edge, so the page itself is inset at xl
+    // and up to keep it clear of the headline.
+    <div className="xl:pl-24">
+      {/* Jump straight to any other discipline without going back a page. */}
+      <ServiceRail activeSlug={service.slug} />
+
       <PageHero
         eyebrow={copy.eyebrow(service.index)}
         lines={lines}
@@ -86,27 +115,6 @@ export function ServiceBody({ service }: { service: Service }) {
               {t(service.description)}
             </p>
           </Reveal>
-
-          {/* features */}
-          <div className="mt-24">
-            <Eyebrow variant="b" className="mb-10">
-              {copy.features}
-            </Eyebrow>
-            <Reveal stagger={0.08} className="grid gap-5 md:grid-cols-2">
-              {service.features.map((f, i) => (
-                <div
-                  key={f.name.en}
-                  className="card border border-paper/[0.08] bg-gradient-to-b from-navy-deep/40 to-transparent p-8 transition-colors duration-500 hover:border-coral/40"
-                >
-                  <span className="font-mono text-xs text-coral">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-4 text-xl font-black uppercase tracking-tight">{t(f.name)}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">{t(f.detail)}</p>
-                </div>
-              ))}
-            </Reveal>
-          </div>
 
           {/* physical work, shown only where it belongs */}
           {service.slug === "merchandise-design" && (
@@ -141,38 +149,77 @@ export function ServiceBody({ service }: { service: Service }) {
             </div>
           )}
 
-          {/* process — a real sequence, so the numbering carries meaning */}
-          <div className="mt-28">
-            <Eyebrow variant="c" className="mb-10">
-              {copy.process}
-            </Eyebrow>
-            <Reveal stagger={0.07} className="grid gap-px overflow-hidden border border-paper/[0.08] bg-paper/[0.08] md:grid-cols-2 lg:grid-cols-3">
-              {process.map((p, i) => (
-                <div key={p.step.en} className="group bg-void p-8 transition-colors duration-500 hover:bg-navy-deep/50">
-                  <p className="text-display text-5xl text-paper/[0.12] transition-colors duration-500 group-hover:text-coral/60">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-6 text-lg font-black uppercase tracking-tight">{t(p.step)}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{t(p.detail)}</p>
-                </div>
-              ))}
+          {/*
+            One section, not two. The old page ran "What you get" and "How we
+            run it" side by side and the reader had to join them up themselves.
+            Now the deliverables hang off the stage of the process that actually
+            produces them, so the run reads start to finish.
+          */}
+          <div className="mt-24">
+            <div className="mb-10 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <Eyebrow variant="c">{copy.process}</Eyebrow>
+              <p className="max-w-md text-sm leading-relaxed text-muted">{copy.processIntro}</p>
+            </div>
+
+            <Reveal
+              stagger={0.07}
+              className="grid gap-px overflow-hidden border border-paper/[0.08] bg-paper/[0.08] md:grid-cols-2 lg:grid-cols-3"
+            >
+              {process.map((p, i) => {
+                const gain = deliverableFor(i);
+                return (
+                  <div
+                    key={p.step.en}
+                    className="group flex flex-col bg-void p-8 transition-colors duration-500 hover:bg-navy-deep/50"
+                  >
+                    <p className="text-display text-5xl text-paper/[0.12] transition-colors duration-500 group-hover:text-coral/60">
+                      {String(i + 1).padStart(2, "0")}
+                    </p>
+                    <h3 className="mt-6 text-lg font-black uppercase tracking-tight">{t(p.step)}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted">{t(p.detail)}</p>
+
+                    {gain && (
+                      <div className="mt-6 border-t border-paper/[0.08] pt-5">
+                        <p className="text-eyebrow mb-2 text-coral">{copy.youGet}</p>
+                        <p className="text-sm font-bold tracking-tight">{t(gain.name)}</p>
+                        <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
+                          {t(gain.detail)}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </Reveal>
           </div>
 
-          {/* related work */}
-          {related.length > 0 && (
-            <div className="mt-28">
+          {/* related work, or an honest placeholder where there is none yet */}
+          {service.slug !== "merchandise-design" && (
+            <div className="mt-24">
               <div className="mb-10 flex items-end justify-between">
                 <Eyebrow variant="d">{copy.related}</Eyebrow>
                 <Link href="/portfolio" className="font-mono text-xs text-soft transition-colors hover:text-coral">
                   {copy.allProjects}
                 </Link>
               </div>
-              <div className="grid gap-6 md:grid-cols-2">
-                {related.slice(0, 2).map((p) => (
-                  <ProjectCard key={p.slug} project={p} />
-                ))}
-              </div>
+
+              {related.length > 0 ? (
+                <div className="grid gap-6 md:grid-cols-2">
+                  {related.slice(0, 2).map((p) => (
+                    <ProjectCard key={p.slug} project={p} />
+                  ))}
+                </div>
+              ) : (
+                <Reveal className="panel-navy flex flex-col items-center justify-center gap-4 border border-paper/[0.08] px-6 py-20 text-center">
+                  <ServiceIcon slug={service.slug} className="size-12 text-coral" />
+                  <p className="text-display text-2xl uppercase text-white lg:text-3xl">
+                    {copy.soon}
+                  </p>
+                  <p className="max-w-sm text-sm leading-relaxed text-white/60">
+                    {copy.soonBody}
+                  </p>
+                </Reveal>
+              )}
             </div>
           )}
 
@@ -187,6 +234,6 @@ export function ServiceBody({ service }: { service: Service }) {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

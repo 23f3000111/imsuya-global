@@ -106,7 +106,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["toastful", "wrap-district", "cyw-art-craft"],
+    related: ["roadtainers", "twinkle-kidz"],
   },
   {
     slug: "custom-web-applications",
@@ -199,7 +199,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["roadtainers", "mir"],
+    related: [],
   },
   {
     slug: "ai-products",
@@ -244,7 +244,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["prince-lubricants", "cyw-art-craft"],
+    related: [],
   },
   {
     slug: "custom-digital-design",
@@ -292,7 +292,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["cyw-art-craft", "wrap-district"],
+    related: ["legendary", "cyw-art-craft"],
   },
   {
     slug: "digital-marketing",
@@ -340,7 +340,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["prince-lubricants", "toastful"],
+    related: [],
   },
   {
     slug: "social-media-management",
@@ -385,7 +385,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["toastful", "mojo-momo-kingdom"],
+    related: [],
   },
   {
     slug: "merchandise-design",
@@ -430,7 +430,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["wrap-district", "legendary"],
+    related: [],
   },
   {
     slug: "corporate-gifts",
@@ -475,7 +475,7 @@ export const services: Service[] = [
         },
       },
     ],
-    related: ["cyw-art-craft"],
+    related: [],
   },
 ];
 

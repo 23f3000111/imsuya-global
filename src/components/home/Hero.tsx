@@ -141,14 +141,12 @@ export function Hero() {
           <span className="hero-static text-outline block whitespace-nowrap">
             <SplitChars text={copy.weBuild} />
           </span>
+          {/* No accent block after the phrase any more: against the dark blue
+              H1 it just read as a stray orange dot. */}
           <span className="relative block h-[1.05em] overflow-hidden">
             {copy.phrases.map((phrase) => (
               <span key={phrase} className="hero-phrase absolute inset-x-0 top-0 whitespace-nowrap">
                 <SplitChars text={phrase} />
-                <span
-                  aria-hidden
-                  className="ml-[0.08em] inline-block size-[0.14em] animate-pulse bg-coral"
-                />
               </span>
             ))}
           </span>

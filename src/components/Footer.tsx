@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { site, socials, office, whatsappLink } from "@/data/site";
 import { FaqList } from "@/components/ui/FaqList";
+import { SOCIAL_ICONS, WhatsAppIcon, MailIcon } from "@/components/ui/Icons";
 import { scrollToTop } from "./providers/SmoothScroll";
 import { useLang } from "@/i18n";
 
@@ -23,7 +24,7 @@ const COPY = {
       { href: "/team", label: "Team" },
       { href: "/contact", label: "Contact" },
     ],
-    rights: "All rights reserved.",
+    credit: "Designed and Powered by Imsuya Global",
     strap: "Creative Digital Design & Smart Website Development Studio",
   },
   ms: {
@@ -41,7 +42,7 @@ const COPY = {
       { href: "/team", label: "Pasukan" },
       { href: "/contact", label: "Hubungi" },
     ],
-    rights: "Hak cipta terpelihara.",
+    credit: "Direka dan Dikuasakan oleh Imsuya Global",
     strap: "Studio Reka Bentuk Digital Kreatif & Pembangunan Laman Web Pintar",
   },
 };
@@ -64,17 +65,22 @@ export function Footer() {
             />
             <p className="text-display max-w-sm text-2xl uppercase lg:text-3xl">{copy.tagline}</p>
 
-            <div className="mt-7 flex flex-col gap-2 font-mono text-sm text-muted">
-              <a href={`mailto:${site.email}`} className="w-fit transition-colors hover:text-coral">
+            <div className="mt-7 flex flex-col gap-2.5 font-mono text-sm text-muted">
+              <a
+                href={`mailto:${site.email}`}
+                className="flex w-fit items-center gap-2.5 transition-colors hover:text-coral"
+              >
+                <MailIcon className="size-3.5" />
                 {site.email}
               </a>
               <a
                 href={whatsappLink(copy.whatsapp)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-fit transition-colors hover:text-coral"
+                className="flex w-fit items-center gap-2.5 transition-colors hover:text-coral"
               >
-                WhatsApp {site.whatsappDisplay} ↗
+                <WhatsAppIcon className="size-3.5" />
+                {site.whatsappDisplay} ↗
               </a>
             </div>
 
@@ -89,18 +95,22 @@ export function Footer() {
 
             <p className="text-eyebrow mb-3 mt-8 text-soft">{copy.followLabel}</p>
             <ul className="flex flex-wrap gap-3">
-              {socials.map((s) => (
-                <li key={s.name}>
-                  <a
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex border border-paper/15 px-4 py-2 font-mono text-[11px] tracking-[0.15em] text-muted transition-colors duration-300 hover:border-coral hover:text-coral"
-                  >
-                    {s.name.toUpperCase()}
-                  </a>
-                </li>
-              ))}
+              {socials.map((s) => {
+                const Icon = SOCIAL_ICONS[s.name];
+                return (
+                  <li key={s.name}>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2.5 border border-paper/15 px-4 py-2 font-mono text-[11px] tracking-[0.15em] text-muted transition-colors duration-300 hover:border-coral hover:text-coral"
+                    >
+                      {Icon && <Icon className="size-3.5" />}
+                      {s.name.toUpperCase()}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -139,9 +149,7 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-paper/[0.06] pt-7 font-mono text-xs text-soft sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {new Date().getFullYear()} Imsuya Global. {copy.rights}
-          </p>
+          <p>{copy.credit}</p>
           <p>{copy.strap}</p>
         </div>
       </div>

@@ -127,21 +127,8 @@ export const projects: Project[] = [
     url: "https://23f3000111.github.io/summer-academy-mockups/site-nova/index.html",
   },
   {
-    slug: "mojo-momo-kingdom",
-    name: "Mojo Momo",
-    variant: { en: "Kingdom", ms: "Kingdom" },
-    sector: { en: "F&B", ms: "Makanan & Minuman" },
-    summary: {
-      en: "Welcome to the Mojo Kingdom. A playful, character led route for a Mont Kiara momo house.",
-      ms: "Selamat datang ke Mojo Kingdom. Hala tuju ceria berteraskan watak untuk kedai momo di Mont Kiara.",
-    },
-    image: "/work/mojo-momo-kingdom.jpg",
-    url: "https://23f3000111.github.io/mojo-momo-mockups/site1-kingdom/",
-  },
-  {
     slug: "mojo-momo-crav",
     name: "Mojo Momo",
-    variant: { en: "Crav", ms: "Crav" },
     sector: { en: "F&B", ms: "Makanan & Minuman" },
     summary: {
       en: "He lands with the first basket. A craving driven route built around the hero product.",
@@ -149,18 +136,6 @@ export const projects: Project[] = [
     },
     image: "/work/mojo-momo-crav.jpg",
     url: "https://23f3000111.github.io/mojo-momo-mockups/site2-crav/",
-  },
-  {
-    slug: "mojo-momo-rain",
-    name: "Mojo Momo",
-    variant: { en: "Rain", ms: "Rain" },
-    sector: { en: "F&B", ms: "Makanan & Minuman" },
-    summary: {
-      en: "Momo hits different in the rain. A cinematic, film led route for the same kitchen.",
-      ms: "Momo terasa berbeza ketika hujan. Hala tuju sinematik berteraskan filem untuk dapur yang sama.",
-    },
-    image: "/work/mojo-momo-rain.jpg",
-    url: "https://23f3000111.github.io/mojo-momo-mockups/site3-rain/",
   },
   {
     slug: "cyw-art-craft",
@@ -209,56 +184,8 @@ export const projects: Project[] = [
     url: "https://23f3000111.github.io/px98-website/index.html",
   },
   {
-    slug: "roadside-eatery",
-    name: "Roadside Eatery",
-    sector: { en: "F&B", ms: "Makanan & Minuman" },
-    summary: {
-      en: "Grilled comfort, roadside soul. Char grilled chops and steaks in a concrete and timber hideout.",
-      ms: "Keselesaan panggangan, jiwa tepi jalan. Cop dan stik panggang arang dalam persekitaran konkrit dan kayu.",
-    },
-    image: "/work/roadside-eatery.jpg",
-    url: "https://23f3000111.github.io/roadside-eatery/",
-  },
-  {
-    slug: "khan-baba",
-    name: "Khan Baba",
-    variant: { en: "Concept One", ms: "Konsep Satu" },
-    sector: { en: "F&B", ms: "Makanan & Minuman" },
-    summary: {
-      en: "The soul of Pakistani cuisine in Kuala Lumpur. Original recipes, tandoor breads and slow simmered nihari.",
-      ms: "Jiwa masakan Pakistan di Kuala Lumpur. Resipi asli, roti tandoor dan nihari yang dimasak perlahan.",
-    },
-    image: "/work/khan-baba.jpg",
-    url: "https://23f3000111.github.io/khan-baba-pakistani-cuisine/",
-  },
-  {
-    slug: "khan-baba-ember",
-    name: "Khan Baba",
-    variant: { en: "Ember", ms: "Ember" },
-    sector: { en: "F&B", ms: "Makanan & Minuman" },
-    summary: {
-      en: "Fire cooked Pakistani cuisine. A bolder, charcoal led route for the same kitchen.",
-      ms: "Masakan Pakistan dimasak dengan api. Hala tuju lebih berani berteraskan arang untuk dapur yang sama.",
-    },
-    image: "/work/khan-baba-ember.jpg",
-    url: "https://23f3000111.github.io/khan-baba-pakistani-cuisine/ember.html",
-  },
-  {
-    slug: "my-french-factory-a",
-    name: "My French Factory",
-    variant: { en: "Option A", ms: "Pilihan A" },
-    sector: { en: "F&B", ms: "Makanan & Minuman" },
-    summary: {
-      en: "Authentic French crêpes and waffles since 2014. An editorial, gallery quiet route for Langkawi.",
-      ms: "Crêpe dan wafel Perancis tulen sejak 2014. Hala tuju bergaya editorial dan tenang untuk Langkawi.",
-    },
-    image: "/work/my-french-factory-a.jpg",
-    url: "https://23f3000111.github.io/myfrenchfactory-website/option-a/",
-  },
-  {
     slug: "my-french-factory-b",
     name: "My French Factory",
-    variant: { en: "Option B", ms: "Pilihan B" },
     sector: { en: "F&B", ms: "Makanan & Minuman" },
     summary: {
       en: "Hello, Langkawi. A louder, poster led route for the same crêperie.",

@@ -5,6 +5,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { ConversationalForm } from "@/components/contact/ConversationalForm";
 import { FaqList } from "@/components/ui/FaqList";
 import { site, socials, office, whatsappLink } from "@/data/site";
+import { SOCIAL_ICONS, WhatsAppIcon, MailIcon } from "@/components/ui/Icons";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { useLang } from "@/i18n";
 
@@ -78,16 +79,26 @@ export function ContactBody() {
                   href={whatsappLink(copy.waMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="card group flex items-center justify-between border border-paper/15 px-6 py-5 transition-colors duration-300 hover:border-coral"
+                  className="card group flex items-center justify-between gap-4 border border-paper/15 px-6 py-5 transition-colors duration-300 hover:border-coral"
                 >
-                  <span className="text-sm font-bold uppercase tracking-widest">{copy.whatsapp}</span>
+                  <span className="flex items-center gap-3.5">
+                    <WhatsAppIcon className="size-5 text-[#25D366]" />
+                    <span className="text-sm font-bold uppercase tracking-widest">
+                      {copy.whatsapp}
+                    </span>
+                  </span>
                   <span className="text-coral transition-transform duration-300 group-hover:translate-x-1">↗</span>
                 </a>
                 <a
                   href={`mailto:${site.email}`}
-                  className="card group flex items-center justify-between border border-paper/15 px-6 py-5 transition-colors duration-300 hover:border-coral"
+                  className="card group flex items-center justify-between gap-4 border border-paper/15 px-6 py-5 transition-colors duration-300 hover:border-coral"
                 >
-                  <span className="text-sm font-bold uppercase tracking-widest">{copy.email}</span>
+                  <span className="flex items-center gap-3.5">
+                    <MailIcon className="size-5 text-navy" />
+                    <span className="text-sm font-bold uppercase tracking-widest">
+                      {copy.email}
+                    </span>
+                  </span>
                   <span className="text-coral transition-transform duration-300 group-hover:translate-x-1">↗</span>
                 </a>
               </div>
@@ -98,18 +109,22 @@ export function ContactBody() {
                 {copy.followLabel}
               </Eyebrow>
               <ul className="flex flex-wrap gap-3">
-                {socials.map((s) => (
-                  <li key={s.name}>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex border border-paper/15 px-5 py-2.5 font-mono text-[11px] tracking-[0.15em] text-muted transition-colors duration-300 hover:border-coral hover:text-coral"
-                    >
-                      {s.name.toUpperCase()}
-                    </a>
-                  </li>
-                ))}
+                {socials.map((s) => {
+                  const Icon = SOCIAL_ICONS[s.name];
+                  return (
+                    <li key={s.name}>
+                      <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2.5 border border-paper/15 px-5 py-2.5 font-mono text-[11px] tracking-[0.15em] text-muted transition-colors duration-300 hover:border-coral hover:text-coral"
+                      >
+                        {Icon && <Icon className="size-3.5" />}
+                        {s.name.toUpperCase()}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 

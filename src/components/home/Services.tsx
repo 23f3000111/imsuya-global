@@ -31,20 +31,41 @@ const COPY = {
   },
 };
 
-/** Renders a heading with the service's key words in the brand orange. */
+/**
+ * Renders a heading with the service's key words in the brand orange.
+ * An ampersand is bound to the word that follows it, so a heading can never
+ * wrap with a lone "&" left hanging at the end of a line.
+ */
 function AccentTitle({ text, accent }: { text: string; accent: string[] }) {
   const wanted = new Set(accent.map((w) => w.toLowerCase()));
+  const words = text.split(" ");
+
+  const groups: string[][] = [];
+  for (let i = 0; i < words.length; i++) {
+    if (words[i] === "&" && words[i + 1]) {
+      groups.push([words[i], words[i + 1]]);
+      i++;
+    } else {
+      groups.push([words[i]]);
+    }
+  }
+
   return (
     <>
-      {text.split(" ").map((word, i) => {
-        const bare = word.replace(/[^\p{L}]/gu, "").toLowerCase();
-        return (
-          <span key={i} className={wanted.has(bare) ? "text-coral" : undefined}>
-            {word}
-            {i < text.split(" ").length - 1 ? " " : ""}
-          </span>
-        );
-      })}
+      {groups.map((group, gi) => (
+        <span key={gi} className="whitespace-nowrap">
+          {group.map((word, wi) => {
+            const bare = word.replace(/[^\p{L}]/gu, "").toLowerCase();
+            return (
+              <span key={wi} className={wanted.has(bare) ? "text-coral" : undefined}>
+                {word}
+                {wi < group.length - 1 ? " " : ""}
+              </span>
+            );
+          })}
+          {gi < groups.length - 1 ? " " : ""}
+        </span>
+      ))}
     </>
   );
 }
@@ -145,15 +166,17 @@ export function Services() {
   return (
     <section
       ref={sectionRef}
-      className="panel-navy relative overflow-hidden text-white lg:h-screen"
+      className="panel-navy relative overflow-hidden text-white lg:flex lg:h-screen lg:flex-col"
     >
       {/*
         Header sits in flow so panels can never collide with it. The section
         pins to the top of the window, so it also has to clear the fixed navbar
-        (96px on desktop) or the heading slides underneath it.
+        (96px on desktop) or the heading slides underneath it. The track below
+        takes the rest of the height, which is what centres each panel with
+        equal space above and below.
       */}
-      <div className="relative z-20 mx-auto w-full max-w-[1600px] px-6 pt-24 lg:flex lg:items-end lg:px-12 lg:pt-0">
-        <div className="flex w-full items-end justify-between lg:h-[196px] lg:pb-6 lg:pt-[96px]">
+      <div className="relative z-20 mx-auto w-full max-w-[1600px] shrink-0 px-6 pt-24 lg:flex lg:items-end lg:px-12 lg:pt-0">
+        <div className="flex w-full items-end justify-between lg:h-[172px] lg:pb-5 lg:pt-[96px]">
           <div>
             <p className="text-eyebrow mb-4 flex items-center gap-3 text-coral">
               <PixelGlyph variant="b" />
@@ -167,16 +190,27 @@ export function Services() {
         </div>
       </div>
 
-      <div ref={trackRef} className="flex flex-col lg:w-max lg:flex-row lg:items-stretch">
+      <div
+        ref={trackRef}
+        className="flex flex-col lg:h-full lg:w-max lg:flex-row lg:items-stretch"
+      >
         {services.map((s, i) => (
           <article
             key={s.slug}
-            className={`relative flex w-full flex-col justify-center gap-10 border-b border-white/10 px-6 py-16 lg:h-[calc(100vh-196px)] lg:w-[78vw] lg:flex-row lg:items-center lg:gap-[3vw] lg:border-b-0 lg:border-r lg:px-[4vw] lg:py-0 ${
+            className={`panel-grid relative flex h-full w-full flex-col justify-center gap-10 border-b border-white/10 px-6 py-16 lg:w-[78vw] lg:flex-row lg:items-center lg:gap-[3vw] lg:border-b-0 lg:border-r-2 lg:border-r-white/15 lg:px-[4vw] lg:py-10 ${
               i % 2 === 0 ? "panel-navy" : "panel-navy-alt"
             }`}
           >
+            {/* The running number, moved off the image to the top of the panel */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute right-[4vw] top-8 z-[2] hidden font-mono text-[11px] tracking-[0.3em] text-white/35 lg:block"
+            >
+              {s.index} / {total}
+            </span>
+
             {/* copy column — always the first thing that reaches the eye */}
-            <div className="panel-copy relative z-10 flex-1 lg:max-w-[38vw]">
+            <div className="panel-copy relative z-10 flex-1 lg:max-w-[36vw]">
               <p className="text-eyebrow mb-5 text-coral">
                 {s.index} / {t(s.short)}
               </p>
@@ -208,27 +242,20 @@ export function Services() {
               </Link>
             </div>
 
-            {/* visual, then the running number to the right of it */}
-            <div className="relative z-[1] flex items-center gap-4 lg:gap-[1.5vw]">
-              <div className="panel-visual img-veil relative aspect-[4/3] w-full overflow-hidden border border-white/15 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.75)] lg:w-[26vw]">
+            {/*
+              Bigger, and dissolved into the navy at its edges rather than sat
+              in a hard frame. Previously the framed box read as an image
+              hanging on the panel instead of belonging to it.
+            */}
+            <div className="panel-visual relative z-[1] w-full lg:w-[36vw]">
+              <div className="panel-image relative aspect-[4/3] w-full overflow-hidden">
                 <Image
                   src={serviceImage(s.slug)}
                   alt={`${t(s.title)} · Imsuya Global`}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 26vw"
+                  sizes="(max-width: 1024px) 100vw, 36vw"
                   className="img-cinematic object-cover"
                 />
-              </div>
-
-              {/* the sequence, reading down the right edge of the image */}
-              <div className="flex shrink-0 flex-col items-center">
-                <span className="text-display text-3xl leading-none text-white lg:text-[3.4vw]">
-                  {s.index}
-                </span>
-                <span className="my-2 block h-10 w-px bg-white/25 lg:h-[4vh]" />
-                <span className="font-mono text-[10px] tracking-[0.2em] text-white/40">
-                  {total}
-                </span>
               </div>
             </div>
           </article>

@@ -109,44 +109,37 @@ export function Story() {
           {copy.eyebrow}
         </Eyebrow>
 
-        <p className="story-statement max-w-5xl text-[clamp(1.75rem,4.2vw,3.5rem)] font-bold leading-[1.15] tracking-tight">
-          {copy.statement.split(" ").map((word, i) => (
-            <span
-              key={`${lang}-${i}`}
-              className={`story-word inline-block ${copy.accent.has(word) ? "text-coral" : ""}`}
-            >
-              {word}&nbsp;
-            </span>
-          ))}
-        </p>
-
         {/*
-          The copy column carries the paragraph AND the numbers so it stands as
-          tall as the photo beside it. Previously the text sat alone at the
-          bottom and left a dead block of paper above it.
+          Headline and body share the left column, and the photo starts level
+          with them. The statement is held to that column width so it no longer
+          runs across the full page and over the image.
         */}
-        <div className="mt-14 grid gap-10 lg:mt-16 lg:grid-cols-12 lg:gap-12">
-          <Reveal className="flex flex-col justify-between gap-10 lg:col-span-5" y={40}>
-            <p className="max-w-md text-base leading-relaxed text-muted">{copy.body}</p>
-
-            <div className="grid grid-cols-2 gap-x-8 gap-y-8 border-t border-paper/[0.08] pt-8">
-              {copy.stats.map((s) => (
-                <div key={s.label}>
-                  <p className="text-display text-4xl lg:text-5xl">{s.value}</p>
-                  <p className="text-eyebrow mt-2 text-soft">{s.label}</p>
-                </div>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-6">
+            <p className="story-statement text-[clamp(1.75rem,3.4vw,3rem)] font-bold leading-[1.15] tracking-tight">
+              {copy.statement.split(" ").map((word, i) => (
+                <span
+                  key={`${lang}-${i}`}
+                  className={`story-word inline-block ${copy.accent.has(word) ? "text-coral" : ""}`}
+                >
+                  {word}&nbsp;
+                </span>
               ))}
-            </div>
-          </Reveal>
+            </p>
 
-          {/* the studio, mid work — with the pixel motif dissolving beside it */}
-          <div className="relative lg:col-span-7">
+            <Reveal y={40}>
+              <p className="mt-10 max-w-md text-base leading-relaxed text-muted">{copy.body}</p>
+            </Reveal>
+          </div>
+
+          {/* the studio, mid work — top aligned with the headline beside it */}
+          <div className="relative lg:col-span-6">
             <div className="story-photo img-veil card relative z-[1] aspect-[16/10] overflow-hidden border border-paper/[0.1]">
               <Image
                 src="/about/studio.jpg"
                 alt={copy.photoAlt}
                 fill
-                sizes="(max-width: 1024px) 100vw, 58vw"
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="img-cinematic object-cover"
               />
             </div>
@@ -169,6 +162,19 @@ export function Story() {
             </div>
           </div>
         </div>
+
+        {/* the counter, laid out as one horizontal band under both columns */}
+        <Reveal
+          stagger={0.08}
+          className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-paper/[0.08] pt-10 lg:mt-16 lg:grid-cols-4"
+        >
+          {copy.stats.map((s) => (
+            <div key={s.label}>
+              <p className="text-display text-4xl lg:text-5xl">{s.value}</p>
+              <p className="text-eyebrow mt-2 text-soft">{s.label}</p>
+            </div>
+          ))}
+        </Reveal>
       </div>
     </section>
   );

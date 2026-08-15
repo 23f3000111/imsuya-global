@@ -29,8 +29,8 @@ const LINKS = {
 const CTA = { en: "Start a project", ms: "Mulakan projek" };
 
 const TAGLINE = {
-  en: "We Build Your Digital Future",
-  ms: "Kami Bina Masa Depan Digital Anda",
+  en: "Building Your Digital Future",
+  ms: "Membina Masa Depan Digital Anda",
 };
 
 export function Nav() {

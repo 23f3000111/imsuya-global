@@ -97,11 +97,24 @@ body {
 
 /*
  * The particle canvas is masked from its own left edge so the pixels fade out
- * well before they reach the headline. Belt and braces with .motion-scrim.
+ * well before they reach the headline. Fully transparent across the first
+ * 42% — stray accent pixels were surfacing over the H1 and reading as dots.
  */
 .hero-motion {
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.3) 26%, black 58%);
-  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.3) 26%, black 58%);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent 42%,
+    rgba(0, 0, 0, 0.45) 62%,
+    black 80%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent 42%,
+    rgba(0, 0, 0, 0.45) 62%,
+    black 80%
+  );
 }
 
 /* Giant ghost typography (marquees, panel indices, footer wordmark). */
@@ -119,6 +132,34 @@ body {
 
 .panel-navy-alt {
   background: linear-gradient(to top, #0b1128 0%, #1e2852 100%);
+}
+
+/* Faint blueprint ruling, so the horizontal scroll reads as a measured run
+   rather than one continuous smear of navy. */
+.panel-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/*
+ * Panel visuals dissolve into the navy at their edges instead of sitting in a
+ * hard frame, which is what made them look like they were hanging on the panel.
+ */
+.panel-image {
+  -webkit-mask-image: radial-gradient(
+    ellipse 82% 82% at 50% 50%,
+    black 55%,
+    rgba(0, 0, 0, 0.45) 78%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 82% 82% at 50% 50%,
+    black 55%,
+    rgba(0, 0, 0, 0.45) 78%,
+    transparent 100%
+  );
 }
 
 /* ---------- blueprint atmosphere ---------- */
