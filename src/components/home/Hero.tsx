@@ -128,9 +128,10 @@ export function Hero() {
       {/* decorative layers, all beneath the copy */}
       <div className="blueprint" aria-hidden />
 
-      {/* The motion lives on the right half only. The mask dissolves it before
+      {/* The motion lives on the right of the frame. Wide on purpose — at 58%
+          the network was squeezed into the corner. The mask dissolves it before
           it can reach the headline column, so no pixel ever crosses the type. */}
-      <div className="hero-canvas hero-motion absolute inset-y-0 right-0 z-0 w-full lg:w-[58%]">
+      <div className="hero-canvas hero-motion absolute inset-y-0 right-0 z-0 w-full lg:w-[64%]">
         <ParticleField />
       </div>
 

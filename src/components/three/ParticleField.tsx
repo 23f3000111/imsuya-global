@@ -459,12 +459,16 @@ export function ParticleField({
       )}
 
       {/* Vignette so type always wins over the scene. Skipped where the field
-          is meant to reach the edges of its band. */}
+          is meant to reach the edges of its band. How wide the clear core runs
+          is left to CSS via --field-core: the hero opens it up on desktop, where
+          a 30% core left the network reading as a small ellipse in the corner
+          rather than a field filling its band. It stays tight on phones, where
+          the copy spans the full width and has nowhere to get out of the way. */}
       {coverage === "vignette" && (
         <div
           className="absolute inset-0 opacity-80"
           style={{
-            background: `radial-gradient(ellipse at center, transparent 30%, ${ground} 100%)`,
+            background: `radial-gradient(ellipse at center, transparent var(--field-core, 30%), ${ground} 100%)`,
           }}
         />
       )}

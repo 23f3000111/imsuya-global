@@ -117,6 +117,50 @@ body {
   );
 }
 
+/*
+ * Desktop gets the wide network. The canvas is 64vw, so opening the mask at 30%
+ * of it puts the first pixels at 55vw — clear of the headline, which runs out
+ * around 51vw — and the field reads across the right ~40% of the frame instead
+ * of hugging the corner. The scrim's paper plate has to clear out ahead of it:
+ * revealing pixels underneath a 55%-opaque wash looks no bigger than before.
+ *
+ * Phones keep the tighter numbers above. There the headline is proportionally
+ * far wider than it is here, and anything earlier runs straight under the type.
+ */
+@media (min-width: 1024px) {
+  .motion-scrim {
+    background:
+      linear-gradient(to bottom, var(--void) 0%, rgba(247, 248, 251, 0) 170px),
+      linear-gradient(
+        to right,
+        var(--void) 0%,
+        var(--void) 32%,
+        rgba(247, 248, 251, 0.5) 46%,
+        rgba(247, 248, 251, 0) 60%
+      );
+  }
+
+  .hero-motion {
+    /* Read by the field's vignette: a wider clear core fills the band top to
+       bottom instead of floating one ellipse in the middle of it. */
+    --field-core: 42%;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 30%,
+      rgba(0, 0, 0, 0.5) 52%,
+      black 70%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 30%,
+      rgba(0, 0, 0, 0.5) 52%,
+      black 70%
+    );
+  }
+}
+
 /* Giant ghost typography (marquees, panel indices, footer wordmark). */
 .ghost-text {
   color: color-mix(in srgb, var(--navy) 11%, transparent);
