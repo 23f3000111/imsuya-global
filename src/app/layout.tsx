@@ -4,6 +4,7 @@ import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/i18n";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { ScrollReset } from "@/components/providers/ScrollReset";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Preloader } from "@/components/Preloader";
 import { Nav } from "@/components/Nav";
@@ -84,6 +85,7 @@ export default function RootLayout({
         <JsonLd json={graph([organizationSchema(), websiteSchema()])} />
         <LanguageProvider>
           <SmoothScroll>
+            <ScrollReset />
             <Preloader />
             <CustomCursor />
             <Nav />
