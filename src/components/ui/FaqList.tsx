@@ -1,17 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import { faqs } from "@/data/faqs";
+import { faqs, faqsFor, type FaqTopic } from "@/data/faqs";
 import { useT } from "@/i18n";
 
 /**
  * Accordion of the standing questions. `limit` trims the list for the footer,
- * where only the top few earn the space.
+ * where only the top few earn the space. `topic` picks the set that belongs to
+ * a given page — the same split the FAQPage markup uses, so what is marked up
+ * is always exactly what is on screen.
  */
-export function FaqList({ limit, tone = "light" }: { limit?: number; tone?: "light" | "dark" }) {
+export function FaqList({
+  limit,
+  topic,
+  tone = "light",
+}: {
+  limit?: number;
+  topic?: FaqTopic;
+  tone?: "light" | "dark";
+}) {
   const t = useT();
   const [open, setOpen] = useState<number | null>(null);
-  const items = limit ? faqs.slice(0, limit) : faqs;
+  const pool = topic ? faqsFor(topic) : faqs;
+  const items = limit ? pool.slice(0, limit) : pool;
 
   const rule = tone === "dark" ? "border-white/15" : "border-paper/[0.1]";
   const question = tone === "dark" ? "text-white" : "text-paper";

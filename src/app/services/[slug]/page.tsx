@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { services } from "@/data/services";
+import { services, serviceImage } from "@/data/services";
 import { ServiceBody } from "@/components/pages/ServiceBody";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbSchema, graph, pageMetadata, serviceSchema } from "@/lib/seo";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -15,10 +17,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) return {};
-  return {
-    title: `${service.title.en} · Imsuya Global`,
+
+  return pageMetadata({
+    path: `/services/${service.slug}`,
+    title: service.title.en,
     description: service.description.en,
-  };
+    image: serviceImage(service.slug),
+    imageAlt: `${service.title.en} by Imsuya Global`,
+  });
 }
 
 export default async function ServicePage({
@@ -30,5 +36,19 @@ export default async function ServicePage({
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
-  return <ServiceBody service={service} />;
+  return (
+    <>
+      <JsonLd
+        json={graph([
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Services", path: "/services" },
+            { name: service.short.en, path: `/services/${service.slug}` },
+          ]),
+          serviceSchema(service),
+        ])}
+      />
+      <ServiceBody service={service} />
+    </>
+  );
 }

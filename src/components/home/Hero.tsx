@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitChars } from "@/components/ui/SplitChars";
+import { PixelGlyph } from "@/components/ui/PixelGlyph";
 import { useLang } from "@/i18n";
 
 gsap.registerPlugin(useGSAP);
@@ -16,6 +17,7 @@ const ParticleField = dynamic(
 
 const COPY = {
   en: {
+    h1: "Creative digital design & smart website development studio in Malaysia",
     weBuild: "WE BUILD",
     phrases: [
       "DIGITAL FUTURES",
@@ -27,6 +29,7 @@ const COPY = {
     scroll: "SCROLL",
   },
   ms: {
+    h1: "Studio reka bentuk digital kreatif & pembangunan laman web pintar di Malaysia",
     weBuild: "KAMI MEMBINA",
     phrases: [
       "MASA DEPAN DIGITAL",
@@ -135,22 +138,45 @@ export function Hero() {
       <div className="motion-scrim" aria-hidden />
 
       <div className="relative z-10 mx-auto w-full max-w-[1600px] px-6 lg:px-12">
+        {/*
+          The page's one real heading. The rotating slab below is the hero
+          visually, but as a heading it was four brand slogans stacked into a
+          single run-on string with no subject and no place in it. This line
+          carries the primary topic; it uses the same eyebrow treatment every
+          other section on the site opens with, so it reads as part of the
+          system rather than as an SEO bolt-on.
+        */}
+        <h1 className="hero-fade-in text-eyebrow mb-6 flex max-w-lg items-start gap-3 text-muted lg:mb-8 lg:max-w-none lg:items-center">
+          <PixelGlyph variant="a" />
+          {copy.h1}
+        </h1>
+
         {/* No max-width here: the rotating band below clips overflow on both
-            axes, so a narrower h1 would shear the longest headline. */}
-        <h1 className="text-display text-[clamp(1.5rem,5.6vw,5.6rem)] uppercase">
+            axes, so a narrower block would shear the longest headline. */}
+        <p className="text-display text-[clamp(1.5rem,5.6vw,5.6rem)] uppercase">
           <span className="hero-static text-outline block whitespace-nowrap">
             <SplitChars text={copy.weBuild} />
           </span>
           {/* No accent block after the phrase any more: against the dark blue
               H1 it just read as a stray orange dot. */}
+          {/*
+            All four headlines live in the DOM at once so the carousel can hand
+            off between them. Only the first is exposed to assistive tech —
+            otherwise the slab is announced as four unrelated slogans run
+            together into one sentence.
+          */}
           <span className="relative block h-[1.05em] overflow-hidden">
-            {copy.phrases.map((phrase) => (
-              <span key={phrase} className="hero-phrase absolute inset-x-0 top-0 whitespace-nowrap">
+            {copy.phrases.map((phrase, i) => (
+              <span
+                key={phrase}
+                aria-hidden={i > 0 || undefined}
+                className="hero-phrase absolute inset-x-0 top-0 whitespace-nowrap"
+              >
                 <SplitChars text={phrase} />
               </span>
             ))}
           </span>
-        </h1>
+        </p>
 
         <p className="hero-fade-in mt-10 max-w-xl text-base leading-relaxed text-muted lg:text-lg">
           {copy.sub}

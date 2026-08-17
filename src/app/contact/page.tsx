@@ -1,11 +1,33 @@
 import type { Metadata } from "next";
 import { ContactBody } from "@/components/pages/ContactBody";
+import { JsonLd } from "@/components/JsonLd";
+import { absoluteUrl, breadcrumbSchema, faqSchema, graph, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact · Imsuya Global",
-  description: "Start a project with Imsuya Global by WhatsApp, email, or a 60 second brief.",
-};
+export const metadata: Metadata = pageMetadata({
+  path: "/contact",
+  title: "Contact",
+  description:
+    "Start a project with Imsuya Global by WhatsApp, email or a 60 second brief. Studio in Damansara Perdana, Petaling Jaya. We reply within one business day.",
+});
 
 export default function ContactPage() {
-  return <ContactBody />;
+  return (
+    <>
+      <JsonLd
+        json={graph([
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Contact", path: "/contact" },
+          ]),
+          {
+            "@type": "ContactPage",
+            url: absoluteUrl("/contact"),
+            name: "Contact Imsuya Global",
+          },
+          faqSchema("engagement"),
+        ])}
+      />
+      <ContactBody />
+    </>
+  );
 }
