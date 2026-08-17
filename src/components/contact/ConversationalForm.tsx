@@ -16,7 +16,7 @@ type Answers = {
 const COPY = {
   en: {
     steps: [
-      { key: "name", question: "What's your name?", placeholder: "Jane Tan", type: "text" },
+      { key: "name", question: "What's your name?", placeholder: "Your Name", type: "text" },
       { key: "company", question: "What's your company?", placeholder: "Acme Sdn Bhd", type: "text" },
       { key: "service", question: "What are you interested in?", type: "chips" },
       {
@@ -46,7 +46,7 @@ const COPY = {
   },
   ms: {
     steps: [
-      { key: "name", question: "Siapa nama anda?", placeholder: "Jane Tan", type: "text" },
+      { key: "name", question: "Siapa nama anda?", placeholder: "Nama Anda", type: "text" },
       { key: "company", question: "Apakah syarikat anda?", placeholder: "Acme Sdn Bhd", type: "text" },
       { key: "service", question: "Apa yang anda minati?", type: "chips" },
       {
@@ -82,6 +82,32 @@ const slide = {
   exit: { opacity: 0, y: -46 },
   transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const },
 };
+
+/**
+ * Our own placeholder, drawn over an empty field, so a blinking coral bracket
+ * can sit in front of the prompt text and say "type here". A native
+ * placeholder is a single string with a single colour and cannot carry it.
+ * Purely visual: the question above is the field's real label.
+ */
+function PromptPlaceholder({
+  text,
+  align = "center",
+}: {
+  text: string;
+  align?: "center" | "start";
+}) {
+  return (
+    <span
+      aria-hidden
+      className={`pointer-events-none absolute inset-0 flex select-none pb-4 text-soft/60 ${
+        align === "center" ? "items-center" : "items-start"
+      }`}
+    >
+      <span className="caret-blink text-coral">[</span>
+      <span className="ml-2">{text}</span>
+    </span>
+  );
+}
 
 export function ConversationalForm() {
   const { lang } = useLang();
@@ -180,24 +206,32 @@ export function ConversationalForm() {
                 ))}
               </div>
             ) : current.type === "textarea" ? (
-              <textarea
-                id="cf-input"
-                ref={inputRef as React.RefObject<HTMLTextAreaElement>}
-                value={value}
-                onChange={(e) => setAnswers({ ...answers, [current.key]: e.target.value })}
-                placeholder={"placeholder" in current ? current.placeholder : ""}
-                rows={4}
-                className="mt-10 w-full resize-none border-b-2 border-paper/20 bg-transparent pb-4 text-xl text-paper outline-none transition-colors duration-300 placeholder:text-soft/60 focus:border-coral lg:text-2xl"
-              />
+              // The wrapper carries the type scale so the field and the
+              // placeholder drawn over it are always the same size.
+              <div className="relative mt-10 text-xl lg:text-2xl">
+                <textarea
+                  id="cf-input"
+                  ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+                  value={value}
+                  onChange={(e) => setAnswers({ ...answers, [current.key]: e.target.value })}
+                  rows={4}
+                  className="w-full resize-none border-b-2 border-paper/20 bg-transparent pb-4 text-paper outline-none transition-colors duration-300 focus:border-coral"
+                />
+                {!value && (
+                  <PromptPlaceholder text={current.placeholder ?? ""} align="start" />
+                )}
+              </div>
             ) : (
-              <input
-                id="cf-input"
-                ref={inputRef as React.RefObject<HTMLInputElement>}
-                value={value}
-                onChange={(e) => setAnswers({ ...answers, [current.key]: e.target.value })}
-                placeholder={"placeholder" in current ? current.placeholder : ""}
-                className="mt-10 w-full border-b-2 border-paper/20 bg-transparent pb-4 text-2xl text-paper outline-none transition-colors duration-300 placeholder:text-soft/60 focus:border-coral lg:text-4xl"
-              />
+              <div className="relative mt-10 text-2xl lg:text-4xl">
+                <input
+                  id="cf-input"
+                  ref={inputRef as React.RefObject<HTMLInputElement>}
+                  value={value}
+                  onChange={(e) => setAnswers({ ...answers, [current.key]: e.target.value })}
+                  className="w-full border-b-2 border-paper/20 bg-transparent pb-4 text-paper outline-none transition-colors duration-300 focus:border-coral"
+                />
+                {!value && <PromptPlaceholder text={current.placeholder ?? ""} />}
+              </div>
             )}
 
             {current.type !== "chips" && (

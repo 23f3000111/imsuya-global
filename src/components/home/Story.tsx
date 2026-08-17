@@ -163,13 +163,16 @@ export function Story() {
           </div>
         </div>
 
-        {/* the counter, laid out as one horizontal band under both columns */}
+        {/* The counter, laid out as one horizontal band under both columns and
+            centred — each figure sits over the middle of its own column, so
+            the four read as a balanced row across the page rather than as
+            four left-aligned starts. */}
         <Reveal
           stagger={0.08}
-          className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-paper/[0.08] pt-10 lg:mt-16 lg:grid-cols-4"
+          className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-paper/[0.08] pt-10 text-center lg:mt-16 lg:grid-cols-4"
         >
           {copy.stats.map((s) => (
-            <div key={s.label}>
+            <div key={s.label} className="flex flex-col items-center">
               <p className="text-display text-4xl lg:text-5xl">{s.value}</p>
               <p className="text-eyebrow mt-2 text-soft">{s.label}</p>
             </div>

@@ -148,26 +148,16 @@ export const projects: Project[] = [
     image: "/work/cyw-art-craft.jpg",
     url: "https://23f3000111.github.io/IMSUYA_GLOBAL/CYW%20Art%20%26%20Craft/CYW_ArtCraft.html",
   },
-  {
-    slug: "victoriashire-one",
-    name: "Victoriashire",
-    variant: { en: "Concept One", ms: "Konsep Satu" },
-    sector: { en: "Early Education", ms: "Pendidikan Awal" },
-    summary: {
-      en: "Raising confident, independent thinkers. A calm, Montessori inspired route for a Puchong preschool.",
-      ms: "Membentuk pemikir yang yakin dan berdikari. Hala tuju tenang berinspirasikan Montessori untuk prasekolah di Puchong.",
-    },
-    image: "/work/victoriashire-one.jpg",
-    url: "https://23f3000111.github.io/victoriashire/mockup-1-html/index.html",
-  },
+  // The light-ground "Concept One" route was withdrawn at the client's
+  // request, which also leaves one Victoriashire case rather than two
+  // near-identical ones competing for the same search intent.
   {
     slug: "victoriashire-three",
     name: "Victoriashire",
-    variant: { en: "Concept Three", ms: "Konsep Tiga" },
     sector: { en: "Early Education", ms: "Pendidikan Awal" },
     summary: {
-      en: "Make the most of every early year. A warmer, photographic route for the same preschool and music school.",
-      ms: "Manfaatkan setiap tahun awal. Hala tuju lebih hangat dan fotografik untuk prasekolah dan sekolah muzik yang sama.",
+      en: "Make the most of every early year. A warm, photographic site for an international preschool, kindergarten and music school in Puchong.",
+      ms: "Manfaatkan setiap tahun awal. Laman hangat dan fotografik untuk prasekolah, tadika dan sekolah muzik antarabangsa di Puchong.",
     },
     image: "/work/victoriashire-three.jpg",
     url: "https://23f3000111.github.io/victoriashire/mockup-3-html/",

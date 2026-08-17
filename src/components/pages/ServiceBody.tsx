@@ -5,6 +5,8 @@ import Link from "next/link";
 import { process, serviceImage, type Service } from "@/data/services";
 import { projects } from "@/data/projects";
 import { merchandise } from "@/data/merchandise";
+import { aiProducts } from "@/data/aiProducts";
+import { ProductDemo } from "@/components/ui/ProductDemo";
 import { PageHero } from "@/components/ui/PageHero";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { ServiceRail } from "@/components/ui/ServiceRail";
@@ -23,6 +25,9 @@ const COPY = {
     youGet: "You get",
     related: "In the wild",
     merch: "Brands we have produced for",
+    demos: "Shipped and running",
+    demosIntro:
+      "Two AI products live in front of real customers right now: a support chatbot and an intelligent booking flow. Both are open — go and use them.",
     soon: "Coming soon",
     soonBody:
       "We are shipping work in this discipline right now. The first case studies land here shortly.",
@@ -40,6 +45,9 @@ const COPY = {
     youGet: "Anda dapat",
     related: "Dalam dunia sebenar",
     merch: "Jenama yang kami hasilkan",
+    demos: "Sudah dilancarkan",
+    demosIntro:
+      "Dua produk AI sedang berkhidmat kepada pelanggan sebenar sekarang: chatbot sokongan dan aliran tempahan pintar. Kedua-duanya terbuka — cuba sendiri.",
     soon: "Akan datang",
     soonBody:
       "Kami sedang menyiapkan kerja dalam disiplin ini. Kajian kes pertama akan dipaparkan di sini tidak lama lagi.",
@@ -115,6 +123,22 @@ export function ServiceBody({ service }: { service: Service }) {
               {t(service.description)}
             </p>
           </Reveal>
+
+          {/* The AI products that are already live, shown as the running
+              products themselves rather than as a list of capabilities. */}
+          {service.slug === "ai-products" && (
+            <div className="mt-24">
+              <div className="mb-10 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <Eyebrow variant="a">{copy.demos}</Eyebrow>
+                <p className="max-w-md text-sm leading-relaxed text-muted">{copy.demosIntro}</p>
+              </div>
+              <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+                {aiProducts.map((p) => (
+                  <ProductDemo key={p.slug} product={p} lang={lang} />
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* physical work, shown only where it belongs */}
           {service.slug === "merchandise-design" && (
@@ -193,8 +217,10 @@ export function ServiceBody({ service }: { service: Service }) {
             </Reveal>
           </div>
 
-          {/* related work, or an honest placeholder where there is none yet */}
-          {service.slug !== "merchandise-design" && (
+          {/* Related work, or an honest placeholder where there is none yet.
+              Merchandise and AI products both carry their own proof above, so
+              neither needs a second, weaker version of the same section. */}
+          {service.slug !== "merchandise-design" && service.slug !== "ai-products" && (
             <div className="mt-24">
               <div className="mb-10 flex items-end justify-between">
                 <Eyebrow variant="d">{copy.related}</Eyebrow>

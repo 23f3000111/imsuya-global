@@ -5,10 +5,13 @@ export function PageHero({
   eyebrow,
   lines,
   intro,
+  accent,
 }: {
   eyebrow: string;
   lines: string[];
   intro?: string;
+  /** Words in the headline to set in the brand coral. */
+  accent?: string[];
 }) {
   return (
     <section className="relative overflow-hidden bg-void px-6 pb-20 pt-44 lg:px-12 lg:pb-28 lg:pt-56">
@@ -23,6 +26,7 @@ export function PageHero({
         <RevealLines
           as="h1"
           lines={lines}
+          accent={accent}
           className="text-display max-w-6xl text-[clamp(2.8rem,8vw,7.5rem)] uppercase"
         />
         {intro && (

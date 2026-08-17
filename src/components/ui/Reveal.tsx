@@ -62,14 +62,21 @@ export function RevealLines({
   lines,
   className = "",
   lineClassName = "",
+  accent,
   as: Tag = "h2",
 }: {
   lines: string[];
   className?: string;
   lineClassName?: string;
+  /** Words inside `lines` to set in the brand coral. Matched whole word,
+   *  case insensitively, ignoring surrounding punctuation. */
+  accent?: string[];
   as?: "h1" | "h2" | "h3" | "p" | "div";
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const wanted = accent?.length
+    ? new Set(accent.map((w) => w.replace(/[^\p{L}\p{N}]/gu, "").toLowerCase()))
+    : null;
 
   useGSAP(
     () => {
@@ -93,7 +100,19 @@ export function RevealLines({
       <Tag className={className}>
         {lines.map((line, i) => (
           <span key={i} className="block overflow-hidden">
-            <span className={`line-inner block will-change-transform ${lineClassName}`}>{line}</span>
+            <span className={`line-inner block will-change-transform ${lineClassName}`}>
+              {wanted
+                ? line.split(" ").map((word, w, all) => {
+                    const bare = word.replace(/[^\p{L}\p{N}]/gu, "").toLowerCase();
+                    return (
+                      <span key={w} className={wanted.has(bare) ? "text-coral" : undefined}>
+                        {word}
+                        {w < all.length - 1 ? " " : ""}
+                      </span>
+                    );
+                  })
+                : line}
+            </span>
           </span>
         ))}
       </Tag>

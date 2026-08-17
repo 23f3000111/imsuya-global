@@ -190,19 +190,25 @@ export function ContactBody() {
             </h2>
           </div>
           <div className="lg:col-span-7">
-            <FaqList />
+            {/* Cost, timeline, ownership, what happens after launch. The
+                "what do you actually do" set lives on /services, so the two
+                pages never carry the same FAQ rich result. */}
+            <FaqList topic="engagement" />
           </div>
         </div>
       </section>
 
       {/*
         Closing band: the brand pixel network in three dimensions, drifting
-        under the wordmark. Decorative only, so it is hidden from assistive tech.
+        under the wordmark. It runs edge to edge across the whole band rather
+        than fading into a vignette, and a click anywhere on it blows the
+        pixels apart from the point you hit. Decorative only, so it is hidden
+        from assistive tech.
       */}
       <section className="panel-navy relative h-[42vh] min-h-[280px] overflow-hidden border-t border-paper/[0.06]">
-        <ParticleField tone="dark" className="opacity-90" />
+        <ParticleField tone="dark" coverage="full" />
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6">
-          <p className="text-display text-center text-[clamp(1.5rem,4vw,3.4rem)] uppercase text-white/90">
+          <p className="text-display text-center text-[clamp(1.5rem,4vw,3.4rem)] uppercase text-white/90 [text-shadow:0_2px_24px_rgba(11,17,40,0.85)]">
             {copy.outro}
           </p>
         </div>

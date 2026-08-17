@@ -53,7 +53,14 @@ function AccentTitle({ text, accent }: { text: string; accent: string[] }) {
   return (
     <>
       {groups.map((group, gi) => (
-        <span key={gi} className="whitespace-nowrap">
+        <span key={gi}>
+          {/*
+            The separating space between groups lives *outside* the nowrap
+            span. While it was inside, every space in the heading became
+            unbreakable, so the whole title was one atomic line that overflowed
+            its column and ran across the panel image beside it.
+          */}
+          <span className="whitespace-nowrap">
           {group.map((word, wi) => {
             const bare = word.replace(/[^\p{L}]/gu, "").toLowerCase();
             return (
@@ -63,6 +70,7 @@ function AccentTitle({ text, accent }: { text: string; accent: string[] }) {
               </span>
             );
           })}
+          </span>
           {gi < groups.length - 1 ? " " : ""}
         </span>
       ))}
@@ -118,7 +126,14 @@ export function Services() {
         // Each panel's copy lifts in as the panel reaches the middle of the
         // viewport, so the information arrives with the panel rather than
         // having already played off screen.
-        gsap.utils.toArray<HTMLElement>(".panel-copy").forEach((copyBlock) => {
+        //
+        // The first panel is deliberately left alone. Its left edge is already
+        // at the left of the window the moment the section pins, so "left 85%"
+        // is a threshold it can only cross going backwards — the trigger never
+        // fired and the copy sat at opacity 0, which meant the section took
+        // over the screen showing a panel with no words on it.
+        gsap.utils.toArray<HTMLElement>(".panel-copy").forEach((copyBlock, i) => {
+          if (i === 0) return;
           gsap.fromTo(
             copyBlock.children,
             { y: 40, opacity: 0 },
@@ -190,9 +205,17 @@ export function Services() {
         </div>
       </div>
 
+      {/*
+        `flex-1` and not `h-full`: `h-full` resolved against the pinned
+        section's own height, so the track was a full viewport tall *below* a
+        172px header. Everything inside it centred around a midpoint that sat
+        well under the middle of the screen, which is why the panels never
+        looked centred at 100% zoom. `flex-1 min-h-0` takes the space the
+        header leaves instead, and the panels centre in the real gap.
+      */}
       <div
         ref={trackRef}
-        className="flex flex-col lg:h-full lg:w-max lg:flex-row lg:items-stretch"
+        className="flex flex-col lg:min-h-0 lg:w-max lg:flex-1 lg:flex-row lg:items-stretch"
       >
         {services.map((s, i) => (
           <article
@@ -209,8 +232,13 @@ export function Services() {
               {s.index} / {total}
             </span>
 
-            {/* copy column — always the first thing that reaches the eye */}
-            <div className="panel-copy relative z-10 flex-1 lg:max-w-[36vw]">
+            {/*
+              Copy column — always the first thing that reaches the eye. The
+              two columns plus the gap now add up to exactly the 70vw the
+              panel leaves after its padding (32 + 3 + 35), so neither can
+              spill over the other.
+            */}
+            <div className="panel-copy relative z-10 w-full min-w-0 shrink-0 lg:w-[32vw]">
               <p className="text-eyebrow mb-5 text-coral">
                 {s.index} / {t(s.short)}
               </p>
@@ -233,27 +261,34 @@ export function Services() {
                   </span>
                 ))}
               </div>
+              {/*
+                The anchor names its destination. "Explore" on its own told a
+                crawler — and a screen reader running a link list — nothing
+                about where nine identical links each went.
+              */}
               <Link
                 href={`/services/${s.slug}`}
                 className="group mt-9 inline-flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-coral"
               >
                 {copy.explore}
+                <span className="sr-only"> {t(s.title)}</span>
                 <span className="inline-block size-2 bg-coral transition-transform duration-300 group-hover:translate-x-2" />
               </Link>
             </div>
 
             {/*
-              Bigger, and dissolved into the navy at its edges rather than sat
-              in a hard frame. Previously the framed box read as an image
-              hanging on the panel instead of belonging to it.
+              Big enough to hold the space it is given: the visual runs the
+              height of the panel rather than sitting in a squat 4:3 box, and
+              gradients carry it into the navy at every edge instead of a hard
+              frame that read as an image hung on the panel.
             */}
-            <div className="panel-visual relative z-[1] w-full lg:w-[36vw]">
-              <div className="panel-image relative aspect-[4/3] w-full overflow-hidden">
+            <div className="panel-visual relative z-[1] w-full lg:w-[35vw]">
+              <div className="panel-image relative aspect-[4/3] w-full overflow-hidden lg:aspect-auto lg:h-[min(62vh,620px)]">
                 <Image
                   src={serviceImage(s.slug)}
                   alt={`${t(s.title)} · Imsuya Global`}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 36vw"
+                  sizes="(max-width: 1024px) 100vw, 35vw"
                   className="img-cinematic object-cover"
                 />
               </div>

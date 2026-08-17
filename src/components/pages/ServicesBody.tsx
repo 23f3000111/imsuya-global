@@ -6,22 +6,30 @@ import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { Eyebrow } from "@/components/ui/Eyebrow";
+import { FaqList } from "@/components/ui/FaqList";
 import { useLang, useT } from "@/i18n";
 
 const COPY = {
   en: {
     eyebrow: "Services / 09 disciplines",
     lines: ["Everything a digital", "business needs."],
+    accent: ["digital"],
     intro: "Strategy, design, engineering and growth under one roof. Pick a discipline to see how we run it.",
     unsure: "Not sure which one you need?",
     cta: "Talk it through with us",
+    faqEyebrow: "Questions / what we do",
+    faqHeading: "What clients ask about the nine.",
   },
   ms: {
     eyebrow: "Perkhidmatan / 09 disiplin",
     lines: ["Segala keperluan", "perniagaan digital."],
+    accent: ["digital"],
     intro: "Strategi, reka bentuk, kejuruteraan dan pertumbuhan di bawah satu bumbung. Pilih satu disiplin untuk lihat cara kami melaksanakannya.",
     unsure: "Tidak pasti yang mana anda perlukan?",
     cta: "Bincang dengan kami",
+    faqEyebrow: "Soalan / apa kami buat",
+    faqHeading: "Soalan pelanggan tentang sembilan disiplin.",
   },
 };
 
@@ -32,7 +40,12 @@ export function ServicesBody() {
 
   return (
     <>
-      <PageHero eyebrow={copy.eyebrow} lines={copy.lines} intro={copy.intro} />
+      <PageHero
+        eyebrow={copy.eyebrow}
+        lines={copy.lines}
+        accent={copy.accent}
+        intro={copy.intro}
+      />
 
       <section className="bg-void px-6 pb-32 lg:px-12">
         <div className="relative z-10 mx-auto max-w-[1600px]">
@@ -61,6 +74,25 @@ export function ServicesBody() {
               </Link>
             ))}
           </Reveal>
+
+          {/*
+            The eight "what do you actually do" questions, answered on the page
+            that sells the work rather than buried on /contact. These are the
+            ones marked up as FAQPage here.
+          */}
+          <div className="mt-28 grid gap-12 border-t border-paper/[0.06] pt-20 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+              <Eyebrow variant="d" className="mb-4">
+                {copy.faqEyebrow}
+              </Eyebrow>
+              <h2 className="text-display max-w-md text-3xl uppercase lg:text-5xl">
+                {copy.faqHeading}
+              </h2>
+            </div>
+            <div className="lg:col-span-7">
+              <FaqList topic="services" />
+            </div>
+          </div>
 
           <div className="mt-32 text-center">
             <p className="text-eyebrow mb-8 text-soft">{copy.unsure}</p>
