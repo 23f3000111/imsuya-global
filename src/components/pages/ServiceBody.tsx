@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { process, serviceImage, type Service } from "@/data/services";
 import { projects } from "@/data/projects";
-import { merchandise } from "@/data/merchandise";
 import { aiProducts } from "@/data/aiProducts";
 import { ProductDemo } from "@/components/ui/ProductDemo";
+import { MerchandiseGallery } from "@/components/ui/MerchandiseGallery";
 import { PageHero } from "@/components/ui/PageHero";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { ServiceRail } from "@/components/ui/ServiceRail";
@@ -18,7 +18,7 @@ import { useLang, useT } from "@/i18n";
 
 const COPY = {
   en: {
-    eyebrow: (index: string) => `Service ${index} / 09`,
+    eyebrow: (index: string) => `Service ${index} / 04`,
     process: "How we run it, and what you get",
     processIntro:
       "Six stages from first conversation to launch day. The deliverables sit against the stage that produces them.",
@@ -28,6 +28,8 @@ const COPY = {
     demos: "Shipped and running",
     demosIntro:
       "Two AI products live in front of real customers right now: a support chatbot and an intelligent booking flow. Both are open — go and use them.",
+    merchIntro:
+      "Full presentation boards. Open one to read it at size, with the brief beside it.",
     soon: "Coming soon",
     soonBody:
       "We are shipping work in this discipline right now. The first case studies land here shortly.",
@@ -38,7 +40,7 @@ const COPY = {
     cta: "Start this project",
   },
   ms: {
-    eyebrow: (index: string) => `Perkhidmatan ${index} / 09`,
+    eyebrow: (index: string) => `Perkhidmatan ${index} / 04`,
     process: "Cara kami laksanakan, dan apa anda dapat",
     processIntro:
       "Enam peringkat dari perbualan pertama hingga hari pelancaran. Hasil kerja diletakkan pada peringkat yang menghasilkannya.",
@@ -48,6 +50,8 @@ const COPY = {
     demos: "Sudah dilancarkan",
     demosIntro:
       "Dua produk AI sedang berkhidmat kepada pelanggan sebenar sekarang: chatbot sokongan dan aliran tempahan pintar. Kedua-duanya terbuka — cuba sendiri.",
+    merchIntro:
+      "Papan pembentangan penuh. Buka satu untuk membacanya pada saiz sebenar, dengan taklimatnya di sebelah.",
     soon: "Akan datang",
     soonBody:
       "Kami sedang menyiapkan kerja dalam disiplin ini. Kajian kes pertama akan dipaparkan di sini tidak lama lagi.",
@@ -114,7 +118,7 @@ export function ServiceBody({ service }: { service: Service }) {
               className="img-cinematic object-cover"
             />
             <span className="absolute bottom-5 left-5 z-10 font-mono text-[11px] tracking-[0.25em] text-white/70">
-              {service.index} / 09 / {t(service.short).toUpperCase()}
+              {service.index} / 04 / {t(service.short).toUpperCase()}
             </span>
           </Reveal>
 
@@ -140,36 +144,18 @@ export function ServiceBody({ service }: { service: Service }) {
             </div>
           )}
 
-          {/* physical work, shown only where it belongs */}
-          {service.slug === "merchandise-design" && (
+          {/*
+            Physical work. Merchandise was its own service line until the offer
+            was cut to four; it is part of Custom Digital Design now, and its
+            proof travels with it.
+          */}
+          {service.slug === "custom-digital-design" && (
             <div className="mt-24">
-              <Eyebrow variant="a" className="mb-10">
-                {copy.merch}
-              </Eyebrow>
-              <Reveal stagger={0.08} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {merchandise.map((m) => (
-                  <figure
-                    key={m.name}
-                    className="card group overflow-hidden border border-paper/[0.08] transition-colors duration-500 hover:border-coral/50"
-                  >
-                    {/* Letterboxed, not cropped: these are full presentation
-                        boards and the edges carry the detail. */}
-                    <div className="panel-navy relative aspect-[3/2] overflow-hidden">
-                      <Image
-                        src={m.image}
-                        alt={`${m.name} merchandise designed by Imsuya Global`}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-contain transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
-                      />
-                    </div>
-                    <figcaption className="px-5 py-4">
-                      <p className="text-base font-bold tracking-tight">{m.name}</p>
-                      <p className="font-mono text-xs text-soft">{t(m.kind)}</p>
-                    </figcaption>
-                  </figure>
-                ))}
-              </Reveal>
+              <div className="mb-10 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <Eyebrow variant="a">{copy.merch}</Eyebrow>
+                <p className="max-w-md text-sm leading-relaxed text-muted">{copy.merchIntro}</p>
+              </div>
+              <MerchandiseGallery lang={lang} />
             </div>
           )}
 
@@ -218,9 +204,9 @@ export function ServiceBody({ service }: { service: Service }) {
           </div>
 
           {/* Related work, or an honest placeholder where there is none yet.
-              Merchandise and AI products both carry their own proof above, so
-              neither needs a second, weaker version of the same section. */}
-          {service.slug !== "merchandise-design" && service.slug !== "ai-products" && (
+              The AI page carries its own live products above, so it does not
+              need a second, weaker version of the same section. */}
+          {service.slug !== "ai-products" && (
             <div className="mt-24">
               <div className="mb-10 flex items-end justify-between">
                 <Eyebrow variant="d">{copy.related}</Eyebrow>

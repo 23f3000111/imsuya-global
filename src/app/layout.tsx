@@ -29,7 +29,7 @@ const jetbrains = JetBrains_Mono({
 const TITLE =
   "Imsuya Global · Creative Digital Design and Smart Website Development Boutique Studio";
 const DESCRIPTION =
-  "Imsuya Global is a boutique digital studio in Petaling Jaya, Malaysia. Websites, custom software, AI automation and products, design, marketing and merchandise for businesses in Malaysia and worldwide.";
+  "Imsuya Global is a boutique digital studio in Petaling Jaya, Malaysia. Smart websites, custom web applications and software systems, custom AI services and softwares, and digital design from brand identity to merchandise, for businesses in Malaysia and worldwide.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -80,7 +80,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-MY" className={`${satoshi.variable} ${jetbrains.variable} antialiased`}>
-      <body className="grain bg-void text-paper">
+      <body className="bg-void text-paper">
         {/* The studio as an entity, declared once for every page. */}
         <JsonLd json={graph([organizationSchema(), websiteSchema()])} />
         <LanguageProvider>

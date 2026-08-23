@@ -22,7 +22,7 @@ export function GET() {
   const body = [
     `# ${site.name}`,
     "",
-    `> ${site.name} is a boutique creative digital design and smart website development studio based in Damansara Perdana, Petaling Jaya, Selangor, Malaysia. It covers nine in-house disciplines — websites, custom web applications and software, AI automation, AI products, digital design, digital marketing (SEO, GEO and AEO), social media management, merchandise design and corporate gifts — and works with clients across Malaysia, Asia, Africa and the Middle East.`,
+    `> ${site.name} is a boutique creative digital design and smart website development studio based in Damansara Perdana, Petaling Jaya, Selangor, Malaysia. It covers four in-house disciplines — smart website design and development, custom web applications and software systems, custom AI services and softwares, and custom digital design from brand identity through to merchandise — and works with clients across Malaysia, Asia, Africa and the Middle East.`,
     "",
     "## About",
     "",
@@ -49,7 +49,7 @@ export function GET() {
     "",
     "## Key pages",
     "",
-    `- [Services overview](${absoluteUrl("/services")}): all nine disciplines.`,
+    `- [Services overview](${absoluteUrl("/services")}): all four disciplines.`,
     `- [Work](${absoluteUrl("/portfolio")}): every case study.`,
     `- [Team](${absoluteUrl("/team")}): founder, CTO and director.`,
     `- [Contact](${absoluteUrl("/contact")}): brief form, WhatsApp, email, map and FAQs.`,

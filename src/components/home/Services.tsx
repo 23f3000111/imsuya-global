@@ -15,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const COPY = {
   en: {
     eyebrow: "What we do / 002",
-    heading: "Nine disciplines.",
+    heading: "Four disciplines.",
     headingSoft: "One team.",
     cue: "Scroll to explore →",
     explore: "Explore",
@@ -23,7 +23,7 @@ const COPY = {
   },
   ms: {
     eyebrow: "Apa kami buat / 002",
-    heading: "Sembilan disiplin.",
+    heading: "Empat disiplin.",
     headingSoft: "Satu pasukan.",
     cue: "Skrol untuk terokai →",
     explore: "Terokai",
@@ -181,7 +181,7 @@ export function Services() {
   return (
     <section
       ref={sectionRef}
-      className="panel-navy relative overflow-hidden text-white lg:flex lg:h-screen lg:flex-col"
+      className="panel-navy-live relative overflow-hidden text-white lg:flex lg:h-[100svh] lg:flex-col"
     >
       {/*
         Header sits in flow so panels can never collide with it. The section
@@ -217,19 +217,17 @@ export function Services() {
         ref={trackRef}
         className="flex flex-col lg:min-h-0 lg:w-max lg:flex-1 lg:flex-row lg:items-stretch"
       >
-        {services.map((s, i) => (
+        {services.map((s) => (
           <article
             key={s.slug}
-            className={`panel-grid relative flex h-full w-full flex-col justify-center gap-10 border-b border-white/10 px-6 py-16 lg:w-[78vw] lg:flex-row lg:items-center lg:gap-[3vw] lg:border-b-0 lg:border-r-2 lg:border-r-white/15 lg:px-[4vw] lg:py-10 ${
-              i % 2 === 0 ? "panel-navy" : "panel-navy-alt"
-            }`}
+            className="panel-grid relative flex h-full w-full flex-col justify-center gap-10 border-b border-white/10 px-6 py-16 lg:w-[78vw] lg:flex-row lg:items-stretch lg:gap-[3vw] lg:border-b-0 lg:border-r-2 lg:border-r-white/15 lg:px-[4vw] lg:py-8"
           >
             {/* The running number, moved off the image to the top of the panel */}
             <span
               aria-hidden
-              className="pointer-events-none absolute right-[4vw] top-8 z-[2] hidden font-mono text-[11px] tracking-[0.3em] text-white/35 lg:block"
+              className="pointer-events-none absolute right-[4vw] top-6 z-[2] hidden font-mono text-[13px] font-medium tracking-[0.3em] text-white/65 lg:block"
             >
-              {s.index} / {total}
+              <span className="text-coral">{s.index}</span> / {total}
             </span>
 
             {/*
@@ -238,7 +236,7 @@ export function Services() {
               panel leaves after its padding (32 + 3 + 35), so neither can
               spill over the other.
             */}
-            <div className="panel-copy relative z-10 w-full min-w-0 shrink-0 lg:w-[32vw]">
+            <div className="panel-copy relative z-10 w-full min-w-0 shrink-0 lg:w-[32vw] lg:self-center">
               <p className="text-eyebrow mb-5 text-coral">
                 {s.index} / {t(s.short)}
               </p>
@@ -264,7 +262,7 @@ export function Services() {
               {/*
                 The anchor names its destination. "Explore" on its own told a
                 crawler — and a screen reader running a link list — nothing
-                about where nine identical links each went.
+                about where four identical links each went.
               */}
               <Link
                 href={`/services/${s.slug}`}
@@ -282,8 +280,8 @@ export function Services() {
               gradients carry it into the navy at every edge instead of a hard
               frame that read as an image hung on the panel.
             */}
-            <div className="panel-visual relative z-[1] w-full lg:w-[35vw]">
-              <div className="panel-image relative aspect-[4/3] w-full overflow-hidden lg:aspect-auto lg:h-[min(62vh,620px)]">
+            <div className="panel-visual relative z-[1] w-full lg:w-[35vw] lg:self-stretch">
+              <div className="panel-image relative aspect-[4/3] w-full overflow-hidden lg:aspect-auto lg:h-full">
                 <Image
                   src={serviceImage(s.slug)}
                   alt={`${t(s.title)} · Imsuya Global`}

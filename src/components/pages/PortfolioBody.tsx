@@ -2,6 +2,7 @@
 
 import { projects } from "@/data/projects";
 import { PageHero } from "@/components/ui/PageHero";
+import { CubeGrid } from "@/components/ui/Cubes";
 import { ProjectCard } from "@/components/home/Work";
 import { Reveal } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -11,6 +12,8 @@ const COPY = {
   en: {
     eyebrow: (n: string) => `Selected work / ${n} projects`,
     lines: ["Proof,", "not promises."],
+    // The client asked for the first word to carry the brand orange.
+    accent: ["Proof"],
     intro:
       "Every project here is live and working for a real business. Open any of them to see the full story.",
     ctaHeading: "Your project belongs on this page.",
@@ -19,6 +22,7 @@ const COPY = {
   ms: {
     eyebrow: (n: string) => `Kerja pilihan / ${n} projek`,
     lines: ["Bukti,", "bukan janji."],
+    accent: ["Bukti"],
     intro:
       "Setiap projek di sini hidup dan bekerja untuk perniagaan sebenar. Buka mana mana untuk melihat kisah penuhnya.",
     ctaHeading: "Projek anda layak berada di halaman ini.",
@@ -33,7 +37,13 @@ export function PortfolioBody() {
 
   return (
     <>
-      <PageHero eyebrow={copy.eyebrow(n)} lines={copy.lines} intro={copy.intro} />
+      <PageHero
+        eyebrow={copy.eyebrow(n)}
+        lines={copy.lines}
+        accent={copy.accent}
+        intro={copy.intro}
+        visual={<CubeGrid className="w-full" />}
+      />
 
       <section className="bg-void px-6 pb-32 lg:px-12">
         <div className="relative z-10 mx-auto max-w-[1600px]">

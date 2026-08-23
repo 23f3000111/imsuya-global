@@ -46,14 +46,26 @@ const OVERSCAN = 1.2;
 /** Particles per square world unit of visible frame. */
 const DENSITY = 4;
 /** Blast radius of a click, in world units. */
-const BURST_RADIUS = 4.6;
-const BURST_FORCE = 20;
+const BURST_RADIUS = 6;
+const BURST_FORCE = 34;
+/**
+ * The cursor carries its own field. Pixels inside this radius are pushed
+ * continuously out of its way and drift back behind it, which is what makes
+ * the network read as following the pointer rather than merely parallaxing
+ * against it.
+ */
+const CURSOR_RADIUS = 3.4;
+const CURSOR_FORCE = 26;
 /** How hard a displaced pixel is pulled back to where it belongs. */
-const SPRING = 6.5;
+const SPRING = 5.2;
 /** Velocity retained per 1/60s. */
-const DAMPING = 0.87;
+const DAMPING = 0.9;
 /** How long the simulation keeps running after the last click. */
-const SETTLE_SECONDS = 4;
+const SETTLE_SECONDS = 5;
+/** Seconds the camera spends diving into the cloud after a click. */
+const DIVE_SECONDS = 1.7;
+/** How far in, in world units, that dive travels. */
+const DIVE_DEPTH = 3.6;
 
 type Cloud = {
   count: number;
@@ -72,7 +84,7 @@ type Cloud = {
  * buffers are not held here either — those are reached through the geometry
  * refs, because Three.js owns them once they are attached.
  */
-type Sim = { base: Float32Array; velocities: Float32Array };
+type Sim = { base: Float32Array; velocities: Float32Array; baseColors: Float32Array };
 
 function buildCloud(
   spreadX: number,
@@ -163,22 +175,37 @@ function Field({
     sim.current = {
       base: cloud.base.slice(),
       velocities: new Float32Array(cloud.count * 3),
+      baseColors: cloud.colors.slice(),
     };
     return () => {
       sim.current = null;
     };
   }, [cloud]);
 
+  const material = useRef<THREE.PointsMaterial>(null);
+
   // Cursor, in normalised device coords relative to *this* canvas.
   const pointer = useRef({ x: 0, y: 0 });
   const smoothed = useRef({ x: 0, y: 0 });
+  /** Whether the pointer is over the canvas, which is what arms the cursor
+   *  field — an off-screen pointer still steers the parallax but must not go
+   *  on shoving pixels around from outside the frame. */
+  const inside = useRef(false);
   // Wall-clock deadline: while it's in the future the blast simulation runs.
   const activeUntil = useRef(0);
   const settled = useRef(true);
   // Whole-field kick, so a click also punches the camera and the group scale.
   const burst = useRef(0);
+  /** Counts down after a click while the camera travels into the cloud. */
+  const dive = useRef(0);
+  /** True while the cloud is tinted by a blast, so it is repainted once on
+   *  the way back to its resting colours and then left alone. */
+  const hot = useRef(false);
   const blast = useRef(new THREE.Vector3());
   const pendingBlast = useRef(false);
+  // Scratch vectors, so the per-frame ray cast allocates nothing.
+  const ray = useRef(new THREE.Vector3());
+  const hit = useRef(new THREE.Vector3());
 
   useEffect(() => {
     const canvas = gl.domElement;
@@ -204,6 +231,12 @@ function Field({
       // that has wandered off the canvas, which is what makes it feel alive.
       pointer.current.x = THREE.MathUtils.clamp(n.x, -1.6, 1.6);
       pointer.current.y = THREE.MathUtils.clamp(n.y, -1.6, 1.6);
+      inside.current = n.inside;
+      if (n.inside) settled.current = false;
+    };
+
+    const onLeave = () => {
+      inside.current = false;
     };
 
     // Only a click *on* the field detonates it — otherwise a click on the
@@ -213,7 +246,9 @@ function Field({
       if (!n || !n.inside) return;
       pointer.current.x = n.x;
       pointer.current.y = n.y;
+      inside.current = true;
       burst.current = 1;
+      dive.current = 1;
       pendingBlast.current = true;
       activeUntil.current = performance.now() / 1000 + SETTLE_SECONDS;
       settled.current = false;
@@ -221,9 +256,11 @@ function Field({
 
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerdown", onDown, { passive: true });
+    document.addEventListener("pointerleave", onLeave);
     return () => {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("pointerleave", onLeave);
     };
   }, [gl]);
 
@@ -233,22 +270,36 @@ function Field({
     // would fire the whole cloud into the distance in one step.
     const dt = Math.min(delta, 1 / 30);
 
-    smoothed.current.x = THREE.MathUtils.lerp(smoothed.current.x, pointer.current.x, 0.09);
-    smoothed.current.y = THREE.MathUtils.lerp(smoothed.current.y, pointer.current.y, 0.09);
+    // Snappier than it was: at 0.09 the field arrived a beat after the
+    // cursor and read as drifting on its own rather than tracking it.
+    smoothed.current.x = THREE.MathUtils.lerp(smoothed.current.x, pointer.current.x, 0.14);
+    smoothed.current.y = THREE.MathUtils.lerp(smoothed.current.y, pointer.current.y, 0.14);
 
     burst.current = Math.max(0, burst.current - dt * 1.6);
     const kick = burst.current * burst.current; // ease out — hardest on impact
 
+    dive.current = Math.max(0, dive.current - dt / DIVE_SECONDS);
+    // Smoothstep, so the camera leaves and returns without a visible corner.
+    const d = dive.current;
+    const diving = d * d * (3 - 2 * d);
+
     const g = group.current;
     if (g) {
       // Follow the pointer: move right and the field swings right with you.
-      g.rotation.y = t * 0.02 + smoothed.current.x * 0.42;
-      g.rotation.x = Math.sin(t * 0.08) * 0.04 + smoothed.current.y * 0.24;
-      g.position.x = smoothed.current.x * 0.9;
-      g.position.y = Math.sin(t * 0.25) * 0.35 - smoothed.current.y * 0.5;
+      g.rotation.y = t * 0.02 + smoothed.current.x * 0.55;
+      g.rotation.x = Math.sin(t * 0.08) * 0.04 + smoothed.current.y * 0.32;
+      // A slow roll into the dive, so a click reads as travelling into the
+      // network rather than as the network simply getting bigger.
+      g.rotation.z = diving * 0.06;
+      g.position.x = smoothed.current.x * 1.25;
+      g.position.y = Math.sin(t * 0.25) * 0.35 - smoothed.current.y * 0.7;
       g.scale.setScalar(1 + kick * 0.1);
       g.updateMatrixWorld();
     }
+
+    // Pixels swell on impact, so the burst carries even where the cloud is
+    // thin enough that displacement alone would be easy to miss.
+    if (material.current) material.current.size = 0.1 + kick * 0.07;
 
     // The live buffers belong to Three.js once they are attached, so they are
     // read back off the geometry rather than out of the memo the JSX was built
@@ -291,27 +342,78 @@ function Field({
       }
     }
 
-    // Integrate the blast: spring back to the resting shape, damped.
-    if (!settled.current && state && positions && linePositions) {
-      const running = performance.now() / 1000 < activeUntil.current;
+    /*
+     * One integration, run whenever anything is moving: the cursor's own
+     * field, the spring back to the resting shape, and whatever a click has
+     * left flying. The old build only integrated after a click, which is why
+     * the network never visibly reacted to the pointer between them.
+     */
+    const cursorLive = inside.current;
+    if (state && positions && linePositions && (!settled.current || cursorLive)) {
+      const blastRunning = performance.now() / 1000 < activeUntil.current;
       const { base, velocities } = state;
       const damp = Math.pow(DAMPING, dt * 60);
       let maxOffset = 0;
 
-      for (let i = 0; i < cloud.count * 3; i++) {
-        const home = base[i] - positions[i];
-        velocities[i] = (velocities[i] + home * SPRING * dt) * damp;
-        positions[i] += velocities[i] * dt;
-        const off = Math.abs(home);
-        if (off > maxOffset) maxOffset = off;
+      // Where the cursor sits inside the cloud: the ray through the pointer,
+      // met with the z = 0 plane, taken into the group's own space.
+      let cx = 0;
+      let cy = 0;
+      let cz = 0;
+      if (cursorLive && g) {
+        const dir = ray.current
+          .set(smoothed.current.x, smoothed.current.y, 0.5)
+          .unproject(camera)
+          .sub(camera.position)
+          .normalize();
+        hit.current
+          .copy(camera.position)
+          .addScaledVector(dir, dir.z !== 0 ? -camera.position.z / dir.z : 0);
+        g.worldToLocal(hit.current);
+        cx = hit.current.x;
+        cy = hit.current.y;
+        cz = hit.current.z;
+      }
+
+      for (let i = 0; i < cloud.count; i++) {
+        const ix = i * 3;
+
+        if (cursorLive) {
+          const dx = positions[ix] - cx;
+          const dy = positions[ix + 1] - cy;
+          const dz = positions[ix + 2] - cz;
+          const dist = Math.hypot(dx, dy, dz);
+          if (dist < CURSOR_RADIUS) {
+            // Squared falloff, and a floor on the distance so a pixel sitting
+            // under the cursor is nudged aside rather than fired off screen.
+            const falloff = 1 - dist / CURSOR_RADIUS;
+            const near = Math.max(dist, 0.4);
+            const push = (CURSOR_FORCE * falloff * falloff * dt) / near;
+            velocities[ix] += dx * push;
+            velocities[ix + 1] += dy * push;
+            velocities[ix + 2] += dz * push;
+          }
+        }
+
+        for (let k = 0; k < 3; k++) {
+          const j = ix + k;
+          const home = base[j] - positions[j];
+          velocities[j] = (velocities[j] + home * SPRING * dt) * damp;
+          positions[j] += velocities[j] * dt;
+          const off = Math.abs(home);
+          if (off > maxOffset) maxOffset = off;
+        }
       }
 
       // Below a fortieth of a world unit nobody can see the difference, so
-      // snap home and stop paying for the simulation.
-      if (!running || maxOffset < 0.025) {
+      // snap home and stop paying for the simulation. Only ever while the
+      // cursor is away — under the pointer the field has work to do.
+      if (!cursorLive && (maxOffset < 0.025 || !blastRunning)) {
         positions.set(base);
         velocities.fill(0);
         settled.current = true;
+      } else {
+        settled.current = false;
       }
 
       const pairs = cloud.pairs;
@@ -324,15 +426,48 @@ function Field({
 
       if (posAttr) posAttr.needsUpdate = true;
       if (lineAttr) lineAttr.needsUpdate = true;
+
+      /*
+       * Heat. While a blast is live, every pixel is tinted toward the brand
+       * coral in proportion to how far it has been thrown, so an explosion
+       * flashes through the network and cools back to ink behind itself.
+       * Repainted for exactly as long as it is needed and then left alone.
+       */
+      const colorAttr = pointGeo.current?.attributes.color as
+        | THREE.BufferAttribute
+        | undefined;
+      const colors = colorAttr?.array as Float32Array | undefined;
+      if (colors) {
+        if (burst.current > 0.02) {
+          const heat = burst.current;
+          const baseColors = state.baseColors;
+          for (let i = 0; i < cloud.count; i++) {
+            const ix = i * 3;
+            const ox = positions[ix] - base[ix];
+            const oy = positions[ix + 1] - base[ix + 1];
+            const oz = positions[ix + 2] - base[ix + 2];
+            const mix = Math.min(1, Math.hypot(ox, oy, oz) * 0.55) * heat;
+            colors[ix] = baseColors[ix] + (ACCENT.r - baseColors[ix]) * mix;
+            colors[ix + 1] = baseColors[ix + 1] + (ACCENT.g - baseColors[ix + 1]) * mix;
+            colors[ix + 2] = baseColors[ix + 2] + (ACCENT.b - baseColors[ix + 2]) * mix;
+          }
+          if (colorAttr) colorAttr.needsUpdate = true;
+          hot.current = true;
+        } else if (hot.current) {
+          colors.set(state.baseColors);
+          if (colorAttr) colorAttr.needsUpdate = true;
+          hot.current = false;
+        }
+      }
     }
 
-    // Pull the camera back gently as the hero story progresses, and punch it
-    // on click so the pixels visibly jump.
+    // Pull the camera back gently as the hero story progresses, and drive it
+    // into the cloud on a click — the "goes deeper" half of the brief.
     const progress = scrollRef?.current ?? 0;
     camera.position.z = THREE.MathUtils.lerp(
       camera.position.z,
-      11 + progress * 4 - kick * 1.4,
-      0.06
+      11 + progress * 4 - kick * 1.4 - diving * DIVE_DEPTH,
+      0.1
     );
   });
 
@@ -344,6 +479,7 @@ function Field({
           <bufferAttribute attach="attributes-color" args={[cloud.colors, 3]} />
         </bufferGeometry>
         <pointsMaterial
+          ref={material}
           size={0.1}
           vertexColors
           transparent

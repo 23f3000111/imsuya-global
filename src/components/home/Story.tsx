@@ -21,7 +21,7 @@ const COPY = {
     photoAlt: "The Imsuya Global studio in Kuala Lumpur",
     stats: [
       { value: "15+", label: "Projects shipped" },
-      { value: "09", label: "Service lines" },
+      { value: "04", label: "Service lines" },
       { value: "03", label: "Countries served" },
       { value: "100%", label: "In house team" },
     ],
@@ -35,7 +35,7 @@ const COPY = {
     photoAlt: "Studio Imsuya Global di Kuala Lumpur",
     stats: [
       { value: "15+", label: "Projek disiapkan" },
-      { value: "09", label: "Barisan perkhidmatan" },
+      { value: "04", label: "Barisan perkhidmatan" },
       { value: "03", label: "Negara dilayani" },
       { value: "100%", label: "Pasukan dalaman" },
     ],
@@ -103,9 +103,15 @@ export function Story() {
   );
 
   return (
-    <section ref={ref} className="relative bg-void py-24 lg:py-32">
-      <div className="relative z-10 mx-auto max-w-[1600px] px-6 lg:px-12">
-        <Eyebrow variant="a" className="mb-10">
+    <section
+      ref={ref}
+      /* min-h rather than h: the block is centred in a full screen when it
+         fits, and is still allowed to grow past it if a translation runs
+         long, instead of clipping. */
+      className="relative bg-void py-24 lg:flex lg:min-h-[100svh] lg:items-center lg:py-24"
+    >
+      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-6 lg:px-12">
+        <Eyebrow variant="a" className="mb-10 lg:mb-6">
           {copy.eyebrow}
         </Eyebrow>
 
@@ -114,7 +120,7 @@ export function Story() {
           with them. The statement is held to that column width so it no longer
           runs across the full page and over the image.
         */}
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
           <div className="lg:col-span-6">
             <p className="story-statement text-[clamp(1.75rem,3.4vw,3rem)] font-bold leading-[1.15] tracking-tight">
               {copy.statement.split(" ").map((word, i) => (
@@ -128,13 +134,13 @@ export function Story() {
             </p>
 
             <Reveal y={40}>
-              <p className="mt-10 max-w-md text-base leading-relaxed text-muted">{copy.body}</p>
+              <p className="mt-10 max-w-md text-base leading-relaxed text-muted lg:mt-7">{copy.body}</p>
             </Reveal>
           </div>
 
           {/* the studio, mid work — top aligned with the headline beside it */}
           <div className="relative lg:col-span-6">
-            <div className="story-photo img-veil card relative z-[1] aspect-[16/10] overflow-hidden border border-paper/[0.1]">
+            <div className="story-photo img-veil card relative z-[1] aspect-[16/10] overflow-hidden border border-paper/[0.1] lg:aspect-auto lg:h-[min(40vh,380px)]">
               <Image
                 src="/about/studio.jpg"
                 alt={copy.photoAlt}
@@ -169,7 +175,7 @@ export function Story() {
             four left-aligned starts. */}
         <Reveal
           stagger={0.08}
-          className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-paper/[0.08] pt-10 text-center lg:mt-16 lg:grid-cols-4"
+          className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-paper/[0.08] pt-10 text-center lg:mt-10 lg:grid-cols-4 lg:gap-y-0 lg:pt-8"
         >
           {copy.stats.map((s) => (
             <div key={s.label} className="flex flex-col items-center">

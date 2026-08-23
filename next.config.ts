@@ -48,6 +48,31 @@ const nextConfig: NextConfig = {
         destination: "/portfolio/victoriashire-three",
         permanent: true,
       },
+      // The blue-and-yellow Summer Academy route came off the portfolio in the
+      // same review that cut the service list down to four.
+      {
+        source: "/portfolio/summer-academy-nova",
+        destination: "/portfolio/summer-academy-sunshine",
+        permanent: true,
+      },
+      /*
+       * Nine service pages became four. Each retired URL goes to the page that
+       * now covers its subject, and the three disciplines the studio no longer
+       * sells go to the services index rather than to an unrelated page.
+       */
+      {
+        source: "/services/ai-automation",
+        destination: "/services/ai-products",
+        permanent: true,
+      },
+      {
+        source: "/services/merchandise-design",
+        destination: "/services/custom-digital-design",
+        permanent: true,
+      },
+      { source: "/services/digital-marketing", destination: "/services", permanent: true },
+      { source: "/services/social-media-management", destination: "/services", permanent: true },
+      { source: "/services/corporate-gifts", destination: "/services", permanent: true },
     ];
   },
 };

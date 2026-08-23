@@ -166,21 +166,53 @@ body {
   color: color-mix(in srgb, var(--navy) 11%, transparent);
 }
 
-/*
- * Dark navy grounds for the What We Do panels. Consecutive panels alternate
- * the gradient direction so the run never reads as one flat slab.
- */
+/* Dark navy ground, used behind panels, placeholders and image frames. */
 .panel-navy {
   background: linear-gradient(to bottom, #0b1128 0%, #1e2852 100%);
 }
 
-.panel-navy-alt {
-  background: linear-gradient(to top, #0b1128 0%, #1e2852 100%);
+/*
+ * The What We Do ground. The client asked for the drifting film grain to come
+ * off the navy and for the blue itself to move instead, so the section runs a
+ * wide multi-stop navy that travels slowly across an oversized box. Nothing
+ * repaints but the gradient, and it reads as the blue changing shade rather
+ * than as noise crawling over the top of it.
+ */
+.panel-navy-live {
+  background: linear-gradient(
+    155deg,
+    #070b1c 0%,
+    #131c3d 22%,
+    #24305f 46%,
+    #16204a 68%,
+    #090f24 100%
+  );
+  background-size: 180% 180%;
+  animation: panel-shade 26s ease-in-out infinite;
 }
 
-/* Faint blueprint ruling, so the horizontal scroll reads as a measured run
-   rather than one continuous smear of navy. */
-.panel-grid {
+@keyframes panel-shade {
+  0%,
+  100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+}
+
+/*
+ * Faint blueprint ruling, so the horizontal scroll reads as a measured run
+ * rather than one continuous smear of navy. It lives on a pseudo-element
+ * rather than on the panel's own background, which is what lets the animated
+ * navy underneath show through instead of being overwritten by it.
+ */
+.panel-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
@@ -190,23 +222,27 @@ body {
 /*
  * Panel visuals dissolve into the navy at their edges instead of sitting in a
  * hard frame, which is what made them look like they were hanging on the panel.
- * The mask holds a much larger solid centre than it used to, so the picture
- * fills the space it is given, and a gradient overlay carries the bottom and
- * inner edges down into the panel navy.
+ * The solid core runs almost to the edge of the box, so the picture fills the
+ * space it is given, and only the last few percent feathers out into the navy.
  */
 .panel-image {
-  -webkit-mask-image: radial-gradient(
-    ellipse 100% 100% at 50% 50%,
-    black 72%,
-    rgba(0, 0, 0, 0.5) 89%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 100% 100% at 50% 50%,
-    black 72%,
-    rgba(0, 0, 0, 0.5) 89%,
-    transparent 100%
-  );
+  /*
+   * A soft frame on all four sides rather than one radial vignette. The
+   * radial version kept a solid core almost to the edge, so a dark photograph
+   * still ended in a visible rectangle against the mid-navy panel — the
+   * client's "they look like they are floating and kept there just like
+   * that". Two linear masks intersected feather every edge by a real
+   * distance while leaving the middle of the picture at full strength, so it
+   * stays as big as the panel and still dissolves into it.
+   */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 11%, black 87%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 11%, black 87%, transparent 100%);
+  mask-composite: intersect;
 }
 
 .panel-image::after {
@@ -216,9 +252,9 @@ body {
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(to top, rgba(11, 17, 40, 0.78) 0%, rgba(11, 17, 40, 0.12) 38%, transparent 62%),
-    linear-gradient(to right, rgba(11, 17, 40, 0.42) 0%, transparent 30%),
-    radial-gradient(ellipse at 70% 30%, rgba(255, 78, 69, 0.14), transparent 62%);
+    linear-gradient(to top, rgba(11, 17, 40, 0.62) 0%, rgba(11, 17, 40, 0.08) 34%, transparent 58%),
+    linear-gradient(to right, rgba(11, 17, 40, 0.3) 0%, transparent 26%),
+    linear-gradient(to left, rgba(11, 17, 40, 0.22) 0%, transparent 22%);
 }
 
 /* ---------- blueprint atmosphere ---------- */
@@ -278,27 +314,6 @@ body {
   box-shadow: 0 30px 60px -28px rgba(30, 40, 82, 0.5);
 }
 
-/* ---------- film grain ---------- */
-
-.grain::after {
-  content: "";
-  position: fixed;
-  inset: -100%;
-  z-index: 90;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.05;
-  animation: grain-shift 9s steps(10) infinite;
-}
-
-@keyframes grain-shift {
-  0%, 100% { transform: translate(0, 0); }
-  20% { transform: translate(-3%, 2%); }
-  40% { transform: translate(2%, -3%); }
-  60% { transform: translate(-2%, -2%); }
-  80% { transform: translate(3%, 3%); }
-}
-
 /* ---------- marquee ---------- */
 
 @keyframes marquee {
@@ -331,48 +346,6 @@ body {
   animation: caret-blink 1.1s steps(1, end) infinite;
 }
 
-/* ---------- service rail (scroll affordance) ---------- */
-
-/*
- * The rail is a list of nine icons and nothing about it said "there are more
- * of these, and they go somewhere". A slow travelling highlight down the
- * stack reads as a scrollable run without adding furniture.
- */
-@keyframes rail-sweep {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  12%,
-  70% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(900%);
-    opacity: 0;
-  }
-}
-
-.rail-sweep {
-  animation: rail-sweep 4.4s var(--ease-out-expo) infinite;
-}
-
-@keyframes rail-nudge {
-  0%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.35;
-  }
-  50% {
-    transform: translateY(4px);
-    opacity: 1;
-  }
-}
-
-.rail-nudge {
-  animation: rail-nudge 1.8s ease-in-out infinite;
-}
-
 /* ---------- pixel drift (final CTA ambience) ---------- */
 
 @keyframes pixel-drift {
@@ -395,6 +368,199 @@ body {
   background:
     linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 45%),
     radial-gradient(ellipse at 50% 0%, rgba(30, 40, 82, 0.35), transparent 70%);
+}
+
+/* ---------- css cubes ---------- */
+
+/*
+ * Two pure-CSS cube pieces the client picked off freefrontend.com/css-cubes,
+ * re-cut to the brand: white tops, navy-tinted sides, coral where the piece
+ * calls for an accent. No canvas, no library, no JavaScript — they cost a
+ * couple of composited layers and nothing else.
+ *
+ * 1. .cube-grid — "Cube Grid (Pure CSS)". An isometric field of cubes that
+ *    rise and fall in a diagonal wave. Sits in the /portfolio header.
+ * 2. .cube-stack — "CSS Only Cubes Hover Effects". Three offset columns of
+ *    isometric cubes that light coral under the pointer. Sits in the
+ *    /services header.
+ *
+ * The originals were written in Pug and Sass. The per-cube grid coordinates
+ * Pug generated in a loop are written out longhand below, and Sass's nesting
+ * and `pow()` arithmetic are resolved into plain custom properties.
+ */
+
+.cube-grid {
+  --n: 4;
+  --cube: clamp(1.7rem, 4.4vw, 3rem);
+  --cube-t: 1.5s;
+  display: grid;
+  grid-template-columns: repeat(var(--n), var(--cube));
+  gap: 0.5em;
+  place-content: center;
+  transform: rotateX(55deg) rotate(45deg);
+  transform-style: preserve-3d;
+}
+
+.cube-grid > .cube {
+  display: grid;
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+  /* The rotation origin sits one cube-edge behind the face, which is what
+     turns a flat square plus two folded pseudo-elements into a solid. */
+  transform-origin: 50% 50% calc(-1 * var(--cube));
+  background: #ffffff;
+  animation: cube-rise var(--cube-t) ease-in-out infinite;
+  /* Diagonal wave: the delay is a function of the cube's row and column. */
+  animation-delay: calc((var(--n) - 1 - var(--j) + var(--i)) * 0.05 * var(--cube-t));
+}
+
+.cube-grid > .cube::before,
+.cube-grid > .cube::after {
+  --face: 0;
+  --fold: calc(1 - var(--face));
+  content: "";
+  grid-area: 1 / 1;
+  transform-origin: calc(var(--fold) * 50%) calc(var(--face) * 50%);
+  translate: calc(var(--face) * 100%) calc(var(--fold) * 100%);
+  rotate: var(--fold) var(--face) 0 calc((2 * var(--face) - 1) * 90deg);
+  background: color-mix(in hsl, #97a3c8 calc(var(--face) * 100%), #cfd6e8);
+}
+
+.cube-grid > .cube::after {
+  --face: 1;
+}
+
+/* Column index, then row index — the two loops the Pug template ran. */
+.cube-grid > .cube:nth-child(4n + 1) { --i: 0; }
+.cube-grid > .cube:nth-child(4n + 2) { --i: 1; }
+.cube-grid > .cube:nth-child(4n + 3) { --i: 2; }
+.cube-grid > .cube:nth-child(4n + 4) { --i: 3; }
+.cube-grid > .cube:nth-child(n + 1) { --j: 0; }
+.cube-grid > .cube:nth-child(n + 5) { --j: 1; }
+.cube-grid > .cube:nth-child(n + 9) { --j: 2; }
+.cube-grid > .cube:nth-child(n + 13) { --j: 3; }
+
+/* Two coral cubes, so the field belongs to this brand rather than to a pen. */
+.cube-grid > .cube:nth-child(6),
+.cube-grid > .cube:nth-child(11) {
+  background: var(--coral);
+}
+
+.cube-grid > .cube:nth-child(6)::before,
+.cube-grid > .cube:nth-child(6)::after,
+.cube-grid > .cube:nth-child(11)::before,
+.cube-grid > .cube:nth-child(11)::after {
+  background: color-mix(in hsl, #a32b25 calc(var(--face) * 100%), #e0413a);
+}
+
+@keyframes cube-rise {
+  0%,
+  50%,
+  100% {
+    scale: 1 1 0;
+  }
+  25% {
+    scale: 1 1 0.5;
+  }
+}
+
+/*
+ * Hover cubes. `--face-size` drives every measurement in the piece, so the
+ * whole cluster scales from one number instead of from a transform that would
+ * also blur the edges.
+ */
+/*
+ * Every cube in the cluster is absolutely positioned, so the cluster itself
+ * measures nothing. The frame gives it a real box — 7 faces wide by 10 tall,
+ * which is what the arrangement works out to once the skew is applied — and
+ * parks the cluster's origin at the point that centres it inside that box.
+ */
+.cube-stack-frame {
+  --face-size: clamp(22px, 3.4vw, 50px);
+  position: relative;
+  width: calc(var(--face-size) * 7);
+  height: calc(var(--face-size) * 10);
+}
+
+.cube-stack {
+  --face-depth: calc(var(--face-size) * 0.8);
+  --stack-gap: calc(var(--face-size) * 0.6);
+  position: absolute;
+  left: calc(var(--face-size) * 3.4);
+  top: calc(var(--face-size) * 3.31);
+  transform: skewY(-20deg);
+}
+
+.cube-stack .cube-col {
+  position: relative;
+  z-index: 2;
+}
+
+.cube-stack .cube-col:nth-child(2) {
+  z-index: 1;
+  translate: calc(var(--face-size) * -1.2) calc(var(--face-size) * -1.2);
+}
+
+.cube-stack .cube-col:nth-child(3) {
+  z-index: 3;
+  translate: calc(var(--face-size) * 1.2) calc(var(--face-size) * 1.2);
+}
+
+.cube-stack .cube-col > div {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap);
+  translate: calc(var(--face-size) * -1.4 * var(--x)) calc(var(--face-size) * -1.2 * var(--y));
+}
+
+.cube-stack .cube-face {
+  position: relative;
+  display: inline-block;
+  width: var(--face-size);
+  height: var(--face-size);
+  background: #ccd4e8;
+  z-index: var(--i);
+  transition: background 1.5s, filter 1.5s;
+}
+
+.cube-stack .cube-face::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--face-depth) * -1);
+  width: var(--face-depth);
+  height: 100%;
+  background: #9aa6c9;
+  transform-origin: right;
+  transform: skewY(45deg);
+  transition: background 1.5s;
+}
+
+.cube-stack .cube-face::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--face-depth) * -1);
+  left: 0;
+  width: 100%;
+  height: var(--face-depth);
+  background: #ffffff;
+  transform-origin: bottom;
+  transform: skewX(45deg);
+  transition: background 1.5s;
+}
+
+/* Instant on the way in, slow on the way out — the original's trick, and the
+   reason the cluster leaves a trail of colour behind the pointer. */
+.cube-stack .cube-face:hover {
+  transition: none;
+  background: var(--coral);
+  filter: drop-shadow(0 0 30px rgba(255, 78, 69, 0.55));
+}
+
+.cube-stack .cube-face:hover::before,
+.cube-stack .cube-face:hover::after {
+  transition: none;
+  background: var(--coral);
 }
 
 /* ---------- custom cursor ---------- */

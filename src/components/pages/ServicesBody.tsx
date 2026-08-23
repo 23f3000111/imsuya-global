@@ -4,6 +4,7 @@ import Link from "next/link";
 import { services } from "@/data/services";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { PageHero } from "@/components/ui/PageHero";
+import { CubeStack } from "@/components/ui/Cubes";
 import { Reveal } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -12,24 +13,25 @@ import { useLang, useT } from "@/i18n";
 
 const COPY = {
   en: {
-    eyebrow: "Services / 09 disciplines",
-    lines: ["Everything a digital", "business needs."],
-    accent: ["digital"],
+    eyebrow: "Services / 04 disciplines",
+    // Three lines, stacked, with the middle one in the brand orange.
+    lines: ["Everything", "Digital", "A Business Needs."],
+    accent: ["Digital"],
     intro: "Strategy, design, engineering and growth under one roof. Pick a discipline to see how we run it.",
     unsure: "Not sure which one you need?",
     cta: "Talk it through with us",
     faqEyebrow: "Questions / what we do",
-    faqHeading: "What clients ask about the nine.",
+    faqHeading: "What clients ask about the four.",
   },
   ms: {
-    eyebrow: "Perkhidmatan / 09 disiplin",
-    lines: ["Segala keperluan", "perniagaan digital."],
-    accent: ["digital"],
+    eyebrow: "Perkhidmatan / 04 disiplin",
+    lines: ["Semua Keperluan", "Digital", "Perniagaan Anda."],
+    accent: ["Digital"],
     intro: "Strategi, reka bentuk, kejuruteraan dan pertumbuhan di bawah satu bumbung. Pilih satu disiplin untuk lihat cara kami melaksanakannya.",
     unsure: "Tidak pasti yang mana anda perlukan?",
     cta: "Bincang dengan kami",
     faqEyebrow: "Soalan / apa kami buat",
-    faqHeading: "Soalan pelanggan tentang sembilan disiplin.",
+    faqHeading: "Soalan pelanggan tentang empat disiplin.",
   },
 };
 
@@ -45,6 +47,7 @@ export function ServicesBody() {
         lines={copy.lines}
         accent={copy.accent}
         intro={copy.intro}
+        visual={<CubeStack className="w-full" />}
       />
 
       <section className="bg-void px-6 pb-32 lg:px-12">

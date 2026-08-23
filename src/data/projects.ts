@@ -13,6 +13,17 @@ export type Project = {
   url: string;
 };
 
+/*
+ * Card order is the client's, three to a row on desktop:
+ *   1  Roadtainers      Twinkle Kidz       M.I.R
+ *   2  Legendary        Prince Lubricants  PX98
+ *   3  Summer Academy   Mojo Momo          Toastful
+ *   4  Balrcutz         CYW Art & Craft    Victoriashire
+ *   5  Wrap District    My French Factory
+ *
+ * The blue-and-yellow "Nova" Summer Academy route was withdrawn in the same
+ * review, leaving one case study for that school rather than two.
+ */
 export const projects: Project[] = [
   {
     slug: "roadtainers",
@@ -70,15 +81,37 @@ export const projects: Project[] = [
     url: "https://23f3000111.github.io/IMSUYA_GLOBAL/Prince%20Lubricants/index.html",
   },
   {
-    slug: "wrap-district",
-    name: "Wrap District",
-    sector: { en: "Automotive Studio", ms: "Studio Automotif" },
+    slug: "px98",
+    name: "PX98",
+    sector: { en: "Automotive Lubricants", ms: "Pelincir Automotif" },
     summary: {
-      en: "Dark, exclusive brand site for an automotive design and wrapping boutique.",
-      ms: "Laman jenama gelap dan eksklusif untuk butik reka bentuk dan balutan kereta.",
+      en: "Precision in every revolution. A premium automotive lubricant brand, another brand by Prince.",
+      ms: "Ketepatan dalam setiap pusingan. Jenama pelincir automotif premium, satu lagi jenama oleh Prince.",
     },
-    image: "/work/wrap-district.jpg",
-    url: "https://23f3000111.github.io/IMSUYA_GLOBAL/Wrap%20District/index.html",
+    image: "/work/px98.jpg",
+    url: "https://23f3000111.github.io/px98-website/index.html",
+  },
+  {
+    slug: "summer-academy-sunshine",
+    name: "Summer Academy",
+    sector: { en: "Education", ms: "Pendidikan" },
+    summary: {
+      en: "Big ideas start small. A bright, playful site for a Dutch inspired creative primary school.",
+      ms: "Idea besar bermula kecil. Laman cerah dan ceria untuk sekolah rendah kreatif berinspirasikan Belanda.",
+    },
+    image: "/work/summer-academy-sunshine.jpg",
+    url: "https://23f3000111.github.io/summer-academy-mockups/site-sunshine/",
+  },
+  {
+    slug: "mojo-momo-crav",
+    name: "Mojo Momo",
+    sector: { en: "F&B", ms: "Makanan & Minuman" },
+    summary: {
+      en: "He lands with the first basket. A craving driven route built around the hero product.",
+      ms: "Dia tiba dengan bakul pertama. Hala tuju berteraskan keinginan yang dibina sekitar produk utama.",
+    },
+    image: "/work/mojo-momo-crav.jpg",
+    url: "https://23f3000111.github.io/mojo-momo-mockups/site2-crav/",
   },
   {
     slug: "toastful",
@@ -92,18 +125,6 @@ export const projects: Project[] = [
     url: "https://imsuya-global-y9lo.vercel.app/",
   },
   {
-    slug: "summer-academy-sunshine",
-    name: "Summer Academy",
-    variant: { en: "Sunshine", ms: "Sunshine" },
-    sector: { en: "Education", ms: "Pendidikan" },
-    summary: {
-      en: "Big ideas start small. A bright, playful route for a Dutch inspired creative primary school.",
-      ms: "Idea besar bermula kecil. Hala tuju cerah dan ceria untuk sekolah rendah kreatif berinspirasikan Belanda.",
-    },
-    image: "/work/summer-academy-sunshine.jpg",
-    url: "https://23f3000111.github.io/summer-academy-mockups/site-sunshine/",
-  },
-  {
     slug: "balrcutz",
     name: "Balrcutz",
     sector: { en: "Premium Barbershop", ms: "Kedai Gunting Premium" },
@@ -113,29 +134,6 @@ export const projects: Project[] = [
     },
     image: "/work/balrcutz.jpg",
     url: "https://23f3000111.github.io/IMSUYA_GLOBAL/BalerCutz/BalerCutz-V1.html",
-  },
-  {
-    slug: "summer-academy-nova",
-    name: "Summer Academy",
-    variant: { en: "Nova", ms: "Nova" },
-    sector: { en: "Education", ms: "Pendidikan" },
-    summary: {
-      en: "Where bright minds rise. A darker, cosmic route for the same school, built to feel premium.",
-      ms: "Tempat minda cerah menyerlah. Hala tuju kosmik yang lebih gelap untuk sekolah sama, dibina agar terasa premium.",
-    },
-    image: "/work/summer-academy-nova.jpg",
-    url: "https://23f3000111.github.io/summer-academy-mockups/site-nova/index.html",
-  },
-  {
-    slug: "mojo-momo-crav",
-    name: "Mojo Momo",
-    sector: { en: "F&B", ms: "Makanan & Minuman" },
-    summary: {
-      en: "He lands with the first basket. A craving driven route built around the hero product.",
-      ms: "Dia tiba dengan bakul pertama. Hala tuju berteraskan keinginan yang dibina sekitar produk utama.",
-    },
-    image: "/work/mojo-momo-crav.jpg",
-    url: "https://23f3000111.github.io/mojo-momo-mockups/site2-crav/",
   },
   {
     slug: "cyw-art-craft",
@@ -163,15 +161,15 @@ export const projects: Project[] = [
     url: "https://23f3000111.github.io/victoriashire/mockup-3-html/",
   },
   {
-    slug: "px98",
-    name: "PX98",
-    sector: { en: "Automotive Lubricants", ms: "Pelincir Automotif" },
+    slug: "wrap-district",
+    name: "Wrap District",
+    sector: { en: "Automotive Studio", ms: "Studio Automotif" },
     summary: {
-      en: "Precision in every revolution. A premium automotive lubricant brand, another brand by Prince.",
-      ms: "Ketepatan dalam setiap pusingan. Jenama pelincir automotif premium, satu lagi jenama oleh Prince.",
+      en: "Dark, exclusive brand site for an automotive design and wrapping boutique.",
+      ms: "Laman jenama gelap dan eksklusif untuk butik reka bentuk dan balutan kereta.",
     },
-    image: "/work/px98.jpg",
-    url: "https://23f3000111.github.io/px98-website/index.html",
+    image: "/work/wrap-district.jpg",
+    url: "https://23f3000111.github.io/IMSUYA_GLOBAL/Wrap%20District/index.html",
   },
   {
     slug: "my-french-factory-b",

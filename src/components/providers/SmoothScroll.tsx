@@ -11,6 +11,17 @@ gsap.registerPlugin(ScrollTrigger);
 // context through every layer.
 let instance: Lenis | null = null;
 
+/**
+ * Freeze and release the smooth scroller. An overlay that hides the page
+ * behind it has to stop Lenis as well as the document: `overflow: hidden` on
+ * <html> does not reach a scroller that is animating the page itself.
+ */
+export function setScrollLocked(locked: boolean) {
+  if (!instance) return;
+  if (locked) instance.stop();
+  else instance.start();
+}
+
 /** Snap to the very top. Used by the HOME button and on route changes. */
 export function scrollToTop(immediate = true) {
   if (instance) {

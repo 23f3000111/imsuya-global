@@ -59,6 +59,13 @@ export const process: { step: L10n; detail: L10n }[] = [
   },
 ];
 
+/**
+ * The four disciplines the studio sells. It ran nine until the offer was
+ * consolidated: AI automation folded into AI services, merchandise folded into
+ * digital design, and marketing, social media and corporate gifts came off the
+ * menu. next.config.ts redirects the retired URLs so nothing that was already
+ * indexed lands on a 404.
+ */
 export const services: Service[] = [
   {
     slug: "website-design-development",
@@ -157,69 +164,36 @@ export const services: Service[] = [
     related: ["roadtainers", "prince-lubricants"],
   },
   {
-    slug: "ai-automation",
-    index: "03",
-    title: { en: "Custom AI Automation", ms: "Automasi AI Tersuai" },
-    short: { en: "AI Automation", ms: "Automasi AI" },
-    tagline: {
-      en: "Put the repetitive work on autopilot.",
-      ms: "Letakkan kerja berulang pada autopilot.",
-    },
-    description: {
-      en: "AI agents and automated workflows wired into your business, so the repetitive work runs itself and your team spends its hours where they actually count.",
-      ms: "Ejen AI dan aliran kerja automatik disambung ke dalam perniagaan anda, supaya kerja berulang berjalan sendiri dan pasukan anda menumpukan masa pada perkara yang benar benar penting.",
-    },
-    features: [
-      {
-        name: { en: "Workflow automation", ms: "Automasi aliran kerja" },
-        detail: {
-          en: "The busywork your team should never have been doing.",
-          ms: "Kerja rutin yang sepatutnya tidak pernah dibuat pasukan anda.",
-        },
-      },
-      {
-        name: { en: "AI agents", ms: "Ejen AI" },
-        detail: {
-          en: "Agents that read, sort, reply and route on your behalf.",
-          ms: "Ejen yang membaca, menyusun, membalas dan menghala bagi pihak anda.",
-        },
-      },
-      {
-        name: { en: "System integrations", ms: "Integrasi sistem" },
-        detail: {
-          en: "Connected to the tools you already run your business on.",
-          ms: "Disambung kepada alat yang anda sudah gunakan setiap hari.",
-        },
-      },
-      {
-        name: { en: "Human oversight", ms: "Pengawasan manusia" },
-        detail: {
-          en: "Clear checkpoints, so automation never runs unwatched.",
-          ms: "Titik semakan jelas, supaya automasi tidak pernah berjalan tanpa pengawasan.",
-        },
-      },
-    ],
-    related: [],
-  },
-  {
+    /*
+     * Automation and AI products used to be two separate lines. They are one
+     * offer now, and the slug stays `ai-products` so the URL the studio has
+     * already been handing out keeps resolving.
+     */
     slug: "ai-products",
-    index: "04",
-    title: { en: "Custom AI Products & Softwares", ms: "Produk & Perisian AI Tersuai" },
-    short: { en: "AI Products & Softwares", ms: "Produk & Perisian AI" },
+    index: "03",
+    title: { en: "Custom AI Services & Softwares", ms: "Perkhidmatan & Perisian AI Tersuai" },
+    short: { en: "AI Services & Softwares", ms: "Perkhidmatan & Perisian AI" },
     tagline: {
       en: "Your data, your workflows, with intelligence built in.",
       ms: "Data anda, aliran kerja anda, dengan kecerdasan terbina.",
     },
     description: {
-      en: "Chatbots, copilots, knowledge systems and AI powered platforms. Designed, trained and shipped as real products your customers use.",
-      ms: "Chatbot, copilot, sistem pengetahuan dan platform berkuasa AI. Direka, dilatih dan dilancarkan sebagai produk sebenar yang digunakan pelanggan anda.",
+      en: "Chatbots, copilots, knowledge systems and automated workflows. AI designed, trained and shipped as real software your customers use and your team runs on, so the repetitive work runs itself and the hours go where they actually count.",
+      ms: "Chatbot, copilot, sistem pengetahuan dan aliran kerja automatik. AI direka, dilatih dan dilancarkan sebagai perisian sebenar yang digunakan pelanggan anda dan dijalankan pasukan anda, supaya kerja berulang berjalan sendiri dan masa ditumpukan pada perkara yang benar benar penting.",
     },
     features: [
       {
-        name: { en: "AI assistants", ms: "Pembantu AI" },
+        name: { en: "AI assistants & chatbots", ms: "Pembantu & chatbot AI" },
         detail: {
           en: "Customer facing bots trained on your knowledge.",
           ms: "Bot pelanggan dilatih dengan pengetahuan anda.",
+        },
+      },
+      {
+        name: { en: "Workflow automation", ms: "Automasi aliran kerja" },
+        detail: {
+          en: "Agents that read, sort, reply and route on your behalf.",
+          ms: "Ejen yang membaca, menyusun, membalas dan menghala bagi pihak anda.",
         },
       },
       {
@@ -230,17 +204,10 @@ export const services: Service[] = [
         },
       },
       {
-        name: { en: "Custom models & pipelines", ms: "Model & saluran tersuai" },
+        name: { en: "Models & integrations", ms: "Model & integrasi" },
         detail: {
-          en: "The right model for the job, integrated properly.",
-          ms: "Model yang tepat untuk tugasan, diintegrasi dengan betul.",
-        },
-      },
-      {
-        name: { en: "AI product strategy", ms: "Strategi produk AI" },
-        detail: {
-          en: "From idea to shipped product, with honest feasibility.",
-          ms: "Dari idea ke produk siap, dengan penilaian jujur.",
+          en: "The right model for the job, wired into the tools you already run.",
+          ms: "Model yang tepat untuk tugasan, disambung ke alat yang anda sudah guna.",
         },
       },
     ],
@@ -248,7 +215,7 @@ export const services: Service[] = [
   },
   {
     slug: "custom-digital-design",
-    index: "05",
+    index: "04",
     title: {
       en: "Custom Digital Design (Graphic Design)",
       ms: "Reka Bentuk Digital Tersuai (Reka Grafik)",
@@ -259,8 +226,8 @@ export const services: Service[] = [
       ms: "Sistem identiti yang menjadikan perniagaan kelihatan seperti peneraju.",
     },
     description: {
-      en: "Logos, brand systems, UI design, pitch decks and campaign visuals. A consistent visual language across everything you ship.",
-      ms: "Logo, sistem jenama, reka bentuk UI, dek pembentangan dan visual kempen. Bahasa visual yang konsisten merentas semua yang anda hasilkan.",
+      en: "Logos, brand systems, UI design, campaign visuals and the physical merchandise that carries them. One consistent visual language across everything you ship, on screen and in the hand.",
+      ms: "Logo, sistem jenama, reka bentuk UI, visual kempen dan barangan fizikal yang membawanya. Satu bahasa visual yang konsisten merentas semua yang anda hasilkan, di skrin dan di tangan.",
     },
     features: [
       {
@@ -285,197 +252,14 @@ export const services: Service[] = [
         },
       },
       {
-        name: { en: "Design systems", ms: "Sistem reka bentuk" },
+        name: { en: "Merchandise & apparel", ms: "Barangan & pakaian" },
         detail: {
-          en: "Reusable components so quality never drifts.",
-          ms: "Komponen boleh guna semula supaya kualiti tidak tergelincir.",
+          en: "Kits, packaging and branded goods, designed and produced.",
+          ms: "Kit, pembungkusan dan barangan berjenama, direka dan dihasilkan.",
         },
       },
     ],
     related: ["legendary", "cyw-art-craft"],
-  },
-  {
-    slug: "digital-marketing",
-    index: "06",
-    title: {
-      en: "Digital Marketing Management (SEO, GEO and AEO)",
-      ms: "Pengurusan Pemasaran Digital (SEO, GEO dan AEO)",
-    },
-    short: { en: "Digital Marketing", ms: "Pemasaran Digital" },
-    tagline: {
-      en: "Be the answer, then be the campaign people remember.",
-      ms: "Jadilah jawapan, kemudian jadilah kempen yang diingati.",
-    },
-    description: {
-      en: "Search visibility and paid media under one roof. SEO for search engines, AEO for answer engines, GEO for generative results, plus the campaigns and reporting that turn attention into revenue.",
-      ms: "Keterlihatan carian dan media berbayar di bawah satu bumbung. SEO untuk enjin carian, AEO untuk enjin jawapan, GEO untuk hasil generatif, serta kempen dan laporan yang menukar perhatian kepada hasil.",
-    },
-    features: [
-      {
-        name: { en: "SEO", ms: "SEO" },
-        detail: {
-          en: "Technical and content SEO that compounds over time.",
-          ms: "SEO teknikal dan kandungan yang berganda dari masa ke masa.",
-        },
-      },
-      {
-        name: { en: "AEO & GEO", ms: "AEO & GEO" },
-        detail: {
-          en: "Structured so AI assistants cite you as the answer.",
-          ms: "Distruktur supaya pembantu AI memetik anda sebagai jawapan.",
-        },
-      },
-      {
-        name: { en: "Paid campaigns", ms: "Kempen berbayar" },
-        detail: {
-          en: "Meta, Google and platform ads tuned for return, not reach.",
-          ms: "Iklan Meta, Google dan platform ditala untuk pulangan, bukan capaian.",
-        },
-      },
-      {
-        name: { en: "Analytics & reporting", ms: "Analitik & laporan" },
-        detail: {
-          en: "Dashboards that show money, not vanity metrics.",
-          ms: "Papan pemuka yang menunjukkan hasil, bukan metrik kosong.",
-        },
-      },
-    ],
-    related: [],
-  },
-  {
-    slug: "social-media-management",
-    index: "07",
-    title: { en: "Social Media Management", ms: "Pengurusan Media Sosial" },
-    short: { en: "Social Media", ms: "Media Sosial" },
-    tagline: {
-      en: "A feed that looks as serious as your business is.",
-      ms: "Feed yang kelihatan seserius perniagaan anda.",
-    },
-    description: {
-      en: "Content calendars, production, publishing and community management. A consistent, premium presence across every platform you appear on.",
-      ms: "Kalendar kandungan, penghasilan, penerbitan dan pengurusan komuniti. Kehadiran premium yang konsisten merentas setiap platform anda.",
-    },
-    features: [
-      {
-        name: { en: "Content strategy", ms: "Strategi kandungan" },
-        detail: {
-          en: "Pillars and calendars mapped to business goals.",
-          ms: "Tonggak dan kalendar dipetakan kepada matlamat perniagaan.",
-        },
-      },
-      {
-        name: { en: "Design & production", ms: "Reka bentuk & penghasilan" },
-        detail: {
-          en: "Posts, reels and stories produced in house.",
-          ms: "Post, reel dan story dihasilkan secara dalaman.",
-        },
-      },
-      {
-        name: { en: "Publishing & community", ms: "Penerbitan & komuniti" },
-        detail: {
-          en: "Scheduled, posted, answered, every single day.",
-          ms: "Dijadualkan, diterbitkan, dijawab, setiap hari.",
-        },
-      },
-      {
-        name: { en: "Growth reporting", ms: "Laporan pertumbuhan" },
-        detail: {
-          en: "Monthly reports on reach, growth and conversions.",
-          ms: "Laporan bulanan tentang capaian, pertumbuhan dan penukaran.",
-        },
-      },
-    ],
-    related: [],
-  },
-  {
-    slug: "merchandise-design",
-    index: "08",
-    title: { en: "Custom Merchandise Design", ms: "Reka Bentuk Barangan Tersuai" },
-    short: { en: "Merchandise Design", ms: "Reka Bentuk Barangan" },
-    tagline: {
-      en: "Physical brand touchpoints, designed and delivered.",
-      ms: "Sentuhan jenama fizikal, direka dan dihantar.",
-    },
-    description: {
-      en: "Apparel, packaging and branded goods. Designed in house and produced through a vetted procurement network, so what arrives matches what we drew.",
-      ms: "Pakaian, pembungkusan dan barangan berjenama. Direka secara dalaman dan dihasilkan melalui rangkaian perolehan yang disahkan, supaya apa yang tiba sepadan dengan apa yang kami lukis.",
-    },
-    features: [
-      {
-        name: { en: "Product design", ms: "Reka bentuk produk" },
-        detail: {
-          en: "Merchandise people actually want to keep.",
-          ms: "Barangan yang orang benar benar mahu simpan.",
-        },
-      },
-      {
-        name: { en: "Sourcing & QC", ms: "Sumber & kawalan kualiti" },
-        detail: {
-          en: "Vetted manufacturers, checked samples, reliable timelines.",
-          ms: "Pengilang disahkan, sampel disemak, garis masa boleh dipercayai.",
-        },
-      },
-      {
-        name: { en: "End to end delivery", ms: "Penghantaran menyeluruh" },
-        detail: {
-          en: "From artwork to doorstep, managed for you.",
-          ms: "Dari lakaran hingga ke depan pintu, diuruskan untuk anda.",
-        },
-      },
-      {
-        name: { en: "Brand consistency", ms: "Konsistensi jenama" },
-        detail: {
-          en: "Physical goods that match your digital identity.",
-          ms: "Barangan fizikal yang sepadan dengan identiti digital anda.",
-        },
-      },
-    ],
-    related: [],
-  },
-  {
-    slug: "corporate-gifts",
-    index: "09",
-    title: { en: "Custom Corporate Gift Solutions", ms: "Penyelesaian Hadiah Korporat Tersuai" },
-    short: { en: "Corporate Gifts", ms: "Hadiah Korporat" },
-    tagline: {
-      en: "Gifts that make your company unforgettable.",
-      ms: "Hadiah yang menjadikan syarikat anda tidak dilupakan.",
-    },
-    description: {
-      en: "Curated corporate gifting programs for clients, partners and teams. Premium, personalised and handled from selection through to delivery.",
-      ms: "Program hadiah korporat terpilih untuk pelanggan, rakan kongsi dan pasukan. Premium, diperibadikan dan diuruskan dari pemilihan sehingga penghantaran.",
-    },
-    features: [
-      {
-        name: { en: "Curated catalogues", ms: "Katalog terpilih" },
-        detail: {
-          en: "Gift selections matched to your brand and budget.",
-          ms: "Pilihan hadiah sepadan dengan jenama dan bajet anda.",
-        },
-      },
-      {
-        name: { en: "Personalisation", ms: "Pemperibadian" },
-        detail: {
-          en: "Custom branding on every item, done tastefully.",
-          ms: "Penjenamaan tersuai pada setiap item, dilakukan dengan citarasa.",
-        },
-      },
-      {
-        name: { en: "Bulk fulfilment", ms: "Pemenuhan pukal" },
-        detail: {
-          en: "Ordering, packing and delivery at company scale.",
-          ms: "Tempahan, pembungkusan dan penghantaran pada skala syarikat.",
-        },
-      },
-      {
-        name: { en: "Seasonal programs", ms: "Program bermusim" },
-        detail: {
-          en: "Festive and event gifting, planned well ahead.",
-          ms: "Hadiah perayaan dan acara, dirancang lebih awal.",
-        },
-      },
-    ],
-    related: [],
   },
 ];
 
@@ -486,14 +270,9 @@ export const services: Service[] = [
 export const serviceAccent: Record<string, { en: string[]; ms: string[] }> = {
   "website-design-development": { en: ["Development"], ms: ["Pembangunan"] },
   "custom-web-applications": { en: ["Software"], ms: ["Perisian"] },
-  "ai-automation": { en: ["Automation"], ms: ["Automasi"] },
   "ai-products": { en: ["Softwares"], ms: ["Perisian"] },
   "custom-digital-design": { en: ["Design"], ms: ["Digital"] },
-  "digital-marketing": { en: ["Marketing"], ms: ["Pemasaran"] },
-  "social-media-management": { en: ["Media"], ms: ["Sosial"] },
-  "merchandise-design": { en: ["Design"], ms: ["Barangan"] },
-  "corporate-gifts": { en: ["Gift"], ms: ["Hadiah"] },
 };
 
-// The homepage horizontal experience runs the full nine, in list order.
+// The homepage horizontal experience runs the full four, in list order.
 export const featuredSlugs = services.map((s) => s.slug);

@@ -97,7 +97,7 @@ export function organizationSchema(): Json {
     image: absoluteUrl(DEFAULT_OG),
     slogan: site.tagline,
     description:
-      "Boutique creative digital design and smart website development studio in Petaling Jaya, Malaysia. Websites, custom software, AI automation and products, design, marketing, merchandise and corporate gifts.",
+      "Boutique creative digital design and smart website development studio in Petaling Jaya, Malaysia. Smart websites, custom web applications and software systems, custom AI services and softwares, and custom digital design from brand identity through to merchandise.",
     email: site.email,
     telephone: `+${site.whatsapp}`,
     address: {
@@ -121,14 +121,12 @@ export function organizationSchema(): Json {
     knowsAbout: [
       "Website design and development",
       "Custom web application development",
-      "AI automation",
+      "Custom software systems",
+      "AI automation and AI agents",
       "AI products and chatbots",
       "Brand identity and digital design",
-      "Search engine optimisation (SEO)",
-      "Answer engine optimisation (AEO)",
-      "Generative engine optimisation (GEO)",
-      "Social media management",
-      "Merchandise and corporate gift design",
+      "UI and UX design",
+      "Merchandise and apparel design",
     ],
     numberOfEmployees: { "@type": "QuantitativeValue", minValue: 3 },
     sameAs: socials.map((s) => s.href),

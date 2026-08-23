@@ -26,8 +26,8 @@ export const faqs: Faq[] = [
       ms: "Apa yang Imsuya Global lakukan?",
     },
     a: {
-      en: "Imsuya Global is a boutique creative digital agency based in Petaling Jaya, Malaysia, offering nine in-house disciplines: website design and development, custom web applications, AI automation, AI products, digital design, digital marketing (SEO, GEO and AEO), social media management, merchandise design and corporate gifts. Strategy, design, engineering and growth all sit under one roof.",
-      ms: "Imsuya Global ialah agensi digital kreatif butik yang berpangkalan di Petaling Jaya, Malaysia, menawarkan sembilan disiplin dalaman: reka bentuk dan pembangunan laman web, aplikasi web tersuai, automasi AI, produk AI, reka bentuk digital, pemasaran digital (SEO, GEO dan AEO), pengurusan media sosial, reka bentuk barangan dan hadiah korporat. Strategi, reka bentuk, kejuruteraan dan pertumbuhan semuanya di bawah satu bumbung.",
+      en: "Imsuya Global is a boutique creative digital agency based in Petaling Jaya, Malaysia, offering four in-house disciplines: smart website design and development, custom web applications and software systems, custom AI services and softwares, and custom digital design covering brand identity through to merchandise. Strategy, design, engineering and production all sit under one roof.",
+      ms: "Imsuya Global ialah agensi digital kreatif butik yang berpangkalan di Petaling Jaya, Malaysia, menawarkan empat disiplin dalaman: reka bentuk dan pembangunan laman web pintar, aplikasi web dan sistem perisian tersuai, perkhidmatan dan perisian AI tersuai, serta reka bentuk digital tersuai dari identiti jenama hingga barangan. Strategi, reka bentuk, kejuruteraan dan produksi semuanya di bawah satu bumbung.",
     },
   },
   {
@@ -37,7 +37,7 @@ export const faqs: Faq[] = [
       ms: "Adakah Imsuya Global agensi reka bentuk web atau agensi digital penuh?",
     },
     a: {
-      en: "Imsuya Global is a full service digital agency, not only a web design studio. Alongside websites, the in-house team builds custom software, AI automation and AI products, brand identity and ongoing marketing, so you can launch and grow with one team instead of coordinating several vendors.",
+      en: "Imsuya Global is a full service digital agency, not only a web design studio. Alongside websites, the in-house team builds custom software systems, AI services and softwares, and digital design from brand identity through to merchandise, so you can launch and grow with one team instead of coordinating several vendors.",
       ms: "Imsuya Global ialah agensi digital perkhidmatan penuh, bukan sekadar studio reka bentuk web. Selain laman web, pasukan dalaman kami membina perisian tersuai, automasi AI dan produk AI, identiti jenama serta pemasaran berterusan, jadi anda boleh melancar dan berkembang dengan satu pasukan tanpa perlu menyelaras beberapa vendor.",
     },
   },
@@ -81,19 +81,19 @@ export const faqs: Faq[] = [
       ms: "Apakah perbezaan antara SEO, GEO dan AEO?",
     },
     a: {
-      en: "SEO improves rankings in traditional search results like Google. AEO targets direct answer boxes and featured snippets. GEO focuses on being found, understood and cited by AI tools such as ChatGPT, Perplexity and Google AI Overviews. Imsuya Global's digital marketing service covers all three under one strategy rather than treating them as separate products.",
-      ms: "SEO meningkatkan kedudukan dalam hasil carian tradisional seperti Google. AEO menyasarkan kotak jawapan terus dan petikan pilihan. GEO memberi tumpuan supaya perniagaan ditemui, difahami dan dipetik oleh alat AI seperti ChatGPT, Perplexity dan Google AI Overviews. Perkhidmatan pemasaran digital Imsuya Global merangkumi ketiga tiganya dalam satu strategi, bukan sebagai produk berasingan.",
+      en: "SEO improves rankings in traditional search results like Google. AEO targets direct answer boxes and featured snippets. GEO focuses on being found, understood and cited by AI tools such as ChatGPT, Perplexity and Google AI Overviews. Imsuya Global builds for all three at once — structured data, answer-shaped content and clean technical foundations go into every site it ships, rather than being sold as a separate product afterwards.",
+      ms: "SEO meningkatkan kedudukan dalam hasil carian tradisional seperti Google. AEO menyasarkan kotak jawapan terus dan petikan pilihan. GEO memberi tumpuan supaya perniagaan ditemui, difahami dan dipetik oleh alat AI seperti ChatGPT, Perplexity dan Google AI Overviews. Imsuya Global membina untuk ketiga tiganya serentak — data berstruktur, kandungan berbentuk jawapan dan asas teknikal yang bersih dimasukkan ke dalam setiap laman, bukan dijual sebagai produk berasingan selepas itu.",
     },
   },
   {
     topic: "services",
     q: {
-      en: "Does Imsuya Global offer ongoing marketing and SEO after building a website?",
-      ms: "Adakah Imsuya Global menawarkan pemasaran dan SEO berterusan selepas membina laman web?",
+      en: "Is SEO handled when Imsuya Global builds a website?",
+      ms: "Adakah SEO diuruskan apabila Imsuya Global membina laman web?",
     },
     a: {
-      en: "Yes. Digital Marketing Management is one of Imsuya Global's nine service lines, covering SEO, GEO and AEO, paid campaigns on Meta and Google, and analytics and reporting. A site's performance is actively managed after launch rather than left to sit.",
-      ms: "Ya. Pengurusan Pemasaran Digital ialah satu daripada sembilan barisan perkhidmatan Imsuya Global, merangkumi SEO, GEO dan AEO, kempen berbayar di Meta dan Google, serta analitik dan laporan. Prestasi laman diurus secara aktif selepas pelancaran, bukan dibiarkan begitu sahaja.",
+      en: "Yes. Technical SEO, AEO and GEO groundwork is part of Smart Website Design and Development, not an upsell: structured data, canonical URLs, sitemaps, performance budgets and answer-shaped content ship with the site. Imsuya Global also stays on after launch for monitoring, iterations and new features.",
+      ms: "Ya. Asas SEO teknikal, AEO dan GEO adalah sebahagian daripada Reka Bentuk & Pembangunan Laman Web Pintar, bukan tambahan berbayar: data berstruktur, URL kanonik, peta laman, bajet prestasi dan kandungan berbentuk jawapan dihantar bersama laman. Imsuya Global juga kekal selepas pelancaran untuk pemantauan, penambahbaikan dan ciri baharu.",
     },
   },
   {
@@ -160,7 +160,7 @@ export const faqs: Faq[] = [
       ms: "Apa yang berlaku selepas laman web atau perisian saya dilancarkan?",
     },
     a: {
-      en: "Launch is treated as the starting point, not the end. Imsuya Global stays on for iterations, monitoring and support, and most clients continue on a monthly retainer for marketing, content and new features.",
+      en: "Launch is treated as the starting point, not the end. Imsuya Global stays on for iterations, monitoring and support, and most clients continue on a monthly retainer for content, iterations and new features.",
       ms: "Pelancaran dianggap sebagai permulaan, bukan penamat. Imsuya Global kekal bersama untuk penambahbaikan, pemantauan dan sokongan, dan kebanyakan pelanggan meneruskan secara bulanan untuk pemasaran, kandungan dan ciri baharu.",
     },
   },

@@ -8,7 +8,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/services",
   title: "Services",
   description:
-    "Nine disciplines, one team: smart websites, custom web applications and software, AI automation, AI products, digital design, digital marketing, social media, merchandise and corporate gifts.",
+    "Four disciplines, one team: smart website design and development, custom web applications and software systems, custom AI services and softwares, and custom digital design from brand identity to merchandise.",
 });
 
 export default function ServicesPage() {
