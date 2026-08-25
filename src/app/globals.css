@@ -1,17 +1,21 @@
 @import "tailwindcss";
 
 /*
- * Single theme: "the blueprint".
- * Navy ink on drafting paper, coral accents, engineered typography.
+ * Single theme, drawn straight off the logo.
+ *
+ * The mark is exactly two colours — deep navy #071C38 and orange #F0504A —
+ * and those are the two the site runs on. The ink used to be a cold
+ * near-black (#0a0e1a) and the accent a hotter red (#ff4e45); both are now
+ * the logo's own values, so type and brand mark sit at the same temperature.
  */
 :root {
-  --void: #f7f8fb; /* off-white with a navy undertone — not glare-white */
-  --paper: #0a0e1a; /* ink */
-  --muted: rgba(13, 18, 36, 0.74); /* readable secondary text */
-  --soft: rgba(13, 18, 36, 0.56); /* labels, indices, fine print */
-  --coral: #ff4e45;
-  --navy: #1e2852;
-  --navy-deep: #e6eaf6; /* light navy surface */
+  --void: #ffffff; /* the paper is plain white — the client asked for it */
+  --paper: #071c38; /* ink — the logo navy */
+  --muted: rgba(7, 28, 56, 0.74); /* readable secondary text */
+  --soft: rgba(7, 28, 56, 0.56); /* labels, indices, fine print */
+  --coral: #f0504a; /* the logo orange */
+  --navy: #0f2a52; /* one step up from the ink, for inverted surfaces */
+  --navy-deep: #e7ecf7; /* light navy surface */
   color-scheme: light;
 }
 
@@ -23,7 +27,7 @@
   --color-coral: var(--coral);
   --color-navy: var(--navy);
   --color-navy-deep: var(--navy-deep);
-  --font-sans: var(--font-satoshi);
+  --font-sans: var(--font-rubik);
   --font-mono: var(--font-jetbrains);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -31,13 +35,15 @@
 html {
   background: var(--void);
   scrollbar-width: thin;
-  scrollbar-color: rgba(13, 18, 36, 0.25) transparent;
+  scrollbar-color: rgba(7, 28, 56, 0.25) transparent;
 }
 
+/* Rubik is the studio typeface — everything that is not a technical label
+   is set in it, at the weight the element calls for. */
 body {
   background: var(--void);
   color: var(--paper);
-  font-family: var(--font-satoshi), system-ui, sans-serif;
+  font-family: var(--font-rubik), system-ui, sans-serif;
   overflow-x: clip;
 }
 
@@ -69,7 +75,7 @@ body {
 
 /* Ghost display type: filled ink, not hairline strokes. */
 .text-outline {
-  color: rgba(10, 14, 26, 0.34);
+  color: rgba(7, 28, 56, 0.32);
 }
 
 /*
@@ -85,13 +91,13 @@ body {
   /* Layers paint top-first: a paper band that keeps the nav legible, then a
      paper plate that runs out before the motion begins. */
   background:
-    linear-gradient(to bottom, var(--void) 0%, rgba(247, 248, 251, 0) 170px),
+    linear-gradient(to bottom, var(--void) 0%, rgba(255, 255, 255, 0) 170px),
     linear-gradient(
       to right,
       var(--void) 0%,
       var(--void) 38%,
-      rgba(247, 248, 251, 0.55) 58%,
-      rgba(247, 248, 251, 0) 76%
+      rgba(255, 255, 255, 0.55) 58%,
+      rgba(255, 255, 255, 0) 76%
     );
 }
 
@@ -130,13 +136,13 @@ body {
 @media (min-width: 1024px) {
   .motion-scrim {
     background:
-      linear-gradient(to bottom, var(--void) 0%, rgba(247, 248, 251, 0) 170px),
+      linear-gradient(to bottom, var(--void) 0%, rgba(255, 255, 255, 0) 170px),
       linear-gradient(
         to right,
         var(--void) 0%,
         var(--void) 32%,
-        rgba(247, 248, 251, 0.5) 46%,
-        rgba(247, 248, 251, 0) 60%
+        rgba(255, 255, 255, 0.5) 46%,
+        rgba(255, 255, 255, 0) 60%
       );
   }
 
@@ -168,7 +174,7 @@ body {
 
 /* Dark navy ground, used behind panels, placeholders and image frames. */
 .panel-navy {
-  background: linear-gradient(to bottom, #0b1128 0%, #1e2852 100%);
+  background: linear-gradient(to bottom, #04101f 0%, #0f2a52 100%);
 }
 
 /*
@@ -181,11 +187,11 @@ body {
 .panel-navy-live {
   background: linear-gradient(
     155deg,
-    #070b1c 0%,
-    #131c3d 22%,
-    #24305f 46%,
-    #16204a 68%,
-    #090f24 100%
+    #030d1a 0%,
+    #071c38 22%,
+    #123458 46%,
+    #09203e 68%,
+    #040f1e 100%
   );
   background-size: 180% 180%;
   animation: panel-shade 26s ease-in-out infinite;
@@ -199,24 +205,6 @@ body {
   50% {
     background-position: 100% 100%;
   }
-}
-
-/*
- * Faint blueprint ruling, so the horizontal scroll reads as a measured run
- * rather than one continuous smear of navy. It lives on a pseudo-element
- * rather than on the panel's own background, which is what lets the animated
- * navy underneath show through instead of being overwritten by it.
- */
-.panel-grid::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 72px 72px;
 }
 
 /*
@@ -252,14 +240,20 @@ body {
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(to top, rgba(11, 17, 40, 0.62) 0%, rgba(11, 17, 40, 0.08) 34%, transparent 58%),
-    linear-gradient(to right, rgba(11, 17, 40, 0.3) 0%, transparent 26%),
-    linear-gradient(to left, rgba(11, 17, 40, 0.22) 0%, transparent 22%);
+    linear-gradient(to top, rgba(4, 16, 31, 0.62) 0%, rgba(4, 16, 31, 0.08) 34%, transparent 58%),
+    linear-gradient(to right, rgba(4, 16, 31, 0.3) 0%, transparent 26%),
+    linear-gradient(to left, rgba(4, 16, 31, 0.22) 0%, transparent 22%);
 }
 
-/* ---------- blueprint atmosphere ---------- */
+/* ---------- ambient wash ---------- */
 
-.blueprint,
+/*
+ * The ruled blueprint grid that used to sit behind every page header is gone
+ * at the client's request — no vertical or horizontal lines boxing the
+ * background anywhere on the site. Only the soft colour wash is left, so the
+ * paper reads as paper. `.blueprint` itself is deliberately not re-defined:
+ * nothing renders it any more.
+ */
 .glow-field {
   position: absolute;
   inset: 0;
@@ -267,29 +261,28 @@ body {
   pointer-events: none;
 }
 
-.blueprint {
-  background-image:
-    linear-gradient(rgba(30, 40, 82, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(30, 40, 82, 0.07) 1px, transparent 1px);
-  background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 40%, black 25%, transparent 78%);
-  mask-image: radial-gradient(ellipse 95% 85% at 50% 40%, black 25%, transparent 78%);
+/*
+ * With the ruled grid gone there is nothing left to break up the colour wash
+ * in a page header, so where it used to stop dead at the bottom of the
+ * section it read as a seam straight across the page. Fading the decorative
+ * layers out before the section ends puts the join back where you cannot
+ * see it.
+ */
+.fade-out-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, black 42%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 42%, transparent 100%);
 }
 
 .glow-field {
-  background:
-    radial-gradient(42% 36% at 78% 16%, rgba(255, 78, 69, 0.09), transparent 70%),
-    radial-gradient(52% 42% at 10% 88%, rgba(30, 40, 82, 0.13), transparent 70%);
+  /* Warmth only. The second blob here used to be navy, and against plain
+     white it was the thing that made the page read grey. */
+  background: radial-gradient(46% 40% at 80% 14%, rgba(240, 80, 74, 0.07), transparent 72%);
 }
 
 /* Cards float — white surface, drafting-table shadow. */
 .card {
   background-color: #ffffff;
-  box-shadow: 0 24px 60px -28px rgba(30, 40, 82, 0.3);
-}
-
-.navy-wash {
-  opacity: 0.18;
+  box-shadow: 0 24px 60px -28px rgba(7, 28, 56, 0.3);
 }
 
 /*
@@ -299,7 +292,7 @@ body {
  */
 .reason-card {
   background-color: #ffffff;
-  box-shadow: 0 18px 44px -26px rgba(30, 40, 82, 0.28);
+  box-shadow: 0 18px 44px -26px rgba(7, 28, 56, 0.28);
   transition:
     background-color 0.45s var(--ease-out-expo),
     border-color 0.45s var(--ease-out-expo),
@@ -311,7 +304,23 @@ body {
   background-color: var(--navy);
   border-color: var(--navy);
   transform: translateY(-4px);
-  box-shadow: 0 30px 60px -28px rgba(30, 40, 82, 0.5);
+  box-shadow: 0 30px 60px -28px rgba(7, 28, 56, 0.5);
+}
+
+/* ---------- process flow diagram ---------- */
+
+/*
+ * From xl the six process stages stop being a stacked timeline and become a
+ * horizontal spine with cards alternating above and below it. Dropping the
+ * <li> out of the box tree lets its card and its node land on different rows
+ * of the parent grid, so the whole diagram is one list in the DOM instead of
+ * one markup tree per breakpoint. `role="list"` is on the <ol> because
+ * `display: contents` can otherwise cost the list its semantics.
+ */
+@media (min-width: 1280px) {
+  .flow-item {
+    display: contents;
+  }
 }
 
 /* ---------- marquee ---------- */
@@ -374,44 +383,62 @@ body {
 
 /*
  * Two pure-CSS cube pieces the client picked off freefrontend.com/css-cubes,
- * re-cut to the brand: white tops, navy-tinted sides, coral where the piece
- * calls for an accent. No canvas, no library, no JavaScript — they cost a
- * couple of composited layers and nothing else.
+ * re-cut to the brand: white tops, navy-tinted sides, orange where the piece
+ * calls for an accent. No canvas and no library — they cost a couple of
+ * composited layers and nothing else.
  *
  * 1. .cube-grid — "Cube Grid (Pure CSS)". An isometric field of cubes that
- *    rise and fall in a diagonal wave. Sits in the /portfolio header.
+ *    rise and fall in a diagonal wave. Sits in the /portfolio header. This
+ *    one is no longer JavaScript-free: the client asked for it to answer the
+ *    pointer and to fire on click, so CubeGrid.tsx writes --tilt-*, --lift
+ *    and --heat and the CSS below does the rest.
  * 2. .cube-stack — "CSS Only Cubes Hover Effects". Three offset columns of
  *    isometric cubes that light coral under the pointer. Sits in the
  *    /services header.
  *
- * The originals were written in Pug and Sass. The per-cube grid coordinates
- * Pug generated in a loop are written out longhand below, and Sass's nesting
- * and `pow()` arithmetic are resolved into plain custom properties.
+ * The originals were written in Pug and Sass. Sass's nesting and `pow()`
+ * arithmetic are resolved into plain custom properties here; the grid
+ * coordinates Pug generated in a loop are written per element by React.
  */
 
 .cube-grid {
-  --n: 4;
-  --cube: clamp(1.7rem, 4.4vw, 3rem);
-  --cube-t: 1.5s;
+  --n: 5;
+  /* Half again as big as the 4x4 field it replaces — the client asked for
+     more of it in the frame. */
+  --cube: clamp(2.1rem, 5.6vw, 4.1rem);
+  --cube-t: 2.2s;
+  /* Written by the pointer. At rest the field sits at the flat isometric
+     angle the original pen used. */
+  --tilt-x: 0deg;
+  --tilt-z: 0deg;
   display: grid;
   grid-template-columns: repeat(var(--n), var(--cube));
-  gap: 0.5em;
+  gap: 0.55em;
   place-content: center;
-  transform: rotateX(55deg) rotate(45deg);
+  transform: rotateX(calc(55deg + var(--tilt-x))) rotate(calc(45deg + var(--tilt-z)));
   transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out-expo);
 }
 
 .cube-grid > .cube {
+  /* Two independent channels, so they can stack:
+     --lift  how far this cube is pushed out of the plane (pointer + click)
+     --heat  how much brand orange has bled into its faces (pointer + click) */
+  --lift: 0;
+  --heat: 0;
   display: grid;
   aspect-ratio: 1;
   transform-style: preserve-3d;
   /* The rotation origin sits one cube-edge behind the face, which is what
      turns a flat square plus two folded pseudo-elements into a solid. */
   transform-origin: 50% 50% calc(-1 * var(--cube));
-  background: #ffffff;
+  background: color-mix(in srgb, var(--coral) calc(var(--heat) * 100%), #ffffff);
   animation: cube-rise var(--cube-t) ease-in-out infinite;
   /* Diagonal wave: the delay is a function of the cube's row and column. */
   animation-delay: calc((var(--n) - 1 - var(--j) + var(--i)) * 0.05 * var(--cube-t));
+  /* The idle wave owns `scale`, so the pointer rides on `translate` instead
+     and the two compose rather than fight. */
+  translate: 0 0 calc(var(--lift) * var(--cube) * 1.25);
 }
 
 .cube-grid > .cube::before,
@@ -423,34 +450,27 @@ body {
   transform-origin: calc(var(--fold) * 50%) calc(var(--face) * 50%);
   translate: calc(var(--face) * 100%) calc(var(--fold) * 100%);
   rotate: var(--fold) var(--face) 0 calc((2 * var(--face) - 1) * 90deg);
-  background: color-mix(in hsl, #97a3c8 calc(var(--face) * 100%), #cfd6e8);
+  background: color-mix(
+    in srgb,
+    #c9403a calc(var(--heat) * 78%),
+    color-mix(in hsl, #97a3c8 calc(var(--face) * 100%), #cfd6e8)
+  );
 }
 
 .cube-grid > .cube::after {
   --face: 1;
 }
 
-/* Column index, then row index — the two loops the Pug template ran. */
-.cube-grid > .cube:nth-child(4n + 1) { --i: 0; }
-.cube-grid > .cube:nth-child(4n + 2) { --i: 1; }
-.cube-grid > .cube:nth-child(4n + 3) { --i: 2; }
-.cube-grid > .cube:nth-child(4n + 4) { --i: 3; }
-.cube-grid > .cube:nth-child(n + 1) { --j: 0; }
-.cube-grid > .cube:nth-child(n + 5) { --j: 1; }
-.cube-grid > .cube:nth-child(n + 9) { --j: 2; }
-.cube-grid > .cube:nth-child(n + 13) { --j: 3; }
-
-/* Two coral cubes, so the field belongs to this brand rather than to a pen. */
-.cube-grid > .cube:nth-child(6),
-.cube-grid > .cube:nth-child(11) {
+/* A few cubes are orange from the start, so the field belongs to this brand
+   rather than to a pen. Set from the component, not by nth-child, because the
+   grid is no longer a fixed 4x4. */
+.cube-grid > .cube.is-accent {
   background: var(--coral);
 }
 
-.cube-grid > .cube:nth-child(6)::before,
-.cube-grid > .cube:nth-child(6)::after,
-.cube-grid > .cube:nth-child(11)::before,
-.cube-grid > .cube:nth-child(11)::after {
-  background: color-mix(in hsl, #a32b25 calc(var(--face) * 100%), #e0413a);
+.cube-grid > .cube.is-accent::before,
+.cube-grid > .cube.is-accent::after {
+  background: color-mix(in hsl, #93302c calc(var(--face) * 100%), #d9453f);
 }
 
 @keyframes cube-rise {
@@ -554,7 +574,7 @@ body {
 .cube-stack .cube-face:hover {
   transition: none;
   background: var(--coral);
-  filter: drop-shadow(0 0 30px rgba(255, 78, 69, 0.55));
+  filter: drop-shadow(0 0 30px rgba(240, 80, 74, 0.55));
 }
 
 .cube-stack .cube-face:hover::before,
@@ -583,7 +603,7 @@ body {
   .cursor-ring {
     width: 34px;
     height: 34px;
-    border: 1px solid rgba(13, 18, 36, 0.35);
+    border: 1px solid rgba(7, 28, 56, 0.35);
     transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo),
       border-color 0.3s, background-color 0.3s;
   }
@@ -591,7 +611,7 @@ body {
     width: 56px;
     height: 56px;
     border-color: var(--coral);
-    background: rgba(255, 78, 69, 0.08);
+    background: rgba(240, 80, 74, 0.08);
   }
 }
 

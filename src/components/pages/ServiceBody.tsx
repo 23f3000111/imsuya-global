@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { process, serviceImage, type Service } from "@/data/services";
+import { serviceImage, type Service } from "@/data/services";
 import { projects } from "@/data/projects";
 import { aiProducts } from "@/data/aiProducts";
 import { ProductDemo } from "@/components/ui/ProductDemo";
@@ -10,6 +10,7 @@ import { MerchandiseGallery } from "@/components/ui/MerchandiseGallery";
 import { PageHero } from "@/components/ui/PageHero";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { ServiceRail } from "@/components/ui/ServiceRail";
+import { ProcessFlow } from "@/components/ui/ProcessFlow";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { ProjectCard } from "@/components/home/Work";
@@ -93,9 +94,15 @@ export function ServiceBody({ service }: { service: Service }) {
       : [t(service.short)];
 
   return (
-    // The rail is fixed to the left edge, so the page itself is inset at xl
-    // and up to keep it clear of the headline.
-    <div className="xl:pl-24">
+    /*
+     * The rail is fixed to the left edge, so the page content is inset at xl
+     * and up to keep it clear of the headline. The inset sits on the content
+     * boxes, never on a wrapper around the whole page: padding the wrapper
+     * left a 96px strip of bare background up the side of the window that the
+     * section grounds never reached, and it read as a white line running
+     * behind the navbar and across the logo.
+     */
+    <>
       {/* Jump straight to any other discipline without going back a page. */}
       <ServiceRail activeSlug={service.slug} />
 
@@ -103,10 +110,11 @@ export function ServiceBody({ service }: { service: Service }) {
         eyebrow={copy.eyebrow(service.index)}
         lines={lines}
         intro={t(service.tagline)}
+        inset
       />
 
       <section className="bg-void px-6 pb-28 lg:px-12">
-        <div className="relative z-10 mx-auto max-w-[1600px]">
+        <div className="relative z-10 mx-auto max-w-[1600px] xl:pl-24">
           {/* cinematic band */}
           <Reveal y={60} className="img-veil card relative mb-20 aspect-[21/9] w-full overflow-hidden border border-paper/[0.1]">
             <Image
@@ -171,36 +179,9 @@ export function ServiceBody({ service }: { service: Service }) {
               <p className="max-w-md text-sm leading-relaxed text-muted">{copy.processIntro}</p>
             </div>
 
-            <Reveal
-              stagger={0.07}
-              className="grid gap-px overflow-hidden border border-paper/[0.08] bg-paper/[0.08] md:grid-cols-2 lg:grid-cols-3"
-            >
-              {process.map((p, i) => {
-                const gain = deliverableFor(i);
-                return (
-                  <div
-                    key={p.step.en}
-                    className="group flex flex-col bg-void p-8 transition-colors duration-500 hover:bg-navy-deep/50"
-                  >
-                    <p className="text-display text-5xl text-paper/[0.12] transition-colors duration-500 group-hover:text-coral/60">
-                      {String(i + 1).padStart(2, "0")}
-                    </p>
-                    <h3 className="mt-6 text-lg font-black uppercase tracking-tight">{t(p.step)}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted">{t(p.detail)}</p>
-
-                    {gain && (
-                      <div className="mt-6 border-t border-paper/[0.08] pt-5">
-                        <p className="text-eyebrow mb-2 text-coral">{copy.youGet}</p>
-                        <p className="text-sm font-bold tracking-tight">{t(gain.name)}</p>
-                        <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
-                          {t(gain.detail)}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </Reveal>
+            {/* Drawn as a diagram rather than listed as a grid of cards, at
+                the client's request. */}
+            <ProcessFlow deliverableFor={deliverableFor} youGetLabel={copy.youGet} />
           </div>
 
           {/* Related work, or an honest placeholder where there is none yet.
@@ -246,6 +227,6 @@ export function ServiceBody({ service }: { service: Service }) {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

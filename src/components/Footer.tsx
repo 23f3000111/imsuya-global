@@ -171,7 +171,7 @@ export function Footer() {
           lengthAdjust="spacingAndGlyphs"
           fill="currentColor"
           style={{
-            fontFamily: "var(--font-satoshi), system-ui, sans-serif",
+            fontFamily: "var(--font-rubik), system-ui, sans-serif",
             fontSize: "116px",
             fontWeight: 900,
           }}

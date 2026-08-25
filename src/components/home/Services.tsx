@@ -220,7 +220,7 @@ export function Services() {
         {services.map((s) => (
           <article
             key={s.slug}
-            className="panel-grid relative flex h-full w-full flex-col justify-center gap-10 border-b border-white/10 px-6 py-16 lg:w-[78vw] lg:flex-row lg:items-stretch lg:gap-[3vw] lg:border-b-0 lg:border-r-2 lg:border-r-white/15 lg:px-[4vw] lg:py-8"
+            className="relative flex h-full w-full flex-col justify-center gap-10 border-b border-white/10 px-6 py-16 lg:w-[78vw] lg:flex-row lg:items-stretch lg:gap-[3vw] lg:border-b-0 lg:border-r-2 lg:border-r-white/15 lg:px-[4vw] lg:py-8"
           >
             {/* The running number, moved off the image to the top of the panel */}
             <span

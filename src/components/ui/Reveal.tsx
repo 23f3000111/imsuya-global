@@ -63,6 +63,7 @@ export function RevealLines({
   className = "",
   lineClassName = "",
   accent,
+  accentLast = false,
   as: Tag = "h2",
 }: {
   lines: string[];
@@ -71,12 +72,23 @@ export function RevealLines({
   /** Words inside `lines` to set in the brand coral. Matched whole word,
    *  case insensitively, ignoring surrounding punctuation. */
   accent?: string[];
+  /**
+   * Set the final word of the final line in the brand orange, by position
+   * rather than by spelling. Word matching would light every copy of that
+   * word in the headline; the client asked for the one it ends on.
+   * Ignored when `accent` names words explicitly.
+   */
+  accentLast?: boolean;
   as?: "h1" | "h2" | "h3" | "p" | "div";
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const wanted = accent?.length
     ? new Set(accent.map((w) => w.replace(/[^\p{L}\p{N}]/gu, "").toLowerCase()))
     : null;
+  // Index of the last line that actually carries a word. A trailing empty
+  // string would otherwise claim the accent and nothing would light up.
+  const lastLine =
+    accentLast && !wanted ? lines.reduce((last, l, i) => (l.trim() ? i : last), -1) : -1;
 
   useGSAP(
     () => {
@@ -98,23 +110,29 @@ export function RevealLines({
   return (
     <div ref={ref}>
       <Tag className={className}>
-        {lines.map((line, i) => (
-          <span key={i} className="block overflow-hidden">
-            <span className={`line-inner block will-change-transform ${lineClassName}`}>
-              {wanted
-                ? line.split(" ").map((word, w, all) => {
-                    const bare = word.replace(/[^\p{L}\p{N}]/gu, "").toLowerCase();
-                    return (
-                      <span key={w} className={wanted.has(bare) ? "text-coral" : undefined}>
-                        {word}
-                        {w < all.length - 1 ? " " : ""}
-                      </span>
-                    );
-                  })
-                : line}
+        {lines.map((line, i) => {
+          // Only the lines that need per-word spans get split; the rest stay a
+          // single text node so the reveal mask has nothing extra to composite.
+          const split = Boolean(wanted) || i === lastLine;
+          return (
+            <span key={i} className="block overflow-hidden">
+              <span className={`line-inner block will-change-transform ${lineClassName}`}>
+                {split
+                  ? line.split(" ").map((word, w, all) => {
+                      const bare = word.replace(/[^\p{L}\p{N}]/gu, "").toLowerCase();
+                      const lit = wanted ? wanted.has(bare) : w === all.length - 1;
+                      return (
+                        <span key={w} className={lit ? "text-coral" : undefined}>
+                          {word}
+                          {w < all.length - 1 ? " " : ""}
+                        </span>
+                      );
+                    })
+                  : line}
+              </span>
             </span>
-          </span>
-        ))}
+          );
+        })}
       </Tag>
     </div>
   );

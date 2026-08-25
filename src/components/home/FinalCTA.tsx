@@ -78,11 +78,9 @@ export function FinalCTA() {
       ref={ref}
       className="relative flex flex-col items-center justify-center overflow-hidden bg-void py-24 text-center lg:py-28"
     >
-      {/* decorative layers — always below text */}
-      <div
-        aria-hidden
-        className="navy-wash absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_50%_120%,#1e2852_0%,transparent_60%)]"
-      />
+      {/* decorative layers — always below text. The navy plate that used to
+          pool under the button has gone with the rest of them: on plain white
+          it read as a grey band with a hard edge where the section ended. */}
       <div className="glow-field" aria-hidden />
       {PIXELS.map((p, i) => (
         <span

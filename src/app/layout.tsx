@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Rubik } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/i18n";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -12,10 +11,16 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { SITE_URL, graph, organizationSchema, websiteSchema } from "@/lib/seo";
 
-const satoshi = localFont({
-  src: "../fonts/Satoshi-Variable.woff2",
-  variable: "--font-satoshi",
-  weight: "300 900",
+/*
+ * Rubik is Imsuya Global's official typeface, so it carries everything on the
+ * site that is not a technical label. The variable cut covers 300–900, which
+ * the display slabs need at the top end and the body copy at the bottom;
+ * asking for a weight list here would ship several static files instead.
+ * It replaces Satoshi, which was a stand-in.
+ */
+const rubik = Rubik({
+  variable: "--font-rubik",
+  subsets: ["latin", "latin-ext"],
   display: "swap",
 });
 
@@ -79,7 +84,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-MY" className={`${satoshi.variable} ${jetbrains.variable} antialiased`}>
+    <html lang="en-MY" className={`${rubik.variable} ${jetbrains.variable} antialiased`}>
       <body className="bg-void text-paper">
         {/* The studio as an entity, declared once for every page. */}
         <JsonLd json={graph([organizationSchema(), websiteSchema()])} />

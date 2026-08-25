@@ -20,7 +20,7 @@ import * as THREE from "three";
  * never appeared to follow the mouse.
  */
 
-const ACCENT = new THREE.Color("#ff4e45");
+const ACCENT = new THREE.Color("#f0504a");
 
 // On paper the network reads as navy ink; on a navy ground it has to invert
 // or the particles simply vanish into the background.
@@ -513,7 +513,7 @@ function StaticField({ tone }: { tone: "light" | "dark" }) {
     <div
       className="absolute inset-0"
       style={{
-        backgroundImage: `radial-gradient(${dot} 1px, transparent 1px), radial-gradient(rgba(255,78,69,0.35) 1px, transparent 1px)`,
+        backgroundImage: `radial-gradient(${dot} 1px, transparent 1px), radial-gradient(rgba(240,80,74,0.35) 1px, transparent 1px)`,
         backgroundSize: "34px 34px, 119px 119px",
         backgroundPosition: "0 0, 17px 17px",
         maskImage: "radial-gradient(ellipse at center, black 20%, transparent 78%)",

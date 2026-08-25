@@ -35,7 +35,7 @@ export function ServiceRail({ activeSlug }: { activeSlug: string }) {
          navbar rather than in the whole window. */
       className="group fixed left-4 top-[calc(50%+3rem)] z-40 hidden -translate-y-1/2 xl:block"
     >
-      <div className="max-h-[calc(100vh-11rem)] overflow-y-auto overscroll-contain rounded-[30px] border border-white/70 bg-white/65 p-2.5 shadow-[0_28px_70px_-30px_rgba(30,40,82,0.55)] backdrop-blur-xl [scrollbar-width:none]">
+      <div className="max-h-[calc(100vh-11rem)] overflow-y-auto overscroll-contain rounded-[30px] border border-white/70 bg-white/65 p-2.5 shadow-[0_28px_70px_-30px_rgba(7,28,56,0.55)] backdrop-blur-xl [scrollbar-width:none]">
         <ul className="flex flex-col gap-1.5">
           {services.map((s) => {
             const active = s.slug === activeSlug;
@@ -54,8 +54,8 @@ export function ServiceRail({ activeSlug }: { activeSlug: string }) {
                   <span
                     className={`flex size-12 shrink-0 items-center justify-center rounded-full transition-all duration-300 [transition-timing-function:var(--ease-out-expo)] ${
                       active
-                        ? "bg-coral text-white shadow-[0_12px_26px_-10px_rgba(255,78,69,0.95)]"
-                        : "bg-white/0 text-navy/70 hover:bg-white hover:text-coral hover:shadow-[0_12px_26px_-14px_rgba(30,40,82,0.5)]"
+                        ? "bg-coral text-white shadow-[0_12px_26px_-10px_rgba(240,80,74,0.95)]"
+                        : "bg-white/0 text-navy/70 hover:bg-white hover:text-coral hover:shadow-[0_12px_26px_-14px_rgba(7,28,56,0.5)]"
                     }`}
                   >
                     <ServiceIcon slug={s.slug} className="size-6" />

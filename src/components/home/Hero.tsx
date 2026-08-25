@@ -66,8 +66,8 @@ export function Hero() {
       });
 
       const markerRest =
-        markers.length > 1 ? getComputedStyle(markers[1]).backgroundColor : "rgba(13,18,36,0.2)";
-      gsap.set(markers[0], { backgroundColor: "#ff4e45" });
+        markers.length > 1 ? getComputedStyle(markers[1]).backgroundColor : "rgba(7,28,56,0.2)";
+      gsap.set(markers[0], { backgroundColor: "#f0504a" });
 
       if (reduced) {
         // Hold on the first headline; no looping motion.
@@ -111,7 +111,7 @@ export function Hero() {
           `${label}+=0.34`
         );
         loop.to(markers[i], { backgroundColor: markerRest, duration: 0.25 }, label);
-        loop.to(markers[next], { backgroundColor: "#ff4e45", duration: 0.25 }, label);
+        loop.to(markers[next], { backgroundColor: "#f0504a", duration: 0.25 }, label);
       });
 
       // Let the last headline breathe before the loop restarts.
@@ -126,8 +126,6 @@ export function Hero() {
       className="relative flex h-svh flex-col justify-center overflow-hidden bg-void"
     >
       {/* decorative layers, all beneath the copy */}
-      <div className="blueprint" aria-hidden />
-
       {/* The motion lives on the right of the frame. Wide on purpose — at 58%
           the network was squeezed into the corner. The mask dissolves it before
           it can reach the headline column, so no pixel ever crosses the type. */}
