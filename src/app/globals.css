@@ -172,26 +172,39 @@ body {
   color: color-mix(in srgb, var(--navy) 11%, transparent);
 }
 
-/* Dark navy ground, used behind panels, placeholders and image frames. */
+/*
+ * Dark navy ground, used behind panels, placeholders and image frames.
+ *
+ * #071C38 is the logo navy, sampled straight off the mark, and it is what
+ * the ground reads as. The gradient only breathes either side of it by a few
+ * points so a large slab does not go flat — it never travels far enough to
+ * become a different blue, which was the client's note.
+ */
 .panel-navy {
-  background: linear-gradient(to bottom, #04101f 0%, #0f2a52 100%);
+  background: linear-gradient(to bottom, #061a33 0%, #071c38 55%, #051529 100%);
 }
 
 /*
  * The What We Do ground. The client asked for the drifting film grain to come
  * off the navy and for the blue itself to move instead, so the section runs a
- * wide multi-stop navy that travels slowly across an oversized box. Nothing
- * repaints but the gradient, and it reads as the blue changing shade rather
- * than as noise crawling over the top of it.
+ * multi-stop navy that travels slowly across an oversized box. Nothing repaints
+ * but the gradient, and it reads as the blue changing shade rather than as
+ * noise crawling over the top of it.
+ *
+ * Every stop is the logo navy #071C38 give or take a few points of lightness.
+ * The first cut ranged from #030D1A to #123458 and the midpoint read as a
+ * brighter, bluer slab than the mark — "the blue is not the same as our logo".
+ * The drift is now narrow enough that the section is unmistakably the logo
+ * colour at every moment of the cycle.
  */
 .panel-navy-live {
   background: linear-gradient(
     155deg,
-    #030d1a 0%,
-    #071c38 22%,
-    #123458 46%,
-    #09203e 68%,
-    #040f1e 100%
+    #061831 0%,
+    #071c38 26%,
+    #0a2444 50%,
+    #071c38 74%,
+    #051529 100%
   );
   background-size: 180% 180%;
   animation: panel-shade 26s ease-in-out infinite;
@@ -387,11 +400,11 @@ body {
  * calls for an accent. No canvas and no library — they cost a couple of
  * composited layers and nothing else.
  *
- * 1. .cube-grid — "Cube Grid (Pure CSS)". An isometric field of cubes that
- *    rise and fall in a diagonal wave. Sits in the /portfolio header. This
- *    one is no longer JavaScript-free: the client asked for it to answer the
- *    pointer and to fire on click, so CubeGrid.tsx writes --tilt-*, --lift
- *    and --heat and the CSS below does the rest.
+ * 1. .cube-grid — "Cube Grid (Pure CSS)". An isometric field of solid cubes
+ *    in the /portfolio header. This one is no longer JavaScript-free: the
+ *    client asked for it to answer the pointer and to fire on click, so
+ *    Cubes.tsx writes --tilt-*, --lift and --heat and the CSS below does the
+ *    rest. The original pen's idle wave is gone — see the note on .cube.
  * 2. .cube-stack — "CSS Only Cubes Hover Effects". Three offset columns of
  *    isometric cubes that light coral under the pointer. Sits in the
  *    /services header.
@@ -406,7 +419,6 @@ body {
   /* Half again as big as the 4x4 field it replaces — the client asked for
      more of it in the frame. */
   --cube: clamp(2.1rem, 5.6vw, 4.1rem);
-  --cube-t: 2.2s;
   /* Written by the pointer. At rest the field sits at the flat isometric
      angle the original pen used. */
   --tilt-x: 0deg;
@@ -432,12 +444,25 @@ body {
   /* The rotation origin sits one cube-edge behind the face, which is what
      turns a flat square plus two folded pseudo-elements into a solid. */
   transform-origin: 50% 50% calc(-1 * var(--cube));
-  background: color-mix(in srgb, var(--coral) calc(var(--heat) * 100%), #ffffff);
-  animation: cube-rise var(--cube-t) ease-in-out infinite;
-  /* Diagonal wave: the delay is a function of the cube's row and column. */
-  animation-delay: calc((var(--n) - 1 - var(--j) + var(--i)) * 0.05 * var(--cube-t));
-  /* The idle wave owns `scale`, so the pointer rides on `translate` instead
-     and the two compose rather than fight. */
+  /*
+   * The lit face, and the second half of why the field kept disappearing: it
+   * used to be pure #ffffff, which was invisible once the paper went pure
+   * white too. It is a hair of navy now, so a cube reads as a solid against
+   * the page instead of as a wireframe of its own side faces.
+   */
+  background: color-mix(in srgb, var(--coral) calc(var(--heat) * 100%), #e6ebf5);
+  /*
+   * No idle animation. The pen this came from ran a diagonal wave that spent
+   * most of its cycle at `scale: 1 1 0` — every cube collapsed to a flat
+   * square and the field read as half missing, which is the client's "ensure
+   * the design stays on the page full time and does not disappear". Left
+   * alone, each cube now sits permanently at the depth the wave used to reach
+   * at its peak. Half an edge is deliberate: at a full edge each cube is deep
+   * enough to bury the one behind it and the field reads as a plate of loose
+   * tops. Motion comes only from the pointer (--lift, --heat, --tilt-*) and
+   * from a click.
+   */
+  scale: 1 1 0.5;
   translate: 0 0 calc(var(--lift) * var(--cube) * 1.25);
 }
 
@@ -473,16 +498,6 @@ body {
   background: color-mix(in hsl, #93302c calc(var(--face) * 100%), #d9453f);
 }
 
-@keyframes cube-rise {
-  0%,
-  50%,
-  100% {
-    scale: 1 1 0;
-  }
-  25% {
-    scale: 1 1 0.5;
-  }
-}
 
 /*
  * Hover cubes. `--face-size` drives every measurement in the piece, so the
@@ -556,6 +571,9 @@ body {
   transition: background 1.5s;
 }
 
+/* The lit top face. Tinted for the same reason the grid's is: pure white has
+   no silhouette against a pure white page, so the cubes along the top of the
+   cluster lost their tops. */
 .cube-stack .cube-face::after {
   content: "";
   position: absolute;
@@ -563,7 +581,7 @@ body {
   left: 0;
   width: 100%;
   height: var(--face-depth);
-  background: #ffffff;
+  background: #e6ebf5;
   transform-origin: bottom;
   transform: skewX(45deg);
   transition: background 1.5s;

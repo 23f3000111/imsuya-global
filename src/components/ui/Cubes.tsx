@@ -21,22 +21,24 @@ const RIPPLE_SPEED = 0.8;
 const RIPPLE_MS = 560;
 
 /**
- * "Cube Grid (Pure CSS)" — an isometric field rising in a diagonal wave, in
- * the /portfolio header.
+ * "Cube Grid (Pure CSS)" — an isometric field of solid cubes in the
+ * /portfolio header.
  *
- * The client asked for it bigger and for it to respond, so on top of the
- * original's idle wave it now does two things:
+ * The original pen ran an idle diagonal wave. It is gone: that wave flattened
+ * each cube to nothing for most of its cycle, so the field kept half
+ * vanishing off the page. The cubes now sit solid and permanent, and every
+ * bit of movement is something the visitor caused:
  *
- *   - follows the pointer. The whole field tips a few degrees toward the
- *     cursor, and every cube lifts and warms toward brand orange in
- *     proportion to how close the cursor is to it.
- *   - fires on click. The wave restarts in sync from the top-left and a
- *     ripple runs outward from the point that was clicked, each cube popping
- *     as the front reaches it.
+ *   - hover. The whole field tips a few degrees toward the cursor, and every
+ *     cube lifts and warms toward brand orange in proportion to how close the
+ *     cursor is to it.
+ *   - click. A ripple runs outward from the point that was clicked and each
+ *     cube jumps as the front reaches it.
  *
  * All of it is written as custom properties on the existing elements — no
- * per-frame style recalculation beyond two numbers per cube — and the whole
- * behaviour is skipped under `prefers-reduced-motion`.
+ * per-frame style recalculation beyond two numbers per cube — the loop parks
+ * itself the moment nothing is moving, and the whole behaviour is skipped
+ * under `prefers-reduced-motion`, where the cubes simply stay put.
  */
 export function CubeGrid({ className = "" }: { className?: string }) {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -154,15 +156,6 @@ export function CubeGrid({ className = "" }: { className?: string }) {
       a.centres.forEach((c, i) => {
         const d = Math.hypot(e.clientX - c.x, e.clientY - c.y);
         a.popAt[i] = now + d / RIPPLE_SPEED;
-      });
-      // Restart every cube's idle wave from zero, so the diagonal run reads as
-      // being launched by the click rather than carrying on mid-stride.
-      a.cubes.forEach((c) => {
-        c.style.animation = "none";
-      });
-      void grid.offsetWidth; // force the restart before the value goes back
-      a.cubes.forEach((c) => {
-        c.style.animation = "";
       });
       wake();
     };
