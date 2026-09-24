@@ -13,8 +13,8 @@
   --paper: #071c38; /* ink — the logo navy */
   --muted: rgba(7, 28, 56, 0.74); /* readable secondary text */
   --soft: rgba(7, 28, 56, 0.56); /* labels, indices, fine print */
-  --coral: #f0504a; /* the logo orange */
-  --navy: #0f2a52; /* one step up from the ink, for inverted surfaces */
+  --coral: #f04e23; /* the logo orange */
+  --navy: #081d38; /* one step up from the ink, for inverted surfaces */
   --navy-deep: #e7ecf7; /* light navy surface */
   color-scheme: light;
 }
