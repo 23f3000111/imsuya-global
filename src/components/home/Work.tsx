@@ -83,7 +83,7 @@ export function ProjectCard({
             </div>
           )}
           {/* coral glow */}
-          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(ellipse_at_50%_120%,rgba(240,80,74,0.25)_0%,transparent_60%)]" />
+          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(ellipse_at_50%_120%,rgba(240,78,35,0.25)_0%,transparent_60%)]" />
         </div>
         <div className="flex flex-1 items-center justify-between gap-4 px-5 py-4">
           <div>

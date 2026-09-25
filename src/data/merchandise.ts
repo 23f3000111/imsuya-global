@@ -1,14 +1,7 @@
-import type { L10n } from "@/i18n/types";
+import type { ShowcaseItem } from "@/components/ui/ShowcaseGallery";
 
-export type Merchandise = {
-  name: string;
-  kind: L10n;
-  image: string;
-  /** Read beside the enlarged board when a card is opened. */
-  blurb: L10n;
-  /** What was actually produced, listed under the description. */
-  items: L10n[];
-};
+/** A board in the merchandise gallery; `items` is what was actually produced. */
+export type Merchandise = ShowcaseItem;
 
 /** Brands we have designed and produced physical merchandise for. */
 export const merchandise: Merchandise[] = [

@@ -22,12 +22,45 @@ export const faqs: Faq[] = [
   {
     topic: "services",
     q: {
+      en: "What is an AI creative agency?",
+      ms: "Apakah itu agensi kreatif AI?",
+    },
+    a: {
+      en: "An AI creative agency puts creative work — brand, website and graphic design — and AI products and automation under one roof. Imsuya Global is an AI creative agency in Malaysia: the same in-house team designs the brand and the website and builds the AI systems that run behind them, so nothing is handed between vendors.",
+      ms: "Agensi kreatif AI menggabungkan kerja kreatif — reka bentuk jenama, laman web dan grafik — dengan produk AI dan automasi di bawah satu bumbung. Imsuya Global ialah agensi kreatif AI di Malaysia: pasukan dalaman yang sama mereka jenama dan laman web serta membina sistem AI di sebaliknya, jadi tiada apa diserahkan antara vendor.",
+    },
+  },
+  {
+    topic: "services",
+    q: {
+      en: "Is Imsuya Global a website development studio in Malaysia?",
+      ms: "Adakah Imsuya Global sebuah studio pembangunan laman web di Malaysia?",
+    },
+    a: {
+      en: "Yes. Imsuya Global is a custom website development studio based in Petaling Jaya, Malaysia, working as website designer and website developer in one team. Every site is designed and built from scratch rather than from a template, with performance and technical SEO built in, for businesses in Malaysia and abroad.",
+      ms: "Ya. Imsuya Global ialah studio pembangunan laman web tersuai yang berpangkalan di Petaling Jaya, Malaysia, bekerja sebagai pereka dan pembangun laman web dalam satu pasukan. Setiap laman direka dan dibina dari awal, bukan dari templat, dengan prestasi dan SEO teknikal terbina, untuk perniagaan di Malaysia dan luar negara.",
+    },
+  },
+  {
+    topic: "services",
+    q: {
+      en: "Is Imsuya Global an AI agency in Malaysia?",
+      ms: "Adakah Imsuya Global sebuah agensi AI di Malaysia?",
+    },
+    a: {
+      en: "Yes. Imsuya Global is an AI agency in Malaysia that designs, trains and ships AI products and systems: chatbots and AI assistants, AI agents and automated workflows, and custom business programmes. AI work sits alongside website design, custom web applications and digital design, so an AI product arrives with the interface and brand it needs.",
+      ms: "Ya. Imsuya Global ialah agensi AI di Malaysia yang mereka, melatih dan melancarkan produk dan sistem AI: chatbot dan pembantu AI, ejen AI dan aliran kerja automatik, serta program perniagaan tersuai. Kerja AI berjalan seiring reka bentuk laman web, aplikasi web tersuai dan reka bentuk digital, jadi produk AI hadir bersama antara muka dan jenama yang diperlukannya.",
+    },
+  },
+  {
+    topic: "services",
+    q: {
       en: "What does Imsuya Global do?",
       ms: "Apa yang Imsuya Global lakukan?",
     },
     a: {
-      en: "Imsuya Global is a boutique creative digital agency based in Petaling Jaya, Malaysia, offering four in-house disciplines: smart website design and development, custom web applications and software systems, custom AI services and softwares, and custom digital design covering brand identity through to merchandise. Strategy, design, engineering and production all sit under one roof.",
-      ms: "Imsuya Global ialah agensi digital kreatif butik yang berpangkalan di Petaling Jaya, Malaysia, menawarkan empat disiplin dalaman: reka bentuk dan pembangunan laman web pintar, aplikasi web dan sistem perisian tersuai, perkhidmatan dan perisian AI tersuai, serta reka bentuk digital tersuai dari identiti jenama hingga barangan. Strategi, reka bentuk, kejuruteraan dan produksi semuanya di bawah satu bumbung.",
+      en: "Imsuya Global is an AI creative agency and website development studio based in Petaling Jaya, Malaysia, offering four in-house disciplines: website design and development, custom web applications and software systems, AI services and programmes, and custom digital design covering brand identity through to merchandise. Strategy, design, engineering and production all sit under one roof.",
+      ms: "Imsuya Global ialah agensi kreatif AI dan studio pembangunan laman web yang berpangkalan di Petaling Jaya, Malaysia, menawarkan empat disiplin dalaman: reka bentuk dan pembangunan laman web, aplikasi web dan sistem perisian tersuai, perkhidmatan dan program AI, serta reka bentuk digital tersuai dari identiti jenama hingga barangan. Strategi, reka bentuk, kejuruteraan dan produksi semuanya di bawah satu bumbung.",
     },
   },
   {
@@ -37,7 +70,7 @@ export const faqs: Faq[] = [
       ms: "Adakah Imsuya Global agensi reka bentuk web atau agensi digital penuh?",
     },
     a: {
-      en: "Imsuya Global is a full service digital agency, not only a web design studio. Alongside websites, the in-house team builds custom software systems, AI services and softwares, and digital design from brand identity through to merchandise, so you can launch and grow with one team instead of coordinating several vendors.",
+      en: "Imsuya Global is a full service digital agency, not only a web design studio. Alongside websites, the in-house team builds custom software systems, AI products and programmes, and digital design from brand identity through to merchandise, so you can launch and grow with one team instead of coordinating several vendors.",
       ms: "Imsuya Global ialah agensi digital perkhidmatan penuh, bukan sekadar studio reka bentuk web. Selain laman web, pasukan dalaman kami membina perisian tersuai, automasi AI dan produk AI, identiti jenama serta pemasaran berterusan, jadi anda boleh melancar dan berkembang dengan satu pasukan tanpa perlu menyelaras beberapa vendor.",
     },
   },
@@ -70,8 +103,8 @@ export const faqs: Faq[] = [
       ms: "Adakah Imsuya Global membina produk AI seperti pembantu AI atau alat dalaman?",
     },
     a: {
-      en: "Yes. Imsuya Global's AI Products & Softwares line builds custom AI assistants, knowledge systems and data pipelines trained on a client's own material, shipped as real products their customers use. Two are live now: a support chatbot for Safeeds Auto Transport and an intelligent booking flow for GigYard.",
-      ms: "Ya. Barisan Produk & Perisian AI Imsuya Global membina pembantu AI tersuai, sistem pengetahuan dan saluran data yang dilatih dengan bahan pelanggan sendiri, dilancarkan sebagai produk sebenar yang digunakan pelanggan mereka. Dua sudah beroperasi: chatbot sokongan untuk Safeeds Auto Transport dan aliran tempahan pintar untuk GigYard.",
+      en: "Yes. Imsuya Global builds AI products and systems in Malaysia through its AI Services & Programme line: custom AI assistants, knowledge systems, automated workflows and business programmes trained on a client's own material and shipped as real software. Live work includes a support chatbot for Safeeds Auto Transport, an intelligent booking flow for GigYard and a retail operations CRM for Legendary.",
+      ms: "Ya. Imsuya Global membina produk dan sistem AI di Malaysia melalui barisan Perkhidmatan & Program AI: pembantu AI tersuai, sistem pengetahuan, aliran kerja automatik dan program perniagaan yang dilatih dengan bahan pelanggan sendiri dan dilancarkan sebagai perisian sebenar. Kerja yang sudah beroperasi termasuk chatbot sokongan untuk Safeeds Auto Transport, aliran tempahan pintar untuk GigYard dan CRM operasi runcit untuk Legendary.",
     },
   },
   {

@@ -6,9 +6,9 @@ import { absoluteUrl, breadcrumbSchema, graph, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   path: "/portfolio",
-  title: "Work",
+  title: "Work · Website Design & Development Projects",
   description:
-    "Selected projects by Imsuya Global: websites, platforms and brands across logistics, education, F&B, property, automotive and industrial clients in Malaysia and beyond.",
+    "Selected work by Imsuya Global, a website design company in Malaysia: websites, web apps and brands for logistics, education, F&B, property, automotive and industrial clients in Malaysia and beyond.",
 });
 
 export default function PortfolioPage() {

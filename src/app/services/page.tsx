@@ -6,9 +6,9 @@ import { absoluteUrl, breadcrumbSchema, faqSchema, graph, pageMetadata } from "@
 
 export const metadata: Metadata = pageMetadata({
   path: "/services",
-  title: "Services",
+  title: "Website Design, Web Apps & AI Services in Malaysia",
   description:
-    "Four disciplines, one team: smart website design and development, custom web applications and software systems, custom AI services and softwares, and custom digital design from brand identity to merchandise.",
+    "Four disciplines from one AI creative agency in Malaysia: website design and development, custom web applications and software systems, AI services and programmes, and digital design from brand identity to merchandise.",
 });
 
 export default function ServicesPage() {

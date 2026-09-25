@@ -17,7 +17,7 @@ const COPY = {
     statement:
       "We don't just build websites. We build systems, brands, software and growth engines.",
     accent: new Set(["systems,", "brands,", "software", "growth"]),
-    body: "Imsuya Global is a boutique creative digital design and smart website development studio. We have experts covering every aspect of the company from strategy, design, engineering, production, development and more.",
+    body: "Imsuya Global is an AI creative agency and website development studio in Malaysia. We have experts covering every aspect of the company from strategy, design, engineering, production, development and more.",
     photoAlt: "The Imsuya Global studio in Kuala Lumpur",
     stats: [
       { value: "15+", label: "Projects shipped" },
@@ -31,7 +31,7 @@ const COPY = {
     statement:
       "Kami bukan sekadar membina laman web. Kami membina sistem, jenama, perisian dan enjin pertumbuhan.",
     accent: new Set(["sistem,", "jenama,", "perisian", "pertumbuhan"]),
-    body: "Imsuya Global ialah studio butik reka bentuk digital kreatif dan pembangunan laman web pintar. Kami mempunyai pakar merangkumi setiap aspek syarikat dari strategi, reka bentuk, kejuruteraan, produksi, pembangunan dan banyak lagi.",
+    body: "Imsuya Global ialah agensi kreatif AI dan studio pembangunan laman web di Malaysia. Kami mempunyai pakar merangkumi setiap aspek syarikat dari strategi, reka bentuk, kejuruteraan, produksi, pembangunan dan banyak lagi.",
     photoAlt: "Studio Imsuya Global di Kuala Lumpur",
     stats: [
       { value: "15+", label: "Projek disiapkan" },

@@ -1,20 +1,23 @@
 @import "tailwindcss";
 
 /*
- * Single theme, drawn straight off the logo.
+ * Single theme, two colours: the studio's official hex codes.
  *
- * The mark is exactly two colours — deep navy #071C38 and orange #F0504A —
- * and those are the two the site runs on. The ink used to be a cold
- * near-black (#0a0e1a) and the accent a hotter red (#ff4e45); both are now
- * the logo's own values, so type and brand mark sit at the same temperature.
+ *   Blue    #081D38
+ *   Orange  #F04E23
+ *
+ * Everything else — muted text, hairlines, shadows, the navy panel gradients,
+ * the shaded faces of the cube pieces — is derived from those two, so there is
+ * one blue and one orange on the site and they are the brand's. The logo
+ * artwork, the favicon and the loader mark are filled with the same values.
  */
 :root {
   --void: #ffffff; /* the paper is plain white — the client asked for it */
-  --paper: #071c38; /* ink — the logo navy */
-  --muted: rgba(7, 28, 56, 0.74); /* readable secondary text */
-  --soft: rgba(7, 28, 56, 0.56); /* labels, indices, fine print */
-  --coral: #f04e23; /* the logo orange */
-  --navy: #081d38; /* one step up from the ink, for inverted surfaces */
+  --paper: #081d38; /* ink — the brand blue */
+  --muted: rgba(8, 29, 56, 0.74); /* readable secondary text */
+  --soft: rgba(8, 29, 56, 0.56); /* labels, indices, fine print */
+  --coral: #f04e23; /* the brand orange */
+  --navy: #081d38; /* inverted surfaces — the same brand blue as the ink */
   --navy-deep: #e7ecf7; /* light navy surface */
   color-scheme: light;
 }
@@ -35,7 +38,7 @@
 html {
   background: var(--void);
   scrollbar-width: thin;
-  scrollbar-color: rgba(7, 28, 56, 0.25) transparent;
+  scrollbar-color: rgba(8, 29, 56, 0.25) transparent;
 }
 
 /* Rubik is the studio typeface — everything that is not a technical label
@@ -75,7 +78,7 @@ body {
 
 /* Ghost display type: filled ink, not hairline strokes. */
 .text-outline {
-  color: rgba(7, 28, 56, 0.32);
+  color: rgba(8, 29, 56, 0.32);
 }
 
 /*
@@ -175,13 +178,12 @@ body {
 /*
  * Dark navy ground, used behind panels, placeholders and image frames.
  *
- * #071C38 is the logo navy, sampled straight off the mark, and it is what
- * the ground reads as. The gradient only breathes either side of it by a few
+ * #081D38 is the brand blue, and it is what the ground reads as. The gradient only breathes either side of it by a few
  * points so a large slab does not go flat — it never travels far enough to
  * become a different blue, which was the client's note.
  */
 .panel-navy {
-  background: linear-gradient(to bottom, #061a33 0%, #071c38 55%, #051529 100%);
+  background: linear-gradient(to bottom, #071b35 0%, #081d38 55%, #06162b 100%);
 }
 
 /*
@@ -191,20 +193,20 @@ body {
  * but the gradient, and it reads as the blue changing shade rather than as
  * noise crawling over the top of it.
  *
- * Every stop is the logo navy #071C38 give or take a few points of lightness.
- * The first cut ranged from #030D1A to #123458 and the midpoint read as a
- * brighter, bluer slab than the mark — "the blue is not the same as our logo".
- * The drift is now narrow enough that the section is unmistakably the logo
- * colour at every moment of the cycle.
+ * Every stop is the brand blue #081D38 give or take a few points of
+ * lightness. The first cut ranged from #030D1A to #123458 and the midpoint
+ * read as a brighter, bluer slab than the brand — "the blue is not the same as
+ * our logo". The drift is narrow enough that the section is unmistakably the
+ * brand colour at every moment of the cycle.
  */
 .panel-navy-live {
   background: linear-gradient(
     155deg,
-    #061831 0%,
-    #071c38 26%,
-    #0a2444 50%,
-    #071c38 74%,
-    #051529 100%
+    #071932 0%,
+    #081d38 26%,
+    #0b2545 50%,
+    #081d38 74%,
+    #06162b 100%
   );
   background-size: 180% 180%;
   animation: panel-shade 26s ease-in-out infinite;
@@ -289,13 +291,13 @@ body {
 .glow-field {
   /* Warmth only. The second blob here used to be navy, and against plain
      white it was the thing that made the page read grey. */
-  background: radial-gradient(46% 40% at 80% 14%, rgba(240, 80, 74, 0.07), transparent 72%);
+  background: radial-gradient(46% 40% at 80% 14%, rgba(240, 78, 35, 0.07), transparent 72%);
 }
 
 /* Cards float — white surface, drafting-table shadow. */
 .card {
   background-color: #ffffff;
-  box-shadow: 0 24px 60px -28px rgba(7, 28, 56, 0.3);
+  box-shadow: 0 24px 60px -28px rgba(8, 29, 56, 0.3);
 }
 
 /*
@@ -305,7 +307,7 @@ body {
  */
 .reason-card {
   background-color: #ffffff;
-  box-shadow: 0 18px 44px -26px rgba(7, 28, 56, 0.28);
+  box-shadow: 0 18px 44px -26px rgba(8, 29, 56, 0.28);
   transition:
     background-color 0.45s var(--ease-out-expo),
     border-color 0.45s var(--ease-out-expo),
@@ -317,7 +319,7 @@ body {
   background-color: var(--navy);
   border-color: var(--navy);
   transform: translateY(-4px);
-  box-shadow: 0 30px 60px -28px rgba(7, 28, 56, 0.5);
+  box-shadow: 0 30px 60px -28px rgba(8, 29, 56, 0.5);
 }
 
 /* ---------- process flow diagram ---------- */
@@ -477,7 +479,7 @@ body {
   rotate: var(--fold) var(--face) 0 calc((2 * var(--face) - 1) * 90deg);
   background: color-mix(
     in srgb,
-    #c9403a calc(var(--heat) * 78%),
+    #c63d1a calc(var(--heat) * 78%),
     color-mix(in hsl, #97a3c8 calc(var(--face) * 100%), #cfd6e8)
   );
 }
@@ -495,7 +497,7 @@ body {
 
 .cube-grid > .cube.is-accent::before,
 .cube-grid > .cube.is-accent::after {
-  background: color-mix(in hsl, #93302c calc(var(--face) * 100%), #d9453f);
+  background: color-mix(in hsl, #8f2a10 calc(var(--face) * 100%), #d6441c);
 }
 
 
@@ -592,13 +594,226 @@ body {
 .cube-stack .cube-face:hover {
   transition: none;
   background: var(--coral);
-  filter: drop-shadow(0 0 30px rgba(240, 80, 74, 0.55));
+  filter: drop-shadow(0 0 30px rgba(240, 78, 35, 0.55));
 }
 
 .cube-stack .cube-face:hover::before,
 .cube-stack .cube-face:hover::after {
   transition: none;
   background: var(--coral);
+}
+
+/* ---------- client logos ---------- */
+
+/*
+ * Plain greyscale washed the light logos out — PX98's yellow "98" and most of
+ * Twinkle Kidz went to near-white on the white page. Pulling brightness down
+ * and contrast up before the fade keeps every mark a readable mid-to-dark grey,
+ * so the row reads as one even weight of ink.
+ */
+.client-logo {
+  filter: grayscale(1) brightness(0.62) contrast(1.25);
+  opacity: 0.72;
+  transition:
+    filter 0.5s var(--ease-out-expo),
+    opacity 0.5s var(--ease-out-expo);
+}
+
+.client-logo:hover {
+  filter: none;
+  opacity: 1;
+}
+
+/* ---------- cube assembly ---------- */
+
+/*
+ * "Pure CSS 3D Cube Assembly Animation", the third css-cubes piece, in the
+ * /team header. Converted from Pug and Sass: the loops that placed each cube
+ * are written by React as --cx/--cy/--cz (core) and --sx/--sy/--sz (corners),
+ * and the Sass arithmetic is plain calc() on one edge length, --l.
+ *
+ * Cubes.tsx writes three things: --tilt-x and --tilt-y (the block tips toward
+ * the pointer) and --burst (0 at rest; a click springs it to about 1 and back,
+ * pushing every cube outward along its own axis).
+ */
+.ca-stage {
+  --l: 4em;
+  --ca-t: 2.6s;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --burst: 0;
+  position: relative;
+  width: 30em;
+  height: 30em;
+  font-size: clamp(8px, 1.02vw, 15px);
+  perspective: 34em;
+}
+
+.ca-stage .ca-assembly,
+.ca-stage .ca-comp,
+.ca-stage .ca-slot,
+.ca-stage .ca-pos,
+.ca-stage .ca-cube,
+.ca-stage .ca-face {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.ca-assembly {
+  top: 50%;
+  left: 50%;
+  transform: rotateX(calc(-45deg + var(--tilt-x))) rotateY(calc(-45deg + var(--tilt-y)));
+  transition: transform 0.9s var(--ease-out-expo);
+}
+
+/* The core turns half a revolution one way, then half the other. */
+.ca-comp--i {
+  animation: ca-ri var(--ca-t) ease-in-out infinite;
+}
+
+/* The corner frame spins about the vertical while the corners are out. */
+.ca-comp--o {
+  animation: ca-ro var(--ca-t) ease-in-out infinite;
+}
+
+@keyframes ca-ri {
+  0%,
+  20% {
+    transform: rotateY(-0.5turn);
+  }
+  50% {
+    transform: none;
+  }
+  80%,
+  100% {
+    transform: rotateX(-0.5turn);
+  }
+}
+
+@keyframes ca-ro {
+  0%,
+  35% {
+    transform: rotate(-0.5turn);
+  }
+  65%,
+  100% {
+    transform: none;
+  }
+}
+
+/* Core and edge cubes, one edge-length apart; a burst spreads them. */
+.ca-slot {
+  transform: translate3d(
+    calc(var(--cx) * var(--l) * (1 + var(--burst) * 0.55)),
+    calc(var(--cy) * var(--l) * (1 + var(--burst) * 0.55)),
+    calc(var(--cz) * var(--l) * (1 + var(--burst) * 0.55))
+  );
+}
+
+/* Each corner in its own mirrored octant, one edge out from the centre. */
+.ca-pos {
+  transform: scale3d(var(--sx), var(--sy), var(--sz))
+    translate3d(
+      calc(var(--l) * (1 + var(--burst))),
+      calc(var(--l) * (1 + var(--burst))),
+      calc(var(--l) * (1 + var(--burst)))
+    );
+}
+
+/* The corner walks out along three edges, holds, and walks back. */
+.ca-pos > .ca-cube {
+  animation: ca-m var(--ca-t) ease-out infinite;
+}
+
+@keyframes ca-m {
+  0%,
+  5%,
+  95%,
+  100% {
+    transform: none;
+  }
+  15% {
+    transform: translate3d(0, var(--l), 0);
+  }
+  25% {
+    transform: translate3d(0, var(--l), var(--l));
+  }
+  35%,
+  65% {
+    transform: translate3d(var(--l), var(--l), var(--l));
+  }
+  75% {
+    transform: translate3d(var(--l), 0, var(--l));
+  }
+  85% {
+    transform: translate3d(var(--l), 0, 0);
+  }
+}
+
+/*
+ * Faces. Shaded by hand rather than with the pen's `filter: brightness()` —
+ * a filter on each of 162 faces in a 3D scene is a compositing layer apiece.
+ * Sides alternate, top and bottom run lighter, and a navy inset edge gives
+ * the white cubes a silhouette against the white page.
+ */
+.ca-face {
+  margin: calc(var(--l) * -0.5);
+  width: var(--l);
+  height: var(--l);
+  backface-visibility: hidden;
+  background: #eef1f8;
+  box-shadow:
+    inset 0 0 0 1px rgba(8, 29, 56, 0.07),
+    inset 0 0 calc(var(--l) * 0.45) rgba(8, 29, 56, 0.1);
+}
+
+.ca-face:nth-child(2n) {
+  background: #e3e8f3;
+}
+
+.ca-face:nth-child(n + 5) {
+  background: #f8f9fc;
+}
+
+.ca-face:nth-child(1) { transform: rotateY(0deg) translateZ(calc(var(--l) * 0.5)); }
+.ca-face:nth-child(2) { transform: rotateY(90deg) translateZ(calc(var(--l) * 0.5)); }
+.ca-face:nth-child(3) { transform: rotateY(180deg) translateZ(calc(var(--l) * 0.5)); }
+.ca-face:nth-child(4) { transform: rotateY(270deg) translateZ(calc(var(--l) * 0.5)); }
+.ca-face:nth-child(5) { transform: rotateX(90deg) translateZ(calc(var(--l) * 0.5)); }
+.ca-face:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--l) * 0.5)); }
+
+/* The eight corners carry the brand orange. */
+.ca-corner .ca-face {
+  background: var(--coral);
+  box-shadow:
+    inset 0 0 0 1px rgba(143, 42, 16, 0.25),
+    inset 0 0 calc(var(--l) * 0.45) rgba(143, 42, 16, 0.35);
+}
+
+.ca-corner .ca-face:nth-child(2n) {
+  background: #d9441c;
+}
+
+.ca-corner .ca-face:nth-child(n + 5) {
+  background: #f4683f;
+}
+
+/* ---------- loader failsafe ---------- */
+
+/*
+ * The loader is removed by its own script about 2.8s in. If that script never
+ * runs — blocked, or broken — this clears the white panel on its own, so a
+ * visitor can never be left looking at nothing.
+ */
+.preloader {
+  animation: preloader-failsafe 0.5s ease 6s forwards;
+}
+
+@keyframes preloader-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 /* ---------- custom cursor ---------- */
@@ -621,7 +836,7 @@ body {
   .cursor-ring {
     width: 34px;
     height: 34px;
-    border: 1px solid rgba(7, 28, 56, 0.35);
+    border: 1px solid rgba(8, 29, 56, 0.35);
     transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo),
       border-color 0.3s, background-color 0.3s;
   }
@@ -629,7 +844,7 @@ body {
     width: 56px;
     height: 56px;
     border-color: var(--coral);
-    background: rgba(240, 80, 74, 0.08);
+    background: rgba(240, 78, 35, 0.08);
   }
 }
 

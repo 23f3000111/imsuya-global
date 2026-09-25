@@ -22,7 +22,7 @@ export function GET() {
   const body = [
     `# ${site.name}`,
     "",
-    `> ${site.name} is a boutique creative digital design and smart website development studio based in Damansara Perdana, Petaling Jaya, Selangor, Malaysia. It covers four in-house disciplines — smart website design and development, custom web applications and software systems, custom AI services and softwares, and custom digital design from brand identity through to merchandise — and works with clients across Malaysia, Asia, Africa and the Middle East.`,
+    `> ${site.name} is an AI creative agency and custom website development studio based in Damansara Perdana, Petaling Jaya, Selangor, Malaysia. It covers four in-house disciplines — website design and development, custom web applications and software systems, AI services and programmes (AI products and systems), and digital and AI design from brand identity through to merchandise — and works with clients across Malaysia, Asia, Africa and the Middle East.`,
     "",
     "## About",
     "",

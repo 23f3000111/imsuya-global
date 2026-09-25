@@ -17,12 +17,13 @@ export type Project = {
  * Card order is the client's, three to a row on desktop:
  *   1  Roadtainers      Twinkle Kidz       M.I.R
  *   2  Legendary        Prince Lubricants  PX98
- *   3  Summer Academy   Mojo Momo          Toastful
- *   4  Balrcutz         CYW Art & Craft    Victoriashire
- *   5  Wrap District    My French Factory
+ *   3  Mojo Momo        Toastful           Balrcutz
+ *   4  CYW Art & Craft  Victoriashire      Wrap District
+ *   5  My French Factory
  *
- * The blue-and-yellow "Nova" Summer Academy route was withdrawn in the same
- * review, leaving one case study for that school rather than two.
+ * Summer Academy is off the portfolio altogether — the "Nova" route went in
+ * part 4 and the remaining "Sunshine" route in the September review. Both
+ * URLs redirect to /portfolio in next.config.ts.
  */
 export const projects: Project[] = [
   {
@@ -67,7 +68,7 @@ export const projects: Project[] = [
       ms: "Rumah minyak wangi Malaysia yang membotolkan landskap, budaya dan jiwa negara.",
     },
     image: "/work/legendary.jpg",
-    url: "https://23f3000111.github.io/legendary-perfume-v2/",
+    url: "https://www.legendary.com.my/",
   },
   {
     slug: "prince-lubricants",
@@ -89,18 +90,7 @@ export const projects: Project[] = [
       ms: "Ketepatan dalam setiap pusingan. Jenama pelincir automotif premium, satu lagi jenama oleh Prince.",
     },
     image: "/work/px98.jpg",
-    url: "https://23f3000111.github.io/px98-website/index.html",
-  },
-  {
-    slug: "summer-academy-sunshine",
-    name: "Summer Academy",
-    sector: { en: "Education", ms: "Pendidikan" },
-    summary: {
-      en: "Big ideas start small. A bright, playful site for a Dutch inspired creative primary school.",
-      ms: "Idea besar bermula kecil. Laman cerah dan ceria untuk sekolah rendah kreatif berinspirasikan Belanda.",
-    },
-    image: "/work/summer-academy-sunshine.jpg",
-    url: "https://23f3000111.github.io/summer-academy-mockups/site-sunshine/",
+    url: "https://www.px98lubricants.com/",
   },
   {
     slug: "mojo-momo-crav",

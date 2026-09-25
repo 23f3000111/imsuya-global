@@ -3,6 +3,7 @@
 import { projects } from "@/data/projects";
 import { PageHero } from "@/components/ui/PageHero";
 import { CubeGrid } from "@/components/ui/Cubes";
+import { ClientLogos } from "@/components/ui/ClientLogos";
 import { ProjectCard } from "@/components/home/Work";
 import { Reveal } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -45,7 +46,7 @@ export function PortfolioBody() {
         visual={<CubeGrid className="w-full" />}
       />
 
-      <section className="bg-void px-6 pb-32 lg:px-12">
+      <section className="bg-void px-6 pb-24 lg:px-12">
         <div className="relative z-10 mx-auto max-w-[1600px]">
           {/* even grid: every project gets the same frame */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
@@ -53,8 +54,15 @@ export function PortfolioBody() {
               <ProjectCard key={p.slug} project={p} eager={i < 3} />
             ))}
           </div>
+        </div>
+      </section>
 
-          <Reveal className="mt-20 border-t border-paper/[0.08] pt-16 text-center">
+      {/* Brands behind the work, between the grid and the call to action. */}
+      <ClientLogos />
+
+      <section className="bg-void px-6 pb-32 pt-20 lg:px-12">
+        <div className="relative z-10 mx-auto max-w-[1600px]">
+          <Reveal className="text-center">
             <h2 className="text-display mx-auto max-w-3xl text-4xl uppercase lg:text-6xl">
               {copy.ctaHeading}
             </h2>

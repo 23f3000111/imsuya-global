@@ -31,10 +31,17 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+/*
+ * Written around the searches the studio wants to be found for in Malaysia:
+ * AI creative agency, website development studio, website design company,
+ * website developer, AI agency, AI products and systems, AI design. Claims of
+ * rank ("No.1", "best") are deliberately left out — the client chose to target
+ * the phrases rather than assert a position that cannot be substantiated.
+ */
 const TITLE =
-  "Imsuya Global · Creative Digital Design and Smart Website Development Boutique Studio";
+  "Imsuya Global · AI Creative Agency & Website Development Studio in Malaysia";
 const DESCRIPTION =
-  "Imsuya Global is a boutique digital studio in Petaling Jaya, Malaysia. Smart websites, custom web applications and software systems, custom AI services and softwares, and digital design from brand identity to merchandise, for businesses in Malaysia and worldwide.";
+  "Imsuya Global is an AI creative agency and custom website development studio in Malaysia: website design and development, custom web apps, AI products and systems, and AI design for businesses in Malaysia and worldwide.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -44,6 +51,17 @@ export const metadata: Metadata = {
   title: { default: TITLE, template: "%s · Imsuya Global" },
   description: DESCRIPTION,
   applicationName: "Imsuya Global",
+  keywords: [
+    "AI creative agency in Malaysia",
+    "AI agency in Malaysia",
+    "website development studio in Malaysia",
+    "custom website development studio Malaysia",
+    "website design company in Malaysia",
+    "website design Malaysia",
+    "website developer in Malaysia",
+    "AI products and systems in Malaysia",
+    "AI design in Malaysia",
+  ],
   authors: [{ name: "Imsuya Global", url: SITE_URL }],
   creator: "Imsuya Global",
   publisher: "Imsuya Global",

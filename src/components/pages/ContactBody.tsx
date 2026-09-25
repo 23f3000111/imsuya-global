@@ -14,6 +14,13 @@ const ParticleField = dynamic(
   { ssr: false }
 );
 
+// WebGL, and several kilobytes of baked land data: client only, and only on
+// this page. The placeholder holds the square so nothing jumps when it lands.
+const Globe = dynamic(() => import("@/components/three/Globe").then((m) => m.Globe), {
+  ssr: false,
+  loading: () => <div className="aspect-square w-full" />,
+});
+
 const COPY = {
   en: {
     eyebrow: "Contact / replies within 1 business day",
@@ -33,6 +40,9 @@ const COPY = {
     faqEyebrow: "Questions / answered",
     faqHeading: "Everything clients ask before we start.",
     outro: "We build digital futures.",
+    globeHq: "Kuala Lumpur · HQ",
+    globeReach: "Where our work runs",
+    globeHint: "Drag to spin",
   },
   ms: {
     eyebrow: "Hubungi / balasan dalam 1 hari bekerja",
@@ -52,6 +62,9 @@ const COPY = {
     faqEyebrow: "Soalan / dijawab",
     faqHeading: "Semua yang pelanggan tanya sebelum kami mula.",
     outro: "Kami bina masa depan digital.",
+    globeHq: "Kuala Lumpur · Ibu pejabat",
+    globeReach: "Di mana kerja kami berjalan",
+    globeHint: "Seret untuk pusing",
   },
 };
 
@@ -61,7 +74,28 @@ export function ContactBody() {
 
   return (
     <>
-      <PageHero eyebrow={copy.eyebrow} lines={copy.lines} intro={copy.intro} />
+      <PageHero
+        eyebrow={copy.eyebrow}
+        lines={copy.lines}
+        intro={copy.intro}
+        visual={
+          <div className="w-full max-w-[560px]">
+            <Globe />
+            {/* The key, and the one instruction the globe needs. */}
+            <p className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.2em] text-soft">
+              <span className="flex items-center gap-2">
+                <span aria-hidden className="block size-2 bg-coral" />
+                {copy.globeHq}
+              </span>
+              <span className="flex items-center gap-2">
+                <span aria-hidden className="block h-px w-5 bg-coral/60" />
+                {copy.globeReach}
+              </span>
+              <span className="text-paper/40">{copy.globeHint}</span>
+            </p>
+          </div>
+        }
+      />
 
       <section className="bg-void px-6 pb-20 lg:px-12 lg:pb-24">
         <div className="relative z-10 mx-auto grid max-w-[1600px] gap-16 lg:grid-cols-12">

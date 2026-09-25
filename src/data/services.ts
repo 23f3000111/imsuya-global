@@ -9,6 +9,13 @@ export type Service = {
   description: L10n;
   features: { name: L10n; detail: L10n }[];
   related: string[]; // project slugs
+  /**
+   * Search-facing title and description, English only because that is what
+   * the page metadata ships. Written around the Malaysian queries the studio
+   * wants to be found for — kept here, beside the service, so the visible
+   * names can stay short without the page titles losing the keywords.
+   */
+  seo: { title: string; description: string };
 };
 
 // Every service has a visual at /services/<slug>.jpg
@@ -114,6 +121,11 @@ export const services: Service[] = [
       },
     ],
     related: ["roadtainers", "twinkle-kidz"],
+    seo: {
+      title: "Website Design & Development in Malaysia",
+      description:
+        "Website design and development studio in Malaysia. Imsuya Global is a website developer and website design company in one team, building fast, conversion-focused custom websites for businesses in Malaysia and worldwide.",
+    },
   },
   {
     slug: "custom-web-applications",
@@ -162,6 +174,11 @@ export const services: Service[] = [
       },
     ],
     related: ["roadtainers", "prince-lubricants"],
+    seo: {
+      title: "Custom Web Applications & Software Systems in Malaysia",
+      description:
+        "Custom web application and software development in Malaysia: dashboards, portals, booking engines, AI chatbots and internal tools, designed and engineered in-house by Imsuya Global for businesses in Malaysia and worldwide.",
+    },
   },
   {
     /*
@@ -171,8 +188,11 @@ export const services: Service[] = [
      */
     slug: "ai-products",
     index: "03",
-    title: { en: "Custom AI Services & Softwares", ms: "Perkhidmatan & Perisian AI Tersuai" },
-    short: { en: "AI Services & Softwares", ms: "Perkhidmatan & Perisian AI" },
+    // Renamed from "Custom AI Services & Softwares" in the September review.
+    // Title and short name are the same on purpose: the client wants the name
+    // on the services list to match the heading on the service page.
+    title: { en: "AI Services & Programme", ms: "Perkhidmatan & Program AI" },
+    short: { en: "AI Services & Programme", ms: "Perkhidmatan & Program AI" },
     tagline: {
       en: "Your data, your workflows, with intelligence built in.",
       ms: "Data anda, aliran kerja anda, dengan kecerdasan terbina.",
@@ -212,6 +232,11 @@ export const services: Service[] = [
       },
     ],
     related: [],
+    seo: {
+      title: "AI Services & Programme · AI Agency in Malaysia",
+      description:
+        "An AI agency in Malaysia building AI products and systems: chatbots, AI agents, automated workflows and custom business programmes, designed, trained and shipped by Imsuya Global.",
+    },
   },
   {
     slug: "custom-digital-design",
@@ -260,6 +285,11 @@ export const services: Service[] = [
       },
     ],
     related: ["legendary", "cyw-art-craft"],
+    seo: {
+      title: "Custom Digital & Graphic Design in Malaysia",
+      description:
+        "Brand identity, UI/UX, campaign creative and merchandise design from Imsuya Global, an AI creative agency in Malaysia. One visual language across everything you ship, on screen and in the hand.",
+    },
   },
 ];
 
@@ -270,7 +300,7 @@ export const services: Service[] = [
 export const serviceAccent: Record<string, { en: string[]; ms: string[] }> = {
   "website-design-development": { en: ["Development"], ms: ["Pembangunan"] },
   "custom-web-applications": { en: ["Software"], ms: ["Perisian"] },
-  "ai-products": { en: ["Softwares"], ms: ["Perisian"] },
+  "ai-products": { en: ["Programme"], ms: ["Program"] },
   "custom-digital-design": { en: ["Design"], ms: ["Digital"] },
 };
 

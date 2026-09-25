@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
+import gsap from "gsap";
 
 /**
  * The two cube pieces the client selected from freefrontend.com's css-cubes
@@ -229,6 +230,140 @@ export function CubeStack({ className = "" }: { className?: string }) {
               ))}
             </div>
           ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Edge positions along one axis of the 3x3x3 block. */
+const AXIS = [0, 1, 2] as const;
+
+/**
+ * The 19 cubes that make up the core and edges: every cell of the 3x3x3 block
+ * except the eight corners. The original Sass looped i, j, k over 0..2 and
+ * skipped a cell when all three were even (i % 2 + j % 2 + k % 2 === 0).
+ */
+const CORE = AXIS.flatMap((i) =>
+  AXIS.flatMap((j) =>
+    AXIS.filter((k) => (i % 2) + (j % 2) + (k % 2) > 0).map((k) => ({
+      key: `${i}${j}${k}`,
+      x: i - 1,
+      y: j - 1,
+      z: k - 1,
+    }))
+  )
+);
+
+/**
+ * The eight corners. Each sits in a frame mirrored into its own octant —
+ * scale3d(±1, ±1, ±1) — so one set of keyframes carries every corner
+ * outward, whichever way it faces.
+ */
+const CORNERS = [0, 2].flatMap((i) =>
+  [0, 2].flatMap((j) =>
+    [0, 2].map((k) => ({
+      key: `${i}${j}${k}`,
+      sx: i === 0 ? 1 : -1,
+      sy: j === 0 ? 1 : -1,
+      sz: k === 0 ? 1 : -1,
+    }))
+  )
+);
+
+function Cube({ className = "" }: { className?: string }) {
+  return (
+    <div className={`ca-cube ${className}`}>
+      {Array.from({ length: 6 }).map((_, f) => (
+        <div key={f} className="ca-face" />
+      ))}
+    </div>
+  );
+}
+
+/**
+ * "Pure CSS 3D Cube Assembly Animation" — the third piece the client picked
+ * from freefrontend's css-cubes, in the /team header. A 3x3x3 block: the
+ * eight orange corner cubes break away along the edges and re-seat while the
+ * white core turns half a revolution, on a loop. Every cube is on screen the
+ * whole time; nothing flattens or fades out.
+ *
+ * On top of the original it answers the pointer — the block tips toward the
+ * cursor — and a click bursts it: the corners fly further out, the core
+ * spreads, and the whole thing springs back together. The geometry and the
+ * loop live in globals.css under "cube assembly"; this component only writes
+ * three custom properties (--tilt-x, --tilt-y, --burst).
+ */
+export function CubeAssembly({ className = "" }: { className?: string }) {
+  const stageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let burst: gsap.core.Timeline | null = null;
+
+    const onMove = (e: PointerEvent) => {
+      const r = stage.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+      const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+      stage.style.setProperty("--tilt-y", `${(dx * 22).toFixed(2)}deg`);
+      stage.style.setProperty("--tilt-x", `${(-dy * 16).toFixed(2)}deg`);
+    };
+
+    const onLeave = () => {
+      stage.style.setProperty("--tilt-x", "0deg");
+      stage.style.setProperty("--tilt-y", "0deg");
+    };
+
+    const onDown = () => {
+      burst?.kill();
+      burst = gsap
+        .timeline()
+        .to(stage, { "--burst": 0.9, duration: 0.22, ease: "power3.out" })
+        .to(stage, { "--burst": 0, duration: 1.1, ease: "elastic.out(1, 0.42)" });
+    };
+
+    stage.addEventListener("pointermove", onMove, { passive: true });
+    stage.addEventListener("pointerleave", onLeave, { passive: true });
+    stage.addEventListener("pointerdown", onDown, { passive: true });
+    return () => {
+      stage.removeEventListener("pointermove", onMove);
+      stage.removeEventListener("pointerleave", onLeave);
+      stage.removeEventListener("pointerdown", onDown);
+      burst?.kill();
+    };
+  }, []);
+
+  return (
+    <div className={`grid place-items-center ${className}`}>
+      <div ref={stageRef} aria-hidden data-cursor className="ca-stage cursor-pointer">
+        <div className="ca-assembly">
+          {/* the core and edges */}
+          <div className="ca-comp ca-comp--i">
+            {CORE.map((c) => (
+              <div
+                key={c.key}
+                className="ca-slot"
+                style={{ "--cx": c.x, "--cy": c.y, "--cz": c.z } as React.CSSProperties}
+              >
+                <Cube />
+              </div>
+            ))}
+          </div>
+          {/* the eight corners */}
+          <div className="ca-comp ca-comp--o">
+            {CORNERS.map((c) => (
+              <div
+                key={c.key}
+                className="ca-pos"
+                style={{ "--sx": c.sx, "--sy": c.sy, "--sz": c.sz } as React.CSSProperties}
+              >
+                <Cube className="ca-corner" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

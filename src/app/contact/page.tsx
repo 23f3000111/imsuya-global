@@ -5,9 +5,9 @@ import { absoluteUrl, breadcrumbSchema, faqSchema, graph, pageMetadata } from "@
 
 export const metadata: Metadata = pageMetadata({
   path: "/contact",
-  title: "Contact",
+  title: "Contact · Start a Website or AI Project in Malaysia",
   description:
-    "Start a project with Imsuya Global by WhatsApp, email or a 60 second brief. Studio in Damansara Perdana, Petaling Jaya. We reply within one business day.",
+    "Start a website, web app or AI project with Imsuya Global by WhatsApp, email or a 60 second brief. Studio in Damansara Perdana, Petaling Jaya, Malaysia. We reply within one business day.",
 });
 
 export default function ContactPage() {

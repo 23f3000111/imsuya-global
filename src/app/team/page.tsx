@@ -5,9 +5,9 @@ import { breadcrumbSchema, graph, pageMetadata, peopleSchema } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   path: "/team",
-  title: "Team",
+  title: "Team · The People Behind the Studio",
   description:
-    "The people behind Imsuya Global: Imran, founder and strategy; Rishikesh, CTO and engineering; Sumaiya, director of operations and delivery.",
+    "Meet the team behind Imsuya Global, an AI creative agency and website development studio in Malaysia: Imran, founder and strategy; Rishikesh, CTO and engineering; Sumaiya, director of operations and delivery.",
 });
 
 // Mirrors the running order in TeamBody. Kept here rather than exported from a

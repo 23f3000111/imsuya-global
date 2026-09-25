@@ -48,11 +48,16 @@ const nextConfig: NextConfig = {
         destination: "/portfolio/victoriashire-three",
         permanent: true,
       },
-      // The blue-and-yellow Summer Academy route came off the portfolio in the
-      // same review that cut the service list down to four.
+      // Summer Academy is off the portfolio: both of its routes were
+      // withdrawn, one in part 4 and the other in the September review.
       {
         source: "/portfolio/summer-academy-nova",
-        destination: "/portfolio/summer-academy-sunshine",
+        destination: "/portfolio",
+        permanent: true,
+      },
+      {
+        source: "/portfolio/summer-academy-sunshine",
+        destination: "/portfolio",
         permanent: true,
       },
       /*

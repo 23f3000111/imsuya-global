@@ -97,7 +97,7 @@ export function organizationSchema(): Json {
     image: absoluteUrl(DEFAULT_OG),
     slogan: site.tagline,
     description:
-      "Boutique creative digital design and smart website development studio in Petaling Jaya, Malaysia. Smart websites, custom web applications and software systems, custom AI services and softwares, and custom digital design from brand identity through to merchandise.",
+      "AI creative agency and custom website development studio in Petaling Jaya, Malaysia. Website design and development, custom web applications and software systems, AI products and systems, and digital and AI design from brand identity through to merchandise.",
     email: site.email,
     telephone: `+${site.whatsapp}`,
     address: {
@@ -119,12 +119,16 @@ export function organizationSchema(): Json {
     ],
     priceRange: "$$",
     knowsAbout: [
-      "Website design and development",
+      "Website design",
+      "Website development",
+      "Custom website development",
       "Custom web application development",
       "Custom software systems",
+      "AI products and systems",
       "AI automation and AI agents",
-      "AI products and chatbots",
-      "Brand identity and digital design",
+      "AI chatbots",
+      "AI design",
+      "Brand identity and graphic design",
       "UI and UX design",
       "Merchandise and apparel design",
     ],

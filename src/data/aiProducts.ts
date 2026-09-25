@@ -20,9 +20,9 @@ export type AiProduct = {
 };
 
 /**
- * Shipped AI work, shown on /services/ai-products. These are the two the
- * client asked to lead with: the Safeeds support chatbot and the GigYard
- * booking flow.
+ * Shipped builds, shown on /services/custom-web-applications: the Safeeds
+ * support chatbot and the GigYard booking flow. They sat on the AI page until
+ * the September review moved them under Web Apps & Software Systems.
  */
 export const aiProducts: AiProduct[] = [
   {

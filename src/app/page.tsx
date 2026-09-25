@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/Hero";
 import { Story } from "@/components/home/Story";
+import { ClientLogos } from "@/components/ui/ClientLogos";
 import { Services } from "@/components/home/Services";
 import { Work } from "@/components/home/Work";
 import { WhyUs } from "@/components/home/WhyUs";
@@ -14,10 +15,9 @@ import { pageMetadata } from "@/lib/seo";
 // og:type, og:site_name and og:locale.
 export const metadata: Metadata = pageMetadata({
   path: "/",
-  title:
-    "Imsuya Global · Creative Digital Design and Smart Website Development Boutique Studio",
+  title: "Imsuya Global · AI Creative Agency & Website Development Studio in Malaysia",
   description:
-    "Imsuya Global is a boutique digital studio in Petaling Jaya, Malaysia. Websites, custom software, AI automation and products, design, marketing and merchandise for businesses in Malaysia and worldwide.",
+    "Imsuya Global is an AI creative agency and custom website development studio in Malaysia: website design and development, custom web apps, AI products and systems, and AI design for businesses in Malaysia and worldwide.",
   // The title already ends in the studio name; the template would append it twice.
   absoluteTitle: true,
 });
@@ -28,6 +28,8 @@ export default function Home() {
   return (
     <>
       <Hero />
+      {/* Proof first: who the studio has worked for, straight after the hero. */}
+      <ClientLogos />
       <Story />
       <Services />
       <Work />

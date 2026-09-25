@@ -61,14 +61,17 @@ export function ServicesBody() {
                 data-cursor
               >
                 <span className="font-mono text-sm text-coral lg:col-span-1">{s.index}</span>
-                {/* Full service names, in the same running order as the homepage.
-                    The icon sits navy at rest and lights orange on hover. */}
+                {/* The same name each service page carries as its heading, so the
+                    list and the page you land on never disagree — the client's
+                    note from the September review. Same running order as the
+                    homepage. The icon sits navy at rest and lights orange on
+                    hover. */}
                 <h2 className="text-display flex items-center gap-4 text-xl uppercase transition-transform duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3 lg:col-span-6 lg:gap-5 lg:text-3xl">
                   <ServiceIcon
                     slug={s.slug}
                     className="size-8 shrink-0 text-navy/70 transition-colors duration-300 group-hover:text-coral lg:size-11"
                   />
-                  {t(s.title)}
+                  {t(s.short)}
                 </h2>
                 <p className="text-sm text-muted lg:col-span-4">{t(s.tagline)}</p>
                 <span className="hidden justify-self-end text-2xl text-soft transition-all duration-300 group-hover:translate-x-2 group-hover:text-coral lg:col-span-1 lg:block">

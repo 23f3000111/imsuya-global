@@ -5,8 +5,10 @@ import Link from "next/link";
 import { serviceImage, type Service } from "@/data/services";
 import { projects } from "@/data/projects";
 import { aiProducts } from "@/data/aiProducts";
+import { merchandise } from "@/data/merchandise";
+import { legendaryCrm } from "@/data/crm";
 import { ProductDemo } from "@/components/ui/ProductDemo";
-import { MerchandiseGallery } from "@/components/ui/MerchandiseGallery";
+import { ShowcaseGallery } from "@/components/ui/ShowcaseGallery";
 import { PageHero } from "@/components/ui/PageHero";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { ServiceRail } from "@/components/ui/ServiceRail";
@@ -26,11 +28,18 @@ const COPY = {
     youGet: "You get",
     related: "In the wild",
     merch: "Brands we have produced for",
+    merchList: "What we produced",
+    merchAlt: "merchandise designed by Imsuya Global",
     demos: "Shipped and running",
     demosIntro:
-      "Two AI products live in front of real customers right now: a support chatbot and an intelligent booking flow. Both are open — go and use them.",
+      "Two builds live in front of real customers right now: a support chatbot and an intelligent booking flow. Both are open — go and use them.",
     merchIntro:
       "Full presentation boards. Open one to read it at size, with the brief beside it.",
+    crm: "Legendary Retail CRM",
+    crmIntro:
+      "A retail operations programme built for Legendary, the Malaysian perfume house: one system from the managing director's morning view down to a promoter closing the day on the shop floor. Open any screen to read it at size.",
+    crmList: "What it does",
+    crmAlt: "Legendary Retail CRM, built by Imsuya Global",
     soon: "Coming soon",
     soonBody:
       "We are shipping work in this discipline right now. The first case studies land here shortly.",
@@ -48,11 +57,18 @@ const COPY = {
     youGet: "Anda dapat",
     related: "Dalam dunia sebenar",
     merch: "Jenama yang kami hasilkan",
+    merchList: "Apa yang kami hasilkan",
+    merchAlt: "barangan direka oleh Imsuya Global",
     demos: "Sudah dilancarkan",
     demosIntro:
-      "Dua produk AI sedang berkhidmat kepada pelanggan sebenar sekarang: chatbot sokongan dan aliran tempahan pintar. Kedua-duanya terbuka — cuba sendiri.",
+      "Dua binaan sedang berkhidmat kepada pelanggan sebenar sekarang: chatbot sokongan dan aliran tempahan pintar. Kedua-duanya terbuka — cuba sendiri.",
     merchIntro:
       "Papan pembentangan penuh. Buka satu untuk membacanya pada saiz sebenar, dengan taklimatnya di sebelah.",
+    crm: "Legendary Retail CRM",
+    crmIntro:
+      "Program operasi runcit yang dibina untuk Legendary, rumah minyak wangi Malaysia: satu sistem dari paparan pagi pengarah urusan hingga promoter menutup hari di lantai jualan. Buka mana mana skrin untuk membacanya pada saiz penuh.",
+    crmList: "Apa fungsinya",
+    crmAlt: "Legendary Retail CRM, dibina oleh Imsuya Global",
     soon: "Akan datang",
     soonBody:
       "Kami sedang menyiapkan kerja dalam disiplin ini. Kajian kes pertama akan dipaparkan di sini tidak lama lagi.",
@@ -136,9 +152,13 @@ export function ServiceBody({ service }: { service: Service }) {
             </p>
           </Reveal>
 
-          {/* The AI products that are already live, shown as the running
-              products themselves rather than as a list of capabilities. */}
-          {service.slug === "ai-products" && (
+          {/*
+            Live builds, shown as the running products themselves rather than
+            as a list of capabilities. Safeeds and GigYard sat on the AI page
+            until the September review moved them here, under Web Apps &
+            Software Systems.
+          */}
+          {service.slug === "custom-web-applications" && (
             <div className="mt-24">
               <div className="mb-10 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
                 <Eyebrow variant="a">{copy.demos}</Eyebrow>
@@ -149,6 +169,25 @@ export function ServiceBody({ service }: { service: Service }) {
                   <ProductDemo key={p.slug} product={p} lang={lang} />
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* The AI page's proof: the four CRM screens and nothing else, at
+              the client's request. */}
+          {service.slug === "ai-products" && (
+            <div className="mt-24">
+              <div className="mb-10 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <Eyebrow variant="a">{copy.crm}</Eyebrow>
+                <p className="max-w-md text-sm leading-relaxed text-muted">{copy.crmIntro}</p>
+              </div>
+              <ShowcaseGallery
+                items={legendaryCrm}
+                lang={lang}
+                listLabel={copy.crmList}
+                altSuffix={copy.crmAlt}
+                columns={2}
+                frame="screen"
+              />
             </div>
           )}
 
@@ -163,7 +202,12 @@ export function ServiceBody({ service }: { service: Service }) {
                 <Eyebrow variant="a">{copy.merch}</Eyebrow>
                 <p className="max-w-md text-sm leading-relaxed text-muted">{copy.merchIntro}</p>
               </div>
-              <MerchandiseGallery lang={lang} />
+              <ShowcaseGallery
+                items={merchandise}
+                lang={lang}
+                listLabel={copy.merchList}
+                altSuffix={copy.merchAlt}
+              />
             </div>
           )}
 
@@ -185,7 +229,7 @@ export function ServiceBody({ service }: { service: Service }) {
           </div>
 
           {/* Related work, or an honest placeholder where there is none yet.
-              The AI page carries its own live products above, so it does not
+              The AI page carries its own CRM screens above, so it does not
               need a second, weaker version of the same section. */}
           {service.slug !== "ai-products" && (
             <div className="mt-24">

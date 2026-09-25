@@ -20,8 +20,8 @@ export async function generateMetadata({
 
   return pageMetadata({
     path: `/services/${service.slug}`,
-    title: service.title.en,
-    description: service.description.en,
+    title: service.seo.title,
+    description: service.seo.description,
     image: serviceImage(service.slug),
     imageAlt: `${service.title.en} by Imsuya Global`,
   });

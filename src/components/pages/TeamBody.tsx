@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { PageHero } from "@/components/ui/PageHero";
+import { CubeAssembly } from "@/components/ui/Cubes";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -84,7 +85,12 @@ export function TeamBody() {
 
   return (
     <>
-      <PageHero eyebrow={copy.eyebrow} lines={copy.lines} intro={copy.intro} />
+      <PageHero
+        eyebrow={copy.eyebrow}
+        lines={copy.lines}
+        intro={copy.intro}
+        visual={<CubeAssembly className="w-full" />}
+      />
 
       <section className="bg-void px-6 pb-20 lg:px-12 lg:pb-24">
         <div className="relative z-10 mx-auto max-w-[1600px]">

@@ -116,6 +116,11 @@ export function RevealLines({
           const split = Boolean(wanted) || i === lastLine;
           return (
             <span key={i} className="block overflow-hidden">
+              {/* A real space between lines. They are block spans, so it never
+                  shows — but without it the heading's text runs the lines
+                  together ("AI Services& Programme") for search engines and
+                  screen readers. */}
+              {i > 0 ? " " : null}
               <span className={`line-inner block will-change-transform ${lineClassName}`}>
                 {split
                   ? line.split(" ").map((word, w, all) => {
