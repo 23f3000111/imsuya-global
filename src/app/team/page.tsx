@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { TeamBody } from "@/components/pages/TeamBody";
+import { team } from "@/data/team";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema, graph, pageMetadata, peopleSchema } from "@/lib/seo";
 
@@ -10,13 +11,9 @@ export const metadata: Metadata = pageMetadata({
     "Meet the team behind Imsuya Global, an AI creative agency and website development studio in Malaysia: Imran, founder and strategy; Rishikesh, CTO and engineering; Sumaiya, director of operations and delivery.",
 });
 
-// Mirrors the running order in TeamBody. Kept here rather than exported from a
-// client component so the markup stays server rendered.
-const MEMBERS = [
-  { name: "Imran", role: "Founder", image: "/team/founder.jpg" },
-  { name: "Rishikesh", role: "Chief Technology Officer", image: "/team/developer.png" },
-  { name: "Sumaiya", role: "Director", image: "/team/director.png" },
-];
+// The same list TeamBody renders, read from a plain data module so the
+// structured data stays server rendered.
+const MEMBERS = team.map((m) => ({ name: m.name, role: m.schemaRole, image: m.image }));
 
 export default function TeamPage() {
   return (

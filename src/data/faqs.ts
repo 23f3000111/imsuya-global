@@ -215,8 +215,8 @@ export const faqs: Faq[] = [
       ms: "Bagaimana saya memulakan projek dengan Imsuya Global?",
     },
     a: {
-      en: "Projects start with a sixty second brief on the contact page, a direct WhatsApp message, or an email to hello@imsuyaglobal.com. Imsuya Global replies within one business day with next steps and, where the scope is clear, a written proposal.",
-      ms: "Projek bermula dengan taklimat enam puluh saat di halaman hubungi, mesej WhatsApp terus, atau emel ke hello@imsuyaglobal.com. Imsuya Global membalas dalam satu hari bekerja dengan langkah seterusnya dan, jika skop sudah jelas, cadangan bertulis.",
+      en: "Projects start with a sixty second brief on the contact page, a direct WhatsApp message, or an email to info@imsuyaglobal.com. Imsuya Global replies within one business day with next steps and, where the scope is clear, a written proposal.",
+      ms: "Projek bermula dengan taklimat enam puluh saat di halaman hubungi, mesej WhatsApp terus, atau emel ke info@imsuyaglobal.com. Imsuya Global membalas dalam satu hari bekerja dengan langkah seterusnya dan, jika skop sudah jelas, cadangan bertulis.",
     },
   },
 ];

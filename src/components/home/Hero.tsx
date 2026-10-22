@@ -232,12 +232,14 @@ export function Hero() {
         ))}
       </div>
 
-      <div className="hero-fade-in absolute inset-x-0 bottom-8 z-10 flex items-end justify-between gap-6 px-6 lg:px-12">
-        <p className="hidden items-center gap-3 font-mono text-[11px] tracking-[0.22em] text-soft sm:flex">
-          <span aria-hidden className="block size-1.5 bg-coral" />
+      <div className="hero-fade-in absolute inset-x-0 bottom-8 z-10 flex items-end px-6 lg:px-12">
+        {/* Wraps before it can reach the scroll cue in the middle. */}
+        <p className="hidden max-w-[calc(50%-4.5rem)] items-center gap-3 font-mono text-[11px] tracking-[0.22em] text-soft sm:flex">
+          <span aria-hidden className="block size-1.5 shrink-0 bg-coral" />
           {copy.base.toUpperCase()}
         </p>
-        <div className="ml-auto flex flex-col items-center gap-2">
+        {/* Centred: the bottom-right corner belongs to the assistant's launcher. */}
+        <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
           <span className="font-mono text-[11px] tracking-[0.25em] text-soft">{copy.scroll}</span>
           <span className="block h-10 w-px animate-pulse bg-gradient-to-b from-coral to-transparent" />
         </div>

@@ -35,6 +35,11 @@ const nextConfig: NextConfig = {
   trailingSlash: false,
   poweredByHeader: false,
 
+  // Loaded with Node's own require at runtime rather than bundled: nodemailer
+  // reaches for Node built-ins (net, tls, dns) the bundler gains nothing from
+  // rewriting. Used by the enquiry email in src/lib/notify.
+  serverExternalPackages: ["nodemailer"],
+
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
@@ -46,6 +51,14 @@ const nextConfig: NextConfig = {
       {
         source: "/portfolio/victoriashire-one",
         destination: "/portfolio/victoriashire-three",
+        permanent: true,
+      },
+      // The CTO's portrait moved to a new file when the real photograph
+      // replaced the stock placeholder; anything that cached the old URL
+      // (search results, shared structured data) follows it.
+      {
+        source: "/team/developer.png",
+        destination: "/team/rishikesh.jpg",
         permanent: true,
       },
       // Summer Academy is off the portfolio: both of its routes were

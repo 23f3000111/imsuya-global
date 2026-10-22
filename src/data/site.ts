@@ -1,8 +1,9 @@
-// Central place for contact details. Replace the placeholders before launch.
+// Central place for contact details. Everything that shows or sends to the
+// studio's inbox reads `site.email`, so this is the one line to change.
 export const site = {
   name: "Imsuya Global",
   tagline: "Building Your Digital Future",
-  email: "hello@imsuyaglobal.com", // TODO: replace with the real inbox
+  email: "info@imsuyaglobal.com",
   whatsapp: "60122357927", // +60 12 235 7927
   whatsappDisplay: "+60 12 235 7927",
   url: "https://imsuyaglobal.com",
