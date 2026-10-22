@@ -75,12 +75,22 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "No way to reply" }, { status: 400 });
   }
 
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  // The client address as the platform sees it. On Vercel x-real-ip is set at
+  // the edge and a visitor can't supply it (x-forwarded-for is overwritten
+  // too); elsewhere, fall back to the first forwarded hop.
+  const ip =
+    request.headers.get("x-real-ip")?.trim() ||
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "unknown";
   const fingerprint = createHash("sha256")
     .update(`${ip}|${data.name.toLowerCase()}|${data.details.toLowerCase()}`)
     .digest("hex");
   if (isDuplicateEnquiry(fingerprint)) return NextResponse.json({ ok: true, delivered: true });
 
+  // Per visitor, plus a daily ceiling for the whole site so a flood can't fill
+  // the inbox or trip the mailbox's sending limits. Hitting either shuts no
+  // one out: the visitor gets WhatsApp and email buttons with the brief
+  // filled in, the same as when email isn't configured.
   if (!allow(`contact:${ip}`, 5, HOUR) || !allow("contact:day:all", 100, 24 * HOUR)) {
     return NextResponse.json({ ok: false, error: "Too many requests" }, { status: 429 });
   }
